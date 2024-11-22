@@ -6,6 +6,7 @@ public abstract class Member {
     private boolean active;
     private boolean junior;
     private boolean fitnessEnthusiast;
+    // Medlemsskabs nr.?
 
     //Constructor -
     public Member(String name, int age, boolean active, boolean junior, boolean fitnessEnthusiast) {
