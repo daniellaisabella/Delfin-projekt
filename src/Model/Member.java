@@ -1,3 +1,5 @@
+package Model;
+
 public abstract class Member {
 
     //Attributes

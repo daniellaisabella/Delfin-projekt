@@ -1,3 +1,5 @@
+package Model;
+
 public class Membership extends Member {
     // Medlemsskabs nr.?
 
