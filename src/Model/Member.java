@@ -16,7 +16,7 @@ public abstract class Member {
         this.name = name;
         this.age = age;
         this.address = address;
-        this.phoneNumber =
+        this.phoneNumber = phoneNumber;
         this.isActive = isActive;
         this.isCompetetive = isCompetetive;
 
