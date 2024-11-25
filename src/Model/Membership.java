@@ -29,7 +29,8 @@ public class Membership extends Member {
                     getName(), getAge(), membershipType, isActive(), isFitnessEnthusiast(), calculateContingent()
             );
         }
-
+    public int annualContingent;
+    private boolean hasPaid;
     public int AnnualContingent(Member member) {
         int Junior = 1000;
         int Senior = 1600;
