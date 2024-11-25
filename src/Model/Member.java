@@ -8,6 +8,7 @@ public abstract class Member {
     private boolean active; // Determines if the member participates actively
     private boolean fitnessEnthusiast;
 
+
     // Constructor
     public Member(String name, int age, boolean active, boolean fitnessEnthusiast) {
         this.name = name;
@@ -72,4 +73,5 @@ public abstract class Member {
                 name, age, active, isJunior(), fitnessEnthusiast
         );
     }
+
 }
