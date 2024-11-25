@@ -29,6 +29,41 @@ public class Membership extends Member {
                     getName(), getAge(), membershipType, isActive(), isFitnessEnthusiast(), calculateContingent()
             );
         }
+
+    public int AnnualContingent(Member member) {
+        int Junior = 1000;
+        int Senior = 1600;
+        int Pensionist = 1200;
+        int passiveMembership = 500;
+        int annualContingent = 0;
+        int age = member.getAge();
+
+        if (!member.isActive) {
+            annualContingent = passiveMembership;
+
+        } else if (age < 18 && member.isActive) {
+            annualContingent = Junior;
+
+        } else if (age > 18 && age < 59 && member.isActive){
+            annualContingent = Senior;
+
+        }else if (age > 59 && member.isActive) {
+            annualContingent = Pensionist;
+
+        }
+        return annualContingent;
     }
+
+}
+public boolean hasPaid() {
+    if(hasPaid) {
+        return true;
+    } else return ("Your outstanding fee is: " + getAnnualContingent());
+}
+
+    }
+
+
+
 
 
