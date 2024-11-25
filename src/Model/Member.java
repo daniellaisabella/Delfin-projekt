@@ -2,75 +2,74 @@ package Model;
 
 public abstract class Member {
 
-    //Attributes
+    // Attributes
     private String name;
-    private int age;
-    private boolean active;
-    private boolean junior;
+    private int age; // Determines if the member is junior or senior
+    private boolean active; // Determines if the member participates actively
     private boolean fitnessEnthusiast;
-    // Medlemsskabs nr.?
 
-    //Constructor -
-    public Member(String name, int age, boolean active, boolean junior, boolean fitnessEnthusiast) {
+    // Constructor
+    public Member(String name, int age, boolean active, boolean fitnessEnthusiast) {
         this.name = name;
-        this.age = age;
+        setAge(age); // Use setter to validate age
         this.active = active;
-        this.junior = junior;
         this.fitnessEnthusiast = fitnessEnthusiast;
     }
 
-    //Constructor - Membership
-    public Member( int age, boolean active, boolean junior, boolean fitnessEnthusiast) {
-        this.age = age;
-        this.active = active;
-        this.junior = junior;
-        this.fitnessEnthusiast = fitnessEnthusiast;
-    }
+    // Abstract method to calculate Contingent
+    public abstract double calculateContingent();
 
-
-
-    // *** GETTER *** //
-
+    // *** GETTERS *** //
     public String getName() {
         return name;
     }
 
-    public int getAge(){
+    public int getAge() {
         return age;
     }
 
-    public boolean getActive(){
+    public boolean isActive() {
         return active;
     }
 
-    public boolean getJunior(){
-        return junior;
-    }
-
-    public boolean getFitnessEnthuisiast(){
+    public boolean isFitnessEnthusiast() {
         return fitnessEnthusiast;
     }
 
-    // *** SETTER *** //
-
-    public String setName() {
-        return name;
+    // Determines if the member is a junior based on age
+    public boolean isJunior() {
+        return age < 18;
     }
 
-    public int setAge(){
-        return age;
+    // *** SETTERS *** //
+    public void setName(String name) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Name cannot be null or empty.");
+        }
+        this.name = name;
     }
 
-    public boolean setActive(){
-        return active;
+    public void setAge(int age) {
+        if (age <= 0) {
+            throw new IllegalArgumentException("Age must be greater than zero.");
+        }
+        this.age = age;
     }
 
-    public boolean setJunior(){
-        return junior;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
-    public boolean setFitnessEnthuisiast(){
-        return fitnessEnthusiast;
+    public void setFitnessEnthusiast(boolean fitnessEnthusiast) {
+        this.fitnessEnthusiast = fitnessEnthusiast;
     }
 
+    // Display member details
+    @Override
+    public String toString() {
+        return String.format(
+                "Name: %s, Age: %d, Active: %b, Junior: %b, Fitness Enthusiast: %b",
+                name, age, active, isJunior(), fitnessEnthusiast
+        );
+    }
 }
