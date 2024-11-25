@@ -55,13 +55,15 @@ public class Membership extends Member {
     }
 
 }
+
+
 public boolean hasPaid() {
     if(hasPaid) {
         return true;
-    } else return ("Your outstanding fee is: " + getAnnualContingent());
+    } else return ("Member has outstanding fee: " + outstanding));
 }
 
-    }
+
 
 
 
