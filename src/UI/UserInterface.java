@@ -32,6 +32,26 @@ public class UserInterface {
 
                 }
 
+                private void addMember() {
+                    System.out.println("Enter member full name");
+                    String name = scanner.nextLine().trim();
+
+                    System.out.println("Enter member date of birth DD/MM/YYYY");
+                    int age = scanner.nextInt();
+
+                    System.out.println("Enter member address, streetname, housenumber, city, zipcode");
+                    String address = scanner.nextLine().trim();
+
+                    System.out.println("Enter member phonenumber");
+                    int phoneNumber = scanner.nextInt();
+
+                    System.out.println("Enter member member type, active or passive");
+                    String memberType = scanner.nextLine().trim();
+                }
+
+                private void showMembers() {
+                    ArraList<Members> members = controller.getMembersCollection().getMembers();
+
 
 }
 
