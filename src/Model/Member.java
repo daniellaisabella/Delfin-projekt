@@ -27,4 +27,50 @@ public abstract class Member {
         this.fitnessEnthusiast = fitnessEnthusiast;
     }
 
+
+
+    // *** GETTER *** //
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge(){
+        return age;
+    }
+
+    public boolean getActive(){
+        return active;
+    }
+
+    public boolean getJunior(){
+        return junior;
+    }
+
+    public boolean getFitnessEnthuisiast(){
+        return fitnessEnthusiast;
+    }
+
+    // *** SETTER *** //
+
+    public String setName() {
+        return name;
+    }
+
+    public int setAge(){
+        return age;
+    }
+
+    public boolean setActive(){
+        return active;
+    }
+
+    public boolean setJunior(){
+        return junior;
+    }
+
+    public boolean setFitnessEnthuisiast(){
+        return fitnessEnthusiast;
+    }
+
 }
