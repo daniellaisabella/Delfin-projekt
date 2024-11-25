@@ -3,8 +3,8 @@ public class Membership extends Member {
 
     private MembershipType membershipType;
 
-    public Membership(String name, int age, boolean active, boolean fitnessEnthusiast, MembershipType membershipType) {
-        super(name, age, active, fitnessEnthusiast);
+    public Membership(String name, String surName, int age, boolean active, boolean fitnessEnthusiast, MembershipType membershipType) {
+        super(name, surName, age, active, fitnessEnthusiast);
         this.membershipType = membershipType;
     }
 
@@ -18,7 +18,7 @@ public class Membership extends Member {
 
     @Override
     public double calculateContingent() {
-        return Contingent.calculateFee(membershipType);
+        return Contingent.calculateContingent(membershipType);
     }
 
     @Override
