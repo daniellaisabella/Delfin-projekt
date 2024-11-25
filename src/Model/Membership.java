@@ -67,7 +67,6 @@ package Model;
 
                 } else if (age > 18 && age < 59 && member.isActive){
                     annualContingent = Senior;
-
                 }else if (age > 59 && member.isActive) {
                     annualContingent = Pensionist;
 
