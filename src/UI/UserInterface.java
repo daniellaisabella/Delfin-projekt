@@ -44,8 +44,15 @@ public class UserInterface {
                     System.out.println("Enter member phonenumber");
                     int phoneNumber = scanner.nextInt();
 
-                    System.out.println("Enter member member type, active or passive");
-                    String memberType = scanner.nextLine().trim();
+                    System.out.println("Is the member active? Yes or No");
+                    boolean isActive = scanner.nextLine().trim().equalsIgnoreCase("yes");
+
+                    System.out.println("Is the member a competetive swimmer? Yes or No");
+                    boolean isCompetetive = scanner.nextLine().trim().equalsIgnoreCase("yes");
+
+                    Member newMember = new Member(name, age, address, phoneNumber, isActive, isCompetetive);
+                    controller.getMemberList().addMember(newMember);
+                    System.out.println("Member added successfully!);
                 }
 
                 private void showMembers() {
