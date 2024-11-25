@@ -1,20 +1,20 @@
 package Model;
 
-public abstract class Member {
+public class Member {
 
     //Attributes
     private String name;
-    private int age;
+    private int dob;
     private String address;
-    private boolean phoneNumber;
+    private int phoneNumber;
     private boolean isActive;
     private boolean isCompetetive;
     // Medlemsskabs nr.?
 
     //Constructor
-    public Member(String name, int age, String address, int phoneNumber, boolean isActive, boolean isCompetetive) {
+    public Member(String name, int dob, String address, int phoneNumber, boolean isActive, boolean isCompetetive) {
         this.name = name;
-        this.age = age;
+        this.dob = dob;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.isActive = isActive;
@@ -23,11 +23,10 @@ public abstract class Member {
     }
 
     //Constructor - Membership
-    public Member( int age, boolean active, boolean junior, boolean fitnessEnthusiast) {
-        this.age = age;
-        this.active = active;
-        this.junior = junior;
-        this.fitnessEnthusiast = fitnessEnthusiast;
+    public Member( int dob, boolean isActive, boolean isCompetetive) {
+        this.dob = dob;
+        this.isActive = isActive;
+        this.isCompetetive = isCompetetive;
     }
 
 }
