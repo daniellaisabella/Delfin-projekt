@@ -1,14 +1,70 @@
 package Model;
-
 public class Membership extends Member {
-    // Medlemsskabs nr.?
 
+    private MembershipType membershipType;
 
-    //Constructor -
-    public Membership(int age, boolean active, boolean junior, boolean fitnessEnthusiast) {
-        super (age, active, junior, fitnessEnthusiast);
+    public Membership(String name, String surName, int age, boolean active, boolean fitnessEnthusiast, MembershipType membershipType) {
+        super(name, surName, age, active, fitnessEnthusiast);
+        this.membershipType = membershipType;
+    }
+
+    public MembershipType getMembershipType() {
+        return membershipType;
+    }
+
+    public void setMembershipType(MembershipType membershipType) {
+        this.membershipType = membershipType;
+    }
+
+    @Override
+    public double calculateContingent() {
+        return Contingent.calculateContingent(membershipType);
+    }
+
+        // Override toString for detailed information
+        @Override
+        public String toString() {
+            return String.format(
+                    "Name: %s, Age: %d, Membership Type: %s, Active: %b, Fitness Enthusiast: %b, Contingent: %.2f DKK",
+                    getName(), getAge(), membershipType, isActive(), isFitnessEnthusiast(), calculateContingent()
+            );
+        }
+    public int annualContingent;
+    private boolean hasPaid;
+    public int AnnualContingent(Member member) {
+        int Junior = 1000;
+        int Senior = 1600;
+        int Pensionist = 1200;
+        int passiveMembership = 500;
+        int annualContingent = 0;
+        int age = member.getAge();
+
+        if (!member.isActive) {
+            annualContingent = passiveMembership;
+
+        } else if (age < 18 && member.isActive) {
+            annualContingent = Junior;
+
+        } else if (age > 18 && age < 59 && member.isActive){
+            annualContingent = Senior;
+
+        }else if (age > 59 && member.isActive) {
+            annualContingent = Pensionist;
+
+        }
+        return annualContingent;
+    }
+
+}
+public boolean hasPaid() {
+    if(hasPaid) {
+        return true;
+    } else return ("Your outstanding fee is: " + getAnnualContingent());
+}
 
     }
 
 
-}
+
+
+
