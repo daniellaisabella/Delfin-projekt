@@ -21,13 +21,14 @@ public class Membership extends Member {
         return Contingent.calculateContingent(membershipType);
     }
 
-    @Override
-    public String toString() {
-        return String.format(
-                "Name: %s, Age: %d, Active: %b, Junior: %b, Fitness Enthusiast: %b, Membership Type: %s, Contingent: %.2f",
-                getName(), getAge(), isActive(), isJunior(), isFitnessEnthusiast(), membershipType, calculateContingent()
-        );
+        // Override toString for detailed information
+        @Override
+        public String toString() {
+            return String.format(
+                    "Name: %s, Age: %d, Membership Type: %s, Active: %b, Fitness Enthusiast: %b, Contingent: %.2f DKK",
+                    getName(), getAge(), membershipType, isActive(), isFitnessEnthusiast(), calculateContingent()
+            );
+        }
     }
-}
 
 
