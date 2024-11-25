@@ -56,7 +56,7 @@ public class UserInterface {
                 }
 
                 private void showMembers() {
-                    ArraList<Member> members = controller.getMembersCollection().getMembers();
+                    ArrayList<Member> members = controller.getMembersCollection().getMembers();
 
                     if (members.isEmpty()) {
                         System.out.println("No members on the list");
