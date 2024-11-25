@@ -29,7 +29,6 @@ public class UserInterface {
 
                     case "add", "1" -> addMember();
                     case "Members", "2" -> showMembers();
-
                 }
 
                 private void addMember() {
@@ -50,10 +49,23 @@ public class UserInterface {
                 }
 
                 private void showMembers() {
-                    ArraList<Members> members = controller.getMembersCollection().getMembers();
+                    ArraList<Member> members = controller.getMembersCollection().getMembers();
+
+                    if (members.isEmpty()) {
+                        System.out.println("No members on the list");
+                    } else {
+                        System.out.println("Members on the list: ");
+                        for (Member member : member) ;
+                        System.out.println();
+                        System.out.println(member);
+                    }
+                }
+            }
+        }
+    }
 
 
-}
+
 
 
 
