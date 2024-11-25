@@ -12,7 +12,7 @@ public class UserInterface {
     }
 
     void displayMenu() {
-        System.out.println("\n---- Administation ----");
+        System.out.println("\n---- Administration ----");
         System.out.println("Type 'add' to add a member to the swimming club");
         System.out.println("Type 'members' to show the member list");
     }

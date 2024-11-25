@@ -4,25 +4,34 @@ public abstract class Member {
 
     // Attributes
     private String name;
+    private String surName;
     private int age; // Determines if the member is junior or senior
     private boolean active; // Determines if the member participates actively
     private boolean fitnessEnthusiast;
 
 
     // Constructor
-    public Member(String name, int age, boolean active, boolean fitnessEnthusiast) {
-        this.name = name;
+    public Member(String name, String surName, int age, boolean active, boolean fitnessEnthusiast) {
+        this.name = capitalizeFirstLetter(name);
+        this.surName = capitalizeFirstLetter(surName);
         setAge(age); // Use setter to validate age
         this.active = active;
         this.fitnessEnthusiast = fitnessEnthusiast;
     }
 
+    //Method to capitalize first letter in name
+    private String capitalizeFirstLetter(String word) {
+        return word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase();
+    }
     // Abstract method to calculate Contingent
     public abstract double calculateContingent();
 
     // *** GETTERS *** //
     public String getName() {
         return name;
+    }
+    public String getSurName() {
+        return surName;
     }
 
     public int getAge() {
