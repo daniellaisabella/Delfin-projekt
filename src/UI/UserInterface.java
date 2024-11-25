@@ -21,7 +21,7 @@ public class UserInterface {
         boolean running = true;
         displayMenu();
 
-        try {
+
             while (running) {
                 String choice = scanner.nextLine().trim().toLowerCase();
 
@@ -70,6 +70,9 @@ public class UserInterface {
             }
         }
     }
+
+
+
 
 
 
