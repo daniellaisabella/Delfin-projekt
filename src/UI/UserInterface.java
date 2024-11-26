@@ -1,6 +1,8 @@
 package UI;
 
 import java.util.ArrayList;
+import java.util.Scanner;
+
 import Model.Controller;
 import Model.Member;
 
