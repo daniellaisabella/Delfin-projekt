@@ -47,6 +47,14 @@ public abstract class Member {
         return isActive;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public int getPhoneNumber() {
+        return phoneNumber;
+    }
+
     public boolean isCompetetive() {
         return isCompetetive;
     }
