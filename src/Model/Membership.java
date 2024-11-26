@@ -3,8 +3,8 @@ public class Membership extends Member {
 
     private MembershipType membershipType;
 
-    public Membership(String name, String surName, int age, boolean active, boolean fitnessEnthusiast, MembershipType membershipType) {
-        super(name, surName, age, active, fitnessEnthusiast);
+    public Membership(String name, String surName, int age, String address,  int phoneNumber, boolean isActive, boolean isCompetitive, MembershipType membershipType) {
+        super(name, surName, age, address, phoneNumber, isActive, isCompetitive);
         this.membershipType = membershipType;
     }
 
@@ -39,25 +39,27 @@ public class Membership extends Member {
         int annualContingent = 0;
         int age = member.getAge();
 
-        if (!member.isActive) {
+        if (!member.isActive()) {
             annualContingent = passiveMembership;
 
-        } else if (age < 18 && member.isActive) {
+        } else if (age < 18 && member.isActive()) {
             annualContingent = Junior;
 
-        } else if (age > 18 && age < 59 && member.isActive){
+        } else if (age > 18 && age < 59 && member.isActive()){
             annualContingent = Senior;
 
-        }else if (age > 59 && member.isActive) {
+        }else if (age > 59 && member.isActive()) {
             annualContingent = Pensionist;
 
         }
         return annualContingent;
     }
-}
 
     public boolean hasPaid() {
+        boolean hasPaid;
         if(hasPaid) {
             return true;
-        } else return ("Member has outstanding fee: " + outstanding));
+        } else return ("Member has outstanding fee: " + outstanding);
     }
+
+}
