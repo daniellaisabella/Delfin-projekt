@@ -11,9 +11,10 @@ public class Swimmer extends Member {
     private boolean isCompetetive;
 
 
-    public Swimmer(String name, int age, String address, int phoneNumber, boolean isActive, boolean isCompetetive) {
-        super(name, age, address, phoneNumber, isActive, isCompetetive);
+    public Swimmer(String name, String surName, int age, boolean isActive, String address, int phoneNumber, boolean isCompetetive) {
+        super(name, surName, age, address, phoneNumber, isActive, isCompetetive);
     }
+
 
     @Override
     public double calculateContingent() {

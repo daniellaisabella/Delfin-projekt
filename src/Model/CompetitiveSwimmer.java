@@ -54,3 +54,8 @@ public class CompetitiveSwimmer extends Member {
         + ", competitiveResults=" + competitiveResults;
     }
 }
+
+
+
+
+
