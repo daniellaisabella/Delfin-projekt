@@ -55,11 +55,14 @@ public class Membership extends Member {
         return annualContingent;
     }
 
-    public boolean hasPaid() {
-        boolean hasPaid;
-        if(hasPaid) {
-            return true;
-        } else return ("Member has outstanding fee: " + outstanding));
-    }
+
+    //har udkommenteret fordi der ikke er en outstanding variabel eller metode e.l.
+
+//    public boolean hasPaid() {
+//        boolean hasPaid;
+//        if(hasPaid) {
+//            return true;
+//        } else return ("Member has outstanding fee: " + outstanding));
+//    }
 
 }
