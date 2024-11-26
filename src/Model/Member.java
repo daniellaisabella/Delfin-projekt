@@ -33,9 +33,11 @@ public abstract class Member {
         this.isActive = isActive;
     }
 
+
     public Member(String swimDiscipline, double time) {
         this.swimDiscipline = swimDiscipline;
         this.time = time;
+    }
 
         //Method to capitalize first letter in name
         private String capitalizeFirstLetter (String word){

@@ -1,3 +1,5 @@
+package Model;
+
 import Model.CompetitiveResults;
 import Model.Member;
 import Model.TrainingResults;
@@ -48,12 +50,7 @@ public class CompetitiveSwimmer extends Member {
     // Override toString() to display swimmer details
     @Override
     public String toString() {
-        return
-                "name='" + getName() + '\'' +
-                ", age=" + getAge() +
-                ", swimDisciplines=" + swimDisciplines +
-                ", trainingResults=" + trainingResults +
-                ", competitiveResults=" + competitiveResults +
-                '}';
+        return "name = " + getName() + ", age = " + getAge() + ", swimDisciplines = " + swimDisciplines + ", trainingResults = " + trainingResults
+        + ", competitiveResults=" + competitiveResults;
     }
 }
