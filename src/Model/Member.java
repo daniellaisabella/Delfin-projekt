@@ -5,7 +5,7 @@ public abstract class Member {
     // Attributes
     private String name;
     private String surName;
-    private int age; // Determines if the member is junior or senior
+    public int age; // Determines if the member is junior or senior
     private boolean isActive; // Determines if the member participates actively
     private String address;
     private int phoneNumber;
@@ -13,7 +13,7 @@ public abstract class Member {
     // Medlemsskabs nr.?
 
     //Constructor
-    public Member(String name, int dob, String address, int phoneNumber, boolean isActive, boolean isCompetetive) {
+    public Member(String name, int age, String address, int phoneNumber, boolean isActive, boolean isCompetetive) {
         this.name = capitalizeFirstLetter(name);
         this.surName = capitalizeFirstLetter(surName);
         this.age = age;
@@ -21,7 +21,6 @@ public abstract class Member {
         this.phoneNumber = phoneNumber;
         this.isActive = isActive;
         this.isCompetetive = isCompetetive;
-
     }
 
     //Method to capitalize first letter in name
@@ -83,7 +82,7 @@ public abstract class Member {
     @Override
     public String toString() {
         return String.format(
-                "Name: %s, Age: %d, Active: %b, Junior: %b, Fitness Enthusiast: %b",
+                "Name: %s, Age: %d, Active: %b, Junior: %b, Competetive: %b",
                 name, age, isActive, isJunior(), isCompetetive
         );
     }
