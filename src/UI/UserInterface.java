@@ -44,8 +44,11 @@ public class UserInterface {
     }
 
     private void addMember() {
-        System.out.println("Enter member full name:");
+        System.out.println("Enter first name:");
         String name = scanner.nextLine().trim();
+
+        System.out.println("Enter last name:");
+        String surName = scanner.nextLine().trim();
 
         System.out.println("Enter member age:");
         int age = scanner.nextInt();
@@ -62,7 +65,7 @@ public class UserInterface {
         System.out.println("Is the member a competitive swimmer? Yes or No:");
         boolean isCompetitive = scanner.nextLine().trim().equalsIgnoreCase("yes");
 
-        Swimmer newMember = new Swimmer(name, age, address, phoneNumber, isActive, isCompetitive);
+        Swimmer newMember = new Swimmer(name, surName, age, isActive, address, phoneNumber, isCompetitive);
         controller.getMemberList().addMember(newMember);
         System.out.println("Member added successfully!");
     }
