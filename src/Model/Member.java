@@ -10,10 +10,10 @@ public abstract class Member {
     private String address;
     private int phoneNumber;
     private boolean isCompetetive;
-    // Medlemsskabs nr.?
+
 
     //Constructor
-    public Member(String name, int dob, String address, int phoneNumber, boolean isActive, boolean isCompetetive) {
+    public Member(String name, int age, String address, int phoneNumber, boolean isActive, boolean isCompetetive) {
         this.name = capitalizeFirstLetter(name);
         this.surName = capitalizeFirstLetter(surName);
         this.age = age;
@@ -79,7 +79,7 @@ public abstract class Member {
         this.age = age;
     }
 
-    public void setActive(boolean active) {
+    public void setIsActive(boolean isActive) {
         this.isActive = isActive;
     }
 
@@ -91,7 +91,7 @@ public abstract class Member {
     @Override
     public String toString() {
         return String.format(
-                "Name: %s, Age: %d, Active: %b, Junior: %b, Fitness Enthusiast: %b",
+                "Name: %s, Age: %d, Active: %b, Junior: %b, Competetive: %b",
                 name, age, isActive, isJunior(), isCompetetive
         );
     }

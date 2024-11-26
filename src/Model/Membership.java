@@ -25,10 +25,10 @@ public class Membership extends Member {
         @Override
         public String toString() {
             return String.format(
-                    "Name: %s, Age: %d, Membership Type: %s, Active: %b, Fitness Enthusiast: %b, Contingent: %.2f DKK",
-                    getName(), getAge(), membershipType, isActive(), isFitnessEnthusiast(), calculateContingent()
-            );
+                    "Name: %s, Age: %d, Membership Type: %s, Active: %b, Competetive: %b, Contingent: %.2f DKK",
+                    getName(), getAge(), membershipType, isActive(), isCompetetive(), calculateContingent());
         }
+
     public int annualContingent;
     private boolean hasPaid;
     public int AnnualContingent(Member member) {
@@ -54,17 +54,10 @@ public class Membership extends Member {
         }
         return annualContingent;
     }
-
-}
-public boolean hasPaid() {
-    if(hasPaid) {
-        return true;
-    } else return ("Your outstanding fee is: " + getAnnualContingent());
 }
 
+    public boolean hasPaid() {
+        if(hasPaid) {
+            return true;
+        } else return ("Member has outstanding fee: " + outstanding));
     }
-
-
-
-
-
