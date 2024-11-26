@@ -3,8 +3,8 @@ public class Membership extends Member {
 
     private MembershipType membershipType;
 
-    public Membership(String name, String surName, int age, boolean active, boolean fitnessEnthusiast, MembershipType membershipType) {
-        super(name, surName, age, active, fitnessEnthusiast);
+    public Membership(String name, String surName, int age, boolean isActive, boolean isCompetetive, MembershipType membershipType) {
+        super(name, surName, age, isActive, isCompetetive);
         this.membershipType = membershipType;
     }
 
@@ -25,8 +25,8 @@ public class Membership extends Member {
         @Override
         public String toString() {
             return String.format(
-                    "Name: %s, Age: %d, Membership Type: %s, Active: %b, Fitness Enthusiast: %b, Contingent: %.2f DKK",
-                    getName(), getAge(), membershipType, isActive(), isFitnessEnthusiast(), calculateContingent()
+                    "Name: %s, Age: %d, Membership Type: %s, Active: %b, Competetive: %b, Contingent: %.2f DKK",
+                    getName(), getAge(), membershipType, isActive(), isCompetetive(), calculateContingent()
             );
         }
     public int annualContingent;
