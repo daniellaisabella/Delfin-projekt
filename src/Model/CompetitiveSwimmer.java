@@ -42,7 +42,9 @@ public List<CompetitiveResult> getCompetitionResults() {
     return competitiveResults;
 }
 
-// Display swimmer details
+
+
+    // Display swimmer details
 @Override
 public String toString() {
             return "Name= " + getName() + ", Age = " + getAge() + ", Disciplines = " + swimDisciplines + ", Training result = " + trainingResults +
