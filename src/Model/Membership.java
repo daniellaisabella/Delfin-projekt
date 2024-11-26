@@ -16,10 +16,10 @@ public class Membership extends Member {
         this.membershipType = membershipType;
     }
 
-    @Override
-    public double calculateContingent() {
-        return Contingent.calculateContingent(membershipType);
-    }
+//    @Override
+//    public double calculateContingent() {
+//        return Contingent.calculateContingent(membershipType);
+//    }
 
         // Override toString for detailed information
         @Override
