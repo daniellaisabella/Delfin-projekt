@@ -47,6 +47,14 @@ public abstract class Member {
         return isActive;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public int getPhoneNumber() {
+        return phoneNumber;
+    }
+
     public boolean isCompetetive() {
         return isCompetetive;
     }
@@ -71,7 +79,7 @@ public abstract class Member {
         this.age = age;
     }
 
-    public void setActive(boolean active) {
+    public void setIsActive(boolean isActive) {
         this.isActive = isActive;
     }
 
@@ -83,7 +91,7 @@ public abstract class Member {
     @Override
     public String toString() {
         return String.format(
-                "Name: %s, Age: %d, Active: %b, Junior: %b, Fitness Enthusiast: %b",
+                "Name: %s, Age: %d, Active: %b, Junior: %b, Competetive: %b",
                 name, age, isActive, isJunior(), isCompetetive
         );
     }
