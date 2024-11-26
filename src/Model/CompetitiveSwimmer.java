@@ -1,56 +1,59 @@
-package Model;
+import Model.CompetitiveResults;
+import Model.Member;
+import Model.TrainingResults;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompetitveSwimmer extends Member {
-    private List<String> SwimmingDisciplines;
-    private List<TrainingResults> trainingResults;
-    private List<CompetitiveResults> competitonResults;
-    private List<SwimDisciplines> swimDisciplines;
-    private ArrayList<Object> competitivenResults;
+public class CompetitiveSwimmer extends Member {
+    private List<String> swimDisciplines; // List of swimming disciplines
+    private List<TrainingResults> trainingResults; // List of training results
+    private List<CompetitiveResults> competitiveResults; // List of competition results
 
-
-    public void CompetitionSwimmer(String name, String surName int age, boolean isActive, String swimCategory) {
-        super(name, surName, age, isActive, false, swimDisciplines);
+    // Constructor for CompetitiveSwimmer
+    public CompetitiveSwimmer(String name, String surName, int age, boolean isActive) {
+        super(name, surName,  age, isActive);
         this.swimDisciplines = new ArrayList<>();
         this.trainingResults = new ArrayList<>();
-        this.competitivenResults = new ArrayList<>();
+        this.competitiveResults = new ArrayList<>();
+    }
 
+    // Add a swim discipline
     public void addDiscipline(String swimDiscipline) {
-        if(!swimDisciplines.contains(swimDiscipline);
-        swimDisciplines.add(swimDisciplines);
+        if (!swimDisciplines.contains(swimDiscipline)) {
+            swimDisciplines.add(swimDiscipline);
         }
     }
 
-public void addTrainingResult(String swimDiscipline, double time) {
-    trainingResults.add(new TrainingResults(swimDiscipline, time));
-}
-
-public void addCompetitionResult(String discipline, double time, int placement) {
-    competitiveResults.add(new CompetetiveResult(discipline, time, placement));
-}
-
-public List SwimDisciplines getSwimDisciplines() {
-    return swimDisciplines;
-}
-
-public List TrainingResults getTrainingResults() {
-    return trainingResults;
-}
-
-public List<CompetitiveResult> getCompetitionResults() {
-    return competitiveResults;
-}
-
-// Display swimmer details
-@Override
-public String toString() {
-            return "Name= " + getName() + ", Age = " + getAge() + ", Disciplines = " + swimDisciplines + ", Training result = " + trainingResults +
-                    ", competitiveResults=" + competitiveResults;
-        }
+    // Add a competition result for a specific discipline
+    public void addCompetitionResult(String discipline, double time, int placement) {
+        competitiveResults.add(new CompetitiveResults(discipline, time, placement));
     }
 
+    // Get the list of swim disciplines
+    public List<String> getSwimDisciplines() {
+        return swimDisciplines;
+    }
 
+    // Get the list of training results
+    public List<TrainingResults> getTrainingResults() {
+        return trainingResults;
+    }
 
+    // Get the list of competition results
+    public List<CompetitiveResults> getCompetitionResults() {
+        return competitiveResults;
+    }
 
-
+    // Override toString() to display swimmer details
+    @Override
+    public String toString() {
+        return
+                "name='" + getName() + '\'' +
+                ", age=" + getAge() +
+                ", swimDisciplines=" + swimDisciplines +
+                ", trainingResults=" + trainingResults +
+                ", competitiveResults=" + competitiveResults +
+                '}';
+    }
+}
