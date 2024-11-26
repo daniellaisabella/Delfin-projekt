@@ -13,7 +13,7 @@ public abstract class Member {
 
 
     //Constructor
-    public Member(String name, int age, String address, int phoneNumber, boolean isActive, boolean isCompetetive) {
+    public Member(String name, String surName, int age, String address, int phoneNumber, boolean isActive, boolean isCompetetive) {
         this.name = capitalizeFirstLetter(name);
         this.surName = capitalizeFirstLetter(surName);
         this.age = age;
