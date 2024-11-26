@@ -5,12 +5,12 @@ public abstract class Member {
     // Attributes
     private String name;
     private String surName;
-    public int age; // Determines if the member is junior or senior
+    private int age; // Determines if the member is junior or senior
     private boolean isActive; // Determines if the member participates actively
     private String address;
     private int phoneNumber;
     private boolean isCompetetive;
-    // Medlemsskabs nr.?
+
 
     //Constructor
     public Member(String name, int age, String address, int phoneNumber, boolean isActive, boolean isCompetetive) {

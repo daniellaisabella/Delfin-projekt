@@ -3,8 +3,8 @@ public class Membership extends Member {
 
     private MembershipType membershipType;
 
-    public Membership(String name, String surName, int age, boolean isActive, boolean isCompetetive, MembershipType membershipType) {
-        super(name, surName, age, isActive, isCompetetive);
+    public Membership(String name, String surName, int age, boolean active, boolean fitnessEnthusiast, MembershipType membershipType) {
+        super(name, surName, age, active, fitnessEnthusiast);
         this.membershipType = membershipType;
     }
 
@@ -55,8 +55,9 @@ public class Membership extends Member {
         return annualContingent;
     }
 }
-public boolean hasPaid() {
-    if(hasPaid) {
-        return true;
-    } else return ("Your outstanding fee is: " + getAnnualContingent());
-}
+
+    public boolean hasPaid() {
+        if(hasPaid) {
+            return true;
+        } else return ("Member has outstanding fee: " + outstanding));
+    }

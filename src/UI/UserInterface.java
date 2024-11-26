@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import Model.Controller;
 import Model.Member;
+import Model.Swimmer;
 
 public class UserInterface {
     private Controller controller;
@@ -61,7 +62,7 @@ public class UserInterface {
         System.out.println("Is the member a competitive swimmer? Yes or No:");
         boolean isCompetitive = scanner.nextLine().trim().equalsIgnoreCase("yes");
 
-        Member newMember = new Member(name, age, address, phoneNumber, isActive, isCompetitive);
+        Swimmer newMember = new Swimmer(name, age, address, phoneNumber, isActive, isCompetitive);
         controller.getMemberList().addMember(newMember);
         System.out.println("Member added successfully!");
     }
