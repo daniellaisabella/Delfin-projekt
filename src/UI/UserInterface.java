@@ -61,7 +61,7 @@ public class UserInterface {
         System.out.println("Is the member a competitive swimmer? Yes or No:");
         boolean isCompetitive = scanner.nextLine().trim().equalsIgnoreCase("yes");
 
-        Member newMember = new Member(name, dob, address, phoneNumber, isActive, isCompetitive);
+        Member newMember = new Member(name, age, address, phoneNumber, isActive, isCompetitive);
         controller.getMemberList().addMember(newMember);
         System.out.println("Member added successfully!");
     }
