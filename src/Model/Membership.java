@@ -4,8 +4,8 @@ public class Membership extends Member {
 
     private MembershipType membershipType;
 
-    public Membership(String name, String surName, int age, boolean active, boolean fitnessEnthusiast, MembershipType membershipType) {
-        super(name, surName, age, active, fitnessEnthusiast);
+    public Membership(String name, String surName, int age, boolean active, String address, boolean fitnessEnthusiast, MembershipType membershipType) {
+        super(name, surName, age, active, address, fitnessEnthusiast);
         this.membershipType = membershipType;
     }
 
