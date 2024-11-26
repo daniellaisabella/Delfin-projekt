@@ -6,17 +6,22 @@ public abstract class Member {
     private String name;
     private String surName;
     private int age; // Determines if the member is junior or senior
-    private boolean active; // Determines if the member participates actively
-    private boolean fitnessEnthusiast;
+    private boolean isActive; // Determines if the member participates actively
+    private String address;
+    private int phoneNumber;
+    private boolean isCompetetive;
+    // Medlemsskabs nr.?
 
-
-    // Constructor
-    public Member(String name, String surName, int age, boolean active, boolean fitnessEnthusiast) {
-        this.name = capitalizeFirstLetter(name);
+    //Constructor
+    public Member(String name, int dob, String address, int phoneNumber, boolean isActive, boolean isCompetetive) {
+        this.name = name capitalizeFirstLetter(name);
         this.surName = capitalizeFirstLetter(surName);
-        setAge(age); // Use setter to validate age
-        this.active = active;
-        this.fitnessEnthusiast = fitnessEnthusiast;
+        this.age = age;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.isActive = isActive;
+        this.isCompetetive = isCompetetive;
+
     }
 
     //Method to capitalize first letter in name
@@ -39,11 +44,11 @@ public abstract class Member {
     }
 
     public boolean isActive() {
-        return active;
+        return isActive;
     }
 
-    public boolean isFitnessEnthusiast() {
-        return fitnessEnthusiast;
+    public boolean isCompetetive() {
+        return isCompetetive;
     }
 
     // Determines if the member is a junior based on age
@@ -67,11 +72,11 @@ public abstract class Member {
     }
 
     public void setActive(boolean active) {
-        this.active = active;
+        this.isActive = isActive;
     }
 
-    public void setFitnessEnthusiast(boolean fitnessEnthusiast) {
-        this.fitnessEnthusiast = fitnessEnthusiast;
+    public void setIsCompetetive(boolean isCompetetive) {
+        this.isCompetetive = isCompetetive;
     }
 
     // Display member details
@@ -79,7 +84,7 @@ public abstract class Member {
     public String toString() {
         return String.format(
                 "Name: %s, Age: %d, Active: %b, Junior: %b, Fitness Enthusiast: %b",
-                name, age, active, isJunior(), fitnessEnthusiast
+                name, age, isActive, isJunior(), isCompetetive
         );
     }
 

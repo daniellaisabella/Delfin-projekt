@@ -1,6 +1,10 @@
 package UI;
-import model.Controller;
+
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import Model.Controller;
+import Model.Member;
 
 public class UserInterface {
     private Controller controller;
@@ -13,56 +17,74 @@ public class UserInterface {
 
     void displayMenu() {
         System.out.println("\n---- Administration ----");
-        System.out.println("Type 'add' to add a member to the swimming club");
-        System.out.println("Type 'members' to show the member list");
+        System.out.println("Type 'add' or '1' to add a member to the swimming club");
+        System.out.println("Type 'members' or '2' to show the member list");
+        System.out.println("Type 'exit' or '0' to exit the program");
     }
 
     public void startProgram() {
         boolean running = true;
         displayMenu();
 
-        try {
-            while (running) {
-                String choice = scanner.nextLine().trim().toLowerCase();
+        while (running) {
+            System.out.print("Enter your choice: ");
+            String choice = scanner.nextLine().trim().toLowerCase();
 
-                switch (choice) {
-
-                    case "add", "1" -> addMember();
-                    case "Members", "2" -> showMembers();
+            switch (choice) {
+                case "add", "1" -> addMember();
+                case "members", "2" -> showMembers();
+                case "exit", "0" -> {
+                    System.out.println("Exiting program...");
+                    running = false;
                 }
-
-                private void addMember() {
-                    System.out.println("Enter member full name");
-                    String name = scanner.nextLine().trim();
-
-                    System.out.println("Enter member date of birth DD/MM/YYYY");
-                    int age = scanner.nextInt();
-
-                    System.out.println("Enter member address, streetname, housenumber, city, zipcode");
-                    String address = scanner.nextLine().trim();
-
-                    System.out.println("Enter member phonenumber");
-                    int phoneNumber = scanner.nextInt();
-
-                    System.out.println("Enter member member type, active or passive");
-                    String memberType = scanner.nextLine().trim();
-                }
-
-                private void showMembers() {
-                    ArraList<Member> members = controller.getMembersCollection().getMembers();
-
-                    if (members.isEmpty()) {
-                        System.out.println("No members on the list");
-                    } else {
-                        System.out.println("Members on the list: ");
-                        for (Member member : member) ;
-                        System.out.println();
-                        System.out.println(member);
-                    }
-                }
+                default -> System.out.println("Invalid choice. Please try again.");
             }
         }
     }
+
+    private void addMember() {
+        System.out.println("Enter member full name:");
+        String name = scanner.nextLine().trim();
+
+        System.out.println("Enter member age:");
+        int age = scanner.nextInt();
+
+        System.out.println("Enter member address (street name, house number, city, zipcode):");
+        String address = scanner.nextLine().trim();
+
+        System.out.println("Enter member phone number:");
+        int phoneNumber = scanner.nextInt();
+
+        System.out.println("Is the member active? Yes or No:");
+        boolean isActive = scanner.nextLine().trim().equalsIgnoreCase("yes");
+
+        System.out.println("Is the member a competitive swimmer? Yes or No:");
+        boolean isCompetitive = scanner.nextLine().trim().equalsIgnoreCase("yes");
+
+        Member newMember = new Member(name, age, address, phoneNumber, isActive, isCompetitive);
+        controller.getMemberList().addMember(newMember);
+        System.out.println("Member added successfully!");
+    }
+
+    private void showMembers() {
+        ArrayList<Member> members = controller.getMemberList().getMembers();
+
+        if (members.isEmpty()) {
+            System.out.println("No members on the list.");
+        } else {
+            System.out.println("Members on the list:");
+            for (Member member : members) {
+                System.out.println(member);
+            }
+        }
+    }
+}
+
+
+
+
+
+
 
 
 
