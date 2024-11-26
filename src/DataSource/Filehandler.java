@@ -1,6 +1,6 @@
 package DataSource;
 
-import Model.Member;
+import Model.Swimmer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,9 +13,9 @@ import java.util.stream.Stream;
 
 public class Filehandler {
     private final String filePatch = "Members.txt";
-    ArrayList<Member> members = new ArrayList<>();
+    ArrayList<Swimmer> members = new ArrayList<>();
 
-    public ArrayList<Member> loadMembers() {
+    public ArrayList<Swimmer> loadMembers() {
 
         try {
             // Check if file exists before trying to read
@@ -37,7 +37,7 @@ public class Filehandler {
                         boolean isCompetetive = Boolean.parseBoolean(data[6]);
 
 
-                        members.add(new Member(name, surName, age, isActive, address, phoneNumber, isCompetetive));
+                        members.add(new Swimmer(name, surName, age, isActive, address, phoneNumber, isCompetetive));
 
 
                     }
@@ -53,10 +53,10 @@ public class Filehandler {
 
     }
 
-    public boolean saveMember(ArrayList<Member> members) {
+    public boolean saveMember(ArrayList<Swimmer> members) {
         try (PrintStream output = new PrintStream(new File(filePatch))) {
             System.out.println("Saving " + members.size() + " movies to the file.");
-            for (Member m : members) {
+            for (Swimmer m : members) {
                 output.println(m.getName() + "," + m.getSurName() + "," + m.getAge() + "," + m.isActive() + "," + m.getAddress() + "," + m.getPhoneNumber() + "," + m.isCompetetive());
             }
             return true;
