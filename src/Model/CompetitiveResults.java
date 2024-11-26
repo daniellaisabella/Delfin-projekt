@@ -22,4 +22,11 @@ public class CompetitiveResults {
     public int getPlacement() {
         return placement;
     }
+
+    // Display competition result details
+    @Override
+    public String toString() {
+        return "Discipline = " + swimDiscipline + ", Time = " + time + ", Placement = " + placement;
+    }
 }
+
