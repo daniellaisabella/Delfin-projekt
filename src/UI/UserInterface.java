@@ -52,12 +52,14 @@ public class UserInterface {
 
         System.out.println("Enter member age:");
         int age = scanner.nextInt();
+        scanner.nextLine();
 
         System.out.println("Enter member address (street name, house number, city, zipcode):");
         String address = scanner.nextLine().trim();
 
         System.out.println("Enter member phone number:");
         int phoneNumber = scanner.nextInt();
+        scanner.nextLine();
 
         System.out.println("Is the member active? Yes or No:");
         boolean isActive = scanner.nextLine().trim().equalsIgnoreCase("yes");
