@@ -16,8 +16,8 @@ public class Swimmer extends Member {
     }
 
 
-    @Override
-    public double calculateContingent() {
-        return 0;
-    }
+//    @Override
+//    public double calculateContingent() {
+//        return 0;
+//    }
 }
