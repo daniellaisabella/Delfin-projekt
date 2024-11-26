@@ -46,8 +46,8 @@ public class UserInterface {
         System.out.println("Enter member full name:");
         String name = scanner.nextLine().trim();
 
-        System.out.println("Enter member date of birth (DD/MM/YYYY):");
-        int dob = scanner.nextInt();
+        System.out.println("Enter member age:");
+        int age = scanner.nextInt();
 
         System.out.println("Enter member address (street name, house number, city, zipcode):");
         String address = scanner.nextLine().trim();

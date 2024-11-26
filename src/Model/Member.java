@@ -5,7 +5,7 @@ public abstract class Member {
     // Attributes
     private String name;
     private String surName;
-    private int dob; // Determines if the member is junior or senior
+    private int age; // Determines if the member is junior or senior
     private boolean isActive; // Determines if the member participates actively
     private String address;
     private int phoneNumber;
@@ -16,7 +16,7 @@ public abstract class Member {
     public Member(String name, int dob, String address, int phoneNumber, boolean isActive, boolean isCompetetive) {
         this.name = name capitalizeFirstLetter(name);
         this.surName = capitalizeFirstLetter(surName);
-        this.dob = dob;
+        this.age = age;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.isActive = isActive;
@@ -44,11 +44,11 @@ public abstract class Member {
     }
 
     public boolean isActive() {
-        return active;
+        return isActive;
     }
 
-    public boolean isFitnessEnthusiast() {
-        return fitnessEnthusiast;
+    public boolean isCompetetive() {
+        return isCompetetive;
     }
 
     // Determines if the member is a junior based on age
@@ -72,11 +72,11 @@ public abstract class Member {
     }
 
     public void setActive(boolean active) {
-        this.active = active;
+        this.isActive = isActive;
     }
 
-    public void setFitnessEnthusiast(boolean fitnessEnthusiast) {
-        this.fitnessEnthusiast = fitnessEnthusiast;
+    public void setIsCompetetive(boolean isCompetetive) {
+        this.isCompetetive = isCompetetive;
     }
 
     // Display member details
@@ -84,7 +84,7 @@ public abstract class Member {
     public String toString() {
         return String.format(
                 "Name: %s, Age: %d, Active: %b, Junior: %b, Fitness Enthusiast: %b",
-                name, age, active, isJunior(), fitnessEnthusiast
+                name, age, isActive, isJunior(), isCompetetive
         );
     }
 
