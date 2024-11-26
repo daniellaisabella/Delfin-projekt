@@ -1,6 +1,7 @@
 package Model;
 public class Membership extends Member {
 
+
     private MembershipType membershipType;
 
     public Membership(String name, String surName, int age, boolean active, boolean fitnessEnthusiast, MembershipType membershipType) {
@@ -54,15 +55,15 @@ public class Membership extends Member {
         }
         return annualContingent;
     }
-
+    public boolean hasPaid() {
+        if(hasPaid) {
+            return true;
+        } else return ("Member has outstanding fee: " + outstanding));
+    }
 }
 
 
-public boolean hasPaid() {
-    if(hasPaid) {
-        return true;
-    } else return ("Member has outstanding fee: " + outstanding));
-}
+
 
 
 

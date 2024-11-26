@@ -10,10 +10,10 @@ public abstract class Member {
     private String address;
     private int phoneNumber;
     private boolean isCompetetive;
-    // Medlemsskabs nr.?
+
 
     //Constructor
-    public Member(String name, int dob, String address, int phoneNumber, boolean isActive, boolean isCompetetive) {
+    public Member(String name, int age, String address, int phoneNumber, boolean isActive, boolean isCompetetive) {
         this.name = name capitalizeFirstLetter(name);
         this.surName = capitalizeFirstLetter(surName);
         this.age = age;
