@@ -25,7 +25,7 @@ public class Membership extends Member {
         @Override
         public String toString() {
             return String.format(
-                    "Name: %s, Age: %d, Membership Type: %s, Active: %b, Competetive: %b, Contingent: %.2f DKK",
+                    "Name: %s, Age: %d, Membership Type: %s, Active: %b, Competitive: %b, Contingent: %.2f DKK",
                     getName(), getAge(), membershipType, isActive(), isCompetetive(), calculateContingent());
         }
 
