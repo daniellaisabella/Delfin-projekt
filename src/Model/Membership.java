@@ -29,8 +29,8 @@ public class Membership extends Member {
                     getName(), getAge(), membershipType, isActive(), isCompetetive(), calculateContingent());
         }
 
-        //---------------annualContingent method redundant with contingent
-    public int annualContingent;
+        //--------------- annualContingent method was redundant with contingent (unsure if still is)
+        public int annualContingent;
     private boolean hasPaid;
     public int AnnualContingent(Member member) {
         int Junior = 1000;
@@ -42,16 +42,12 @@ public class Membership extends Member {
 
         if (!member.isActive()) {
             annualContingent = passiveMembership;
-
-        } else if (age < 18 && member.isActive()) {
+        } else if (age < 18) {
             annualContingent = Junior;
-
-        } else if (age > 18 && age < 59 && member.isActive()){
+        } else if (age < 60) {
             annualContingent = Senior;
-
-        }else if (age > 59 && member.isActive()) {
+        } else {
             annualContingent = Pensionist;
-
         }
         return annualContingent;
     }
