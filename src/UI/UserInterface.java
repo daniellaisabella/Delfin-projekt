@@ -83,7 +83,7 @@ try{
         controller.getMemberList().addMember(newMember);
         System.out.println("\nMember added successfully!");
 
-    }
+    } //----- method added for int phone number invalid input
     private int getIntInput() {
         while (!scanner.hasNextInt()) {
             System.out.println("Invalid input. Please enter a valid number.");
