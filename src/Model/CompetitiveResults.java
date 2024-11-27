@@ -2,12 +2,12 @@ package Model;
 
 public class CompetitiveResults {
     private String swimDiscipline;
-    private double time;
+    private double preformanceTime;
     private int placement;
 
-    public CompetitiveResults(String swimDiscipline, double time, int placement) {
+    public CompetitiveResults(String swimDiscipline, double preformanceTime, int placement) {
         this.swimDiscipline = swimDiscipline;
-        this.time = time;
+        this.preformanceTime = preformanceTime;
         this.placement = placement;
     }
 
@@ -15,8 +15,8 @@ public class CompetitiveResults {
         return swimDiscipline;
     }
 
-    public double getTime() {
-        return time;
+    public double getPreformanceTime() {
+        return preformanceTime;
     }
 
     public int getPlacement() {
@@ -26,7 +26,7 @@ public class CompetitiveResults {
     // Display competition result details
     @Override
     public String toString() {
-        return "Discipline = " + swimDiscipline + ", Time = " + time + ", Placement = " + placement;
+        return "Discipline = " + swimDiscipline + ", Time = " + preformanceTime + ", Placement = " + placement;
     }
 }
 

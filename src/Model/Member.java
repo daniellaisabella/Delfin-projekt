@@ -11,7 +11,7 @@ public abstract class Member {
     private int phoneNumber;
     private boolean isCompetetive;
     private String swimDiscipline;
-    private double time;
+    private double preformanceTime;
 
 
     //Constructor
@@ -34,9 +34,9 @@ public abstract class Member {
     }
 
 
-    public Member(String swimDiscipline, double time) {
+    public Member(String swimDiscipline, double preformanceTime) {
         this.swimDiscipline = swimDiscipline;
-        this.time = time;
+        this.preformanceTime = preformanceTime;
     }
 
     //Method to capitalize first letter in name
@@ -44,10 +44,11 @@ public abstract class Member {
         return word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase();
     }
 
-    //
+    //-----suggestion to remove and be handled by contingent class instead
     public double calculateContingent() {
         return 0;
     }
+
 
     // *** GETTERS *** //
     public String getName() {
@@ -79,6 +80,7 @@ public abstract class Member {
     }
 
     // Determines if the member is a junior based on age
+    //-------------suggestion to remove this method and use membershipType method instead
     public boolean isJunior() {
         return age < 18;
     }
