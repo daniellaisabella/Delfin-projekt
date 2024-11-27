@@ -15,9 +15,4 @@ public class Swimmer extends Member {
         super(name, surName, age, address, phoneNumber, isActive, isCompetetive);
     }
 
-
-//    @Override
-//    public double calculateContingent() {
-//        return 0;
-//    }
 }
