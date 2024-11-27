@@ -29,6 +29,7 @@ public class Membership extends Member {
                     getName(), getAge(), membershipType, isActive(), isCompetetive(), calculateContingent());
         }
 
+        //---------------annualContingent method redundant with contingent
     public int annualContingent;
     private boolean hasPaid;
     public int AnnualContingent(Member member) {
@@ -66,3 +67,5 @@ public class Membership extends Member {
 //    }
 
 }
+
+//implement calculateCongintent() method to use contingent class

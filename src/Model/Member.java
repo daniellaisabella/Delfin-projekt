@@ -10,7 +10,7 @@ public abstract class Member {
     private String address;
     private int phoneNumber;
     private boolean isCompetetive;
-    private String swimDiscipline;
+    private String swimStroke;
     private double preformanceTime;
 
 
@@ -34,8 +34,8 @@ public abstract class Member {
     }
 
 
-    public Member(String swimDiscipline, double preformanceTime) {
-        this.swimDiscipline = swimDiscipline;
+    public Member(String swimStroke, double preformanceTime) {
+        this.swimStroke = swimStroke;
         this.preformanceTime = preformanceTime;
     }
 
