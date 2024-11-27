@@ -16,16 +16,16 @@ public class CompetitiveSwimmer extends Member {
         this.competitiveResults = new ArrayList<>();
     }
 
-    // Add a swim discipline
-    public void addStroke(String swimStroke) {
+    // Add a swim stroke
+    public void addSwimStroke(String swimStroke) {
         if (!swimStrokes.contains(swimStroke)) {
             swimStrokes.add(swimStroke);
         }
     }
 
     // Add a competition result for a specific discipline
-    public void addCompetitionResult(String discipline, double time, int placement) {
-        competitiveResults.add(new CompetitiveResults(discipline, time, placement));
+    public void addCompetitionResult(String swimStrokes, double timePreformance, int placement) {
+        competitiveResults.add(new CompetitiveResults(swimStrokes, timePreformance, placement));
     }
 
     // Get the list of swim disciplines

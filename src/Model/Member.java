@@ -11,7 +11,7 @@ public abstract class Member {
     private int phoneNumber;
     private boolean isCompetetive;
     private String swimStroke;
-    private double preformanceTime;
+    private double timePreformance;
 
 
     //Constructor
@@ -34,9 +34,9 @@ public abstract class Member {
     }
 
 
-    public Member(String swimStroke, double preformanceTime) {
+    public Member(String swimStroke, double timePreformance) {
         this.swimStroke = swimStroke;
-        this.preformanceTime = preformanceTime;
+        this.timePreformance = timePreformance;
     }
 
     //Method to capitalize first letter in name

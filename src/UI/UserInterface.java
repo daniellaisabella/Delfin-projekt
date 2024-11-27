@@ -18,9 +18,9 @@ public class UserInterface {
 
     void displayMenu() {
         System.out.println("\n---- Administration ----");
-        System.out.println("Type 'add' or '1' to add a member to the swimming club");
-        System.out.println("Type 'members' or '2' to show the member list");
-        System.out.println("Type 'exit' or '0' to exit the program");
+        System.out.println("1. Enter the following number [1] or 'add' or to register a new member to the club");
+        System.out.println("2. Enter the following number [2] or 'members' to view the list of members");
+        System.out.println("3. Enter the following number [3] or 'exit' to exit the program");
     }
 
     public void startProgram() {
@@ -28,7 +28,6 @@ public class UserInterface {
         displayMenu();
 
         while (running) {
-            System.out.print("Enter your choice: ");
             String choice = scanner.nextLine().trim().toLowerCase();
 
             switch (choice) {
@@ -44,13 +43,14 @@ public class UserInterface {
     }
 
     private void addMember() {
-        System.out.println("Enter first name:");
+        System.out.println("[Please enter the following details to register a new member]");
+        System.out.println("\nFirst name: ");
         String name = scanner.nextLine().trim();
 
-        System.out.println("Enter last name:");
+        System.out.println("Surname: ");
         String surName = scanner.nextLine().trim();
 
-        System.out.println("Enter member age:");
+        System.out.println("Date of birth [DD-MM-YYYY]: ");
         int age = scanner.nextInt();
         scanner.nextLine();
 

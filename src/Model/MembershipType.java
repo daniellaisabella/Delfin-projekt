@@ -6,6 +6,4 @@ public enum MembershipType {
         ACTIVE_JUNIOR,
         ACTIVE_SENIOR,
         ACTIVE_PENSIONIST
-
-
 }
