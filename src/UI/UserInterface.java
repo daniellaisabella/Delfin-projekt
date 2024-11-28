@@ -87,13 +87,15 @@ public class UserInterface {
     }
 
     public boolean editMember() {
-        System.out.print("Enter Username ");
-        String title = scanner.nextLine().trim();
-        Member memberToEdit = getMemberByUsername(name);
+        System.out.print("Enter username: ");
+        String username = scanner.nextLine().trim();
+
+        // Find member by username
+        Member memberToEdit = controller.getMemberList().getMemberByUsername(username);
 
         if (memberToEdit == null) {
-            System.out.println("model.Member not found.");
-            return;
+            System.out.println("Member not found.");
+            return false;
         }
 
         System.out.print("Enter first name (press Enter to keep current): ");
@@ -105,24 +107,32 @@ public class UserInterface {
         if (!newSurname.isEmpty()) memberToEdit.setSurname(newSurname);
 
         System.out.print("Enter new age (press Enter to keep current): ");
-        int newAge = scanner.nextLine().trim();
-        if (!newAge.isEmpty()) memberToEdit.setAge(newAge);
-
-        System.out.print("Is the member active? y/n (press Enter to keep current): ");
-        String = scanner.nextLine().trim();
-        if (!isActiveInput.isEmpty()) memberToEdit.setIsActive(isActiveInput.equalsIgnoreCase("y"));
-
-        System.out.print("Enter new address (press Enter to keep current): ");
-        String newAddress = scanner.nextLine().trim();
-        if (!newAddress.isEmpty()) memberToEdit.setAddress(newAddress);
+        String ageInput = scanner.nextLine().trim();
+        if (!ageInput.isEmpty()) {
+            try {
+                int newAge = Integer.parseInt(ageInput);
+                memberToEdit.setAge(newAge);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid age input. Skipping update.");
+            }
+        }
 
         System.out.print("Enter new phone number (press Enter to keep current): ");
-        int newPhoneNumber = scanner.nextLine().trim();
-        if (!newPhoneNumber.isEmpty()) memberToEdit.setPhoneNumber(newPhoneNumber);
+        String phoneNumberInput = scanner.nextLine().trim();
+        if (!phoneNumberInput.isEmpty()) {
+            try {
+                int newPhoneNumber = Integer.parseInt(phoneNumberInput);
+                memberToEdit.setPhoneNumber(newPhoneNumber);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid phone number input. Skipping update.");
+            }
+        }
 
-        System.out.print("Is the member a competition swimmer? y/n (press Enter to keep current): ");
-        String = scanner.nextLine().trim();
-        if (!isCompetetive.isEmpty()) memberToEdit.setIsCompetetive(isCompetetive.equalsIgnoreCase("y"));
+        System.out.print("Is the member a competitive swimmer? y/n (press Enter to keep current): ");
+        String isCompetitiveInput = scanner.nextLine().trim();
+        if (!isCompetitiveInput.isEmpty()) {
+            memberToEdit.setIsCompetitive(isCompetitiveInput.equalsIgnoreCase("y"));
+        }
 
         System.out.print("Enter swim discipline (press Enter to keep current): ");
         String newSwimDiscipline = scanner.nextLine().trim();
@@ -132,7 +142,7 @@ public class UserInterface {
         String newSwimTime = scanner.nextLine().trim();
         if (!newSwimTime.isEmpty()) memberToEdit.setSwimTime(newSwimTime);
 
-
-
-
-
+        System.out.println("Member information updated successfully.");
+        return true;
+    }
+}
