@@ -12,7 +12,7 @@ public abstract class Member {
     private int phoneNumber;
     private boolean isCompetetive;
     private String swimDiscipline;
-    private String swimTime;
+    private double swimTime;
     private boolean isCompetitive;
 
 
@@ -38,7 +38,7 @@ public abstract class Member {
 
     public Member(String swimDiscipline, double time) {
         this.swimDiscipline = swimDiscipline;
-        this.time = time;
+        this.swimDiscipline = swimDiscipline;
     }
 
     //Method to capitalize first letter in name
@@ -62,6 +62,10 @@ public abstract class Member {
 
     public String getUsername() {
         return username;
+    }
+
+    public double getSwimTime() {
+        return swimTime;
     }
 
     public int getAge() {
@@ -111,9 +115,6 @@ public abstract class Member {
         this.surname = surname;
     }
 
-    public void setSwimTime(String swimTime) {
-        this.swimTime = swimTime;
-    }
 
     public void setIsCompetitive(boolean isCompetitive) {
         this.isCompetitive = isCompetitive;
