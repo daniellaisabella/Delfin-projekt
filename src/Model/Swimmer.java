@@ -11,11 +11,10 @@ public class Swimmer extends Member {
     private String address;
     private int phoneNumber;
     private String mail;
-    private boolean isCompetetive;
+    public boolean isCompetetive;
 
 
     public Swimmer(String name, String surName, LocalDate age, boolean isActive, String address, int phoneNumber, boolean isCompetetive) {
-        super(name, surName, age, address, phoneNumber,mail, isActive, isCompetetive);
+        super(name, surname, age, address, phoneNumber,mail, isActive, isCompetetive);
     }
-
 }
