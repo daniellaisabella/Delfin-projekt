@@ -14,6 +14,7 @@ public class UserInterface {
     private Controller controller;
     private Scanner scanner;
 
+
     public UserInterface() {
         this.controller = new Controller();
         this.scanner = new Scanner(System.in);
@@ -80,6 +81,9 @@ try{
         System.out.println("Phone number: ");
         int phoneNumber = getIntInput();
 
+        System.out.println("e-mail: ");
+        String email = scanner.nextLine();
+
         //this option could need an if statement
         System.out.println("Is the member active? Y/N : ");
         boolean isActive = scanner.nextLine().trim().equalsIgnoreCase("y");
@@ -88,7 +92,7 @@ try{
         System.out.println("Register member as competitive? Y/N :");
         boolean isCompetitive = scanner.nextLine().trim().equalsIgnoreCase("y");
 
-        Swimmer newMember = new Swimmer(name, surName, age, isActive, address,phoneNumber, isCompetitive);
+        Swimmer newMember = new Swimmer(name, surName, age, isActive, address,phoneNumber, mail,isCompetitive);
         controller.getMemberList().addMember(newMember);
         System.out.println("\nMember added successfully!");
 

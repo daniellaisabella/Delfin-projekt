@@ -9,6 +9,7 @@ public abstract class Member {
     private boolean isActive; // Determines if the member participates actively
     private String address;
     private int phoneNumber;
+    private String mail;
     private boolean isCompetetive;
     private String swimStroke;
     private double timePreformance;
@@ -16,13 +17,14 @@ public abstract class Member {
 
 
     //Constructor
-    public Member(String name, String surName, LocalDate age, String address, int phoneNumber, boolean isActive, boolean isCompetetive) {
+    public Member(String name, String surName, LocalDate age, String address, int phoneNumber,String mail, boolean isActive, boolean isCompetetive) {
         this.name = capitalizeFirstLetter(name);
         this.surName = capitalizeFirstLetter(surName);
         this.age = age;
         this.address = address;
 
         this.phoneNumber = phoneNumber;
+        this.mail= mail;
         this.isActive = isActive;
         this.isCompetetive = isCompetetive;
     }
@@ -80,6 +82,10 @@ public abstract class Member {
 
     public int getPhoneNumber() {
         return phoneNumber;
+    }
+
+    public String getMail() {
+        return mail;
     }
 
     public boolean isCompetetive() {

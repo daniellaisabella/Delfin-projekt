@@ -35,10 +35,11 @@ public class Filehandler {
                         boolean isActive = Boolean.parseBoolean(data[3]);
                         String address = data[4];
                         int phoneNumber = Integer.parseInt(data[5]);
-                        boolean isCompetetive = Boolean.parseBoolean(data[6]);
+                        String mail = data[6];
+                        boolean isCompetetive = Boolean.parseBoolean(data[7]);
 
 
-                        members.add(new Swimmer(name, surName, age, isActive, address, phoneNumber, isCompetetive));
+                        members.add(new Swimmer(name, surName, age, isActive, address, phoneNumber,mail, isCompetetive));
 
 
                     }
@@ -58,7 +59,7 @@ public class Filehandler {
         try (PrintStream output = new PrintStream(new File(filePatch))) {
             System.out.println("Saving " + members.size() + " movies to the file.");
             for (Swimmer m : members) {
-                output.println(m.getName() + "," + m.getSurName() + "," + m.getAge() + "," + m.isActive() + "," + m.getAddress() + "," + m.getPhoneNumber() + "," + m.isCompetetive());
+                output.println(m.getName() + "," + m.getSurName() + "," + m.getAge() + "," + m.isActive() + "," + m.getAddress() + "," + m.getPhoneNumber() + "," + m.getMail()+ "," + m.isCompetetive());
             }
             return true;
         } catch (FileNotFoundException e) {
