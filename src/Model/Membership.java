@@ -25,11 +25,12 @@ public class Membership extends Member {
         @Override
         public String toString() {
             return String.format(
-                    "Name: %s, Age: %d, Membership Type: %s, Active: %b, Competetive: %b, Contingent: %.2f DKK",
+                    "Name: %s, Age: %d, Membership Type: %s, Active: %b, Competitive: %b, Contingent: %.2f DKK",
                     getName(), getAge(), membershipType, isActive(), isCompetetive(), calculateContingent());
         }
 
-    public int annualContingent;
+        //--------------- annualContingent method was redundant with contingent (unsure if still is)
+        public int annualContingent;
     private boolean hasPaid;
     public int AnnualContingent(Member member) {
         int Junior = 1000;
@@ -41,16 +42,12 @@ public class Membership extends Member {
 
         if (!member.isActive()) {
             annualContingent = passiveMembership;
-
-        } else if (age < 18 && member.isActive()) {
+        } else if (age < 18) {
             annualContingent = Junior;
-
-        } else if (age > 18 && age < 59 && member.isActive()){
+        } else if (age < 60) {
             annualContingent = Senior;
-
-        }else if (age > 59 && member.isActive()) {
+        } else {
             annualContingent = Pensionist;
-
         }
         return annualContingent;
     }
@@ -66,3 +63,5 @@ public class Membership extends Member {
 //    }
 
 }
+
+//implement calculateCongintent() method to use contingent class

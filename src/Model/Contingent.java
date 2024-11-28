@@ -24,3 +24,5 @@ public class Contingent {
     }
 }
 
+//add method to determine membership type based on age, and active/pasive
+

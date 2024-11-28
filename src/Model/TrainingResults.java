@@ -1,26 +1,26 @@
 package Model;
 
 public class TrainingResults {
-    private String discipline;
-    private double time;
+    private String swimStroke;
+    private double timePreformance;
 
-    public void trainingResults(String discipline, double time) {
-        this.discipline = discipline;
-        this.time = time;
+    public void trainingResults(String swimStroke, double timePreformance) {
+        this.swimStroke = swimStroke;
+        this.timePreformance = timePreformance;
     }
 
-    public String getDiscipline() {
-        return discipline;
+    public String getSwimStroke() {
+        return swimStroke;
     }
 
-    public double getTime() {
-        return time;
+    public double getTimePreformance() {
+        return timePreformance;
     }
 
     // Display results details
     @Override
     public String toString() {
-        return "discipline = " + discipline + ", time = " + time;
+        return "discipline = " + swimStroke + ", time = " + timePreformance;
     }
 }
 
