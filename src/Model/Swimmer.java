@@ -14,7 +14,7 @@ public class Swimmer extends Member {
     private boolean isCompetetive;
 
 
-    public Swimmer(String name, String surName, LocalDate age, boolean isActive, String address, int phoneNumber,String mail, boolean isCompetetive) {
+    public Swimmer(String name, String surName, LocalDate age, boolean isActive, String address, int phoneNumber, boolean isCompetetive) {
         super(name, surName, age, address, phoneNumber,mail, isActive, isCompetetive);
     }
 

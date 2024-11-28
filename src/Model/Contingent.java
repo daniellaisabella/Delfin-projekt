@@ -8,7 +8,7 @@ public class Contingent {
     private static final double ACTIVE_RETIREES_FEE = 1200.0;
 
     // Calculate contingent based on MembershipType
-    public static double calculateContingent(MembershipType type) {
+    public static double calculateContingent() {
         switch (type) {
             case PASSIVE:
                 return PASSIVE_FEE;

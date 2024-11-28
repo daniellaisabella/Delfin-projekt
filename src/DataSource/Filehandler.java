@@ -39,7 +39,7 @@ public class Filehandler {
                         boolean isCompetetive = Boolean.parseBoolean(data[7]);
 
 
-                        members.add(new Swimmer(name, surName, age, isActive, address, phoneNumber,mail, isCompetetive));
+                        members.add(new Swimmer(name, surName, age, isActive, address, phoneNumber, isCompetetive));
 
 
                     }
