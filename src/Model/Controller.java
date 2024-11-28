@@ -11,7 +11,4 @@ public class Controller {
     public MemberList getMemberList() {
         return memberList;
     }
-
-
-
 }
