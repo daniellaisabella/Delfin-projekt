@@ -13,7 +13,6 @@ public abstract class Member {
     private int phoneNumber;
     private String mail;
     private boolean isCompetetive;
-    private String swimDiscipline;
     private double swimTime;
     private boolean isCompetitive;
     private String swimStroke;
