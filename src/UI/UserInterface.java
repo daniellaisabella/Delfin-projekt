@@ -140,7 +140,7 @@ public class UserInterface {
 
         System.out.print("Enter swim time (press Enter to keep current): ");
         String newSwimTime = scanner.nextLine().trim();
-        if (!newSwimTime.isEmpty()) memberToEdit.setSwimTime(newSwimTime);
+        if (!newSwimTime.isEmpty()) memberToEdit.setSwimTime(Double.parseDouble(newSwimTime));
 
         System.out.println("Member information updated successfully.");
         return true;
