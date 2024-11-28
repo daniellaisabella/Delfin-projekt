@@ -1,7 +1,8 @@
 package DataSource;
 
 import Model.Swimmer;
-
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -30,7 +31,7 @@ public class Filehandler {
                     if (data.length == 7) {
                         String name = data[0];
                         String surName = data[1];
-                        int age = Integer.parseInt(data[2]);
+                        LocalDate age = LocalDate.parse(data[2], DateTimeFormatter.ISO_LOCAL_DATE);
                         boolean isActive = Boolean.parseBoolean(data[3]);
                         String address = data[4];
                         int phoneNumber = Integer.parseInt(data[5]);

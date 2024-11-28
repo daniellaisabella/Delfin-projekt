@@ -1,5 +1,8 @@
 package UI;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -18,24 +21,23 @@ public class UserInterface {
 
     void displayMenu() {
         System.out.println("\n---- Administration ----");
-        System.out.println("Type 'add' or '1' to add a member to the swimming club");
-        System.out.println("Type 'members' or '2' to show the member list");
-        System.out.println("Type 'exit' or '0' to exit the program");
+        System.out.println("- [enter] the following number [1] to [register] a new member to the club");
+        System.out.println("- [enter] the following number [2] to [view] the list of members");
+        System.out.println("- [enter] the following number [0] to [exit] the program");
     }
 
     public void startProgram() {
         boolean running = true;
         displayMenu();
-
+try{
         while (running) {
             System.out.print("Enter your choice: ");
             String choice = scanner.nextLine().trim().toLowerCase();
 
             switch (choice) {
-                case "add", "1" -> addMember();
-                case "members", "2" -> showMembers();
-                case "edit member", "3" -> editMember();
-                case "exit", "0" -> {
+                case "1" -> addMember();
+                case "2" -> showMembers();
+                case "0" -> {
                     System.out.println("Exiting program...");
                     running = false;
                 }
@@ -43,34 +45,58 @@ public class UserInterface {
             }
         }
     }
-
     private void addMember() {
-        System.out.println("Enter first name:");
+        System.out.println("[Please enter the following details to register a new member]");
+        System.out.println("\nFirst name [Please include middle name if applicable]: ");
         String name = scanner.nextLine().trim();
 
-        System.out.println("Enter last name:");
+        System.out.println("Surname: ");
         String surName = scanner.nextLine().trim();
 
-        System.out.println("Enter member age:");
-        int age = scanner.nextInt();
-        scanner.nextLine();
+        System.out.println("Date of birth [DD-MM-YYYY]: ");
+        LocalDate age= null;
+        while (age == null) {
+            try {
+                String dobString = scanner.nextLine().trim();
+                age = LocalDate.parse(dobString, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date format. Please use DD-MM-YYYY.");
+            }
+        }
 
-        System.out.println("Enter member address (street name, house number, city, zipcode):");
+        System.out.println("Adress Line 1 [Street name] : ");
+        scanner.nextLine();
+        System.out.println("Address Line 2 [Street number] : ");
+        scanner.nextLine();
+        System.out.println("Zip code: ");
+        scanner.nextLine();
+        System.out.println("City: ");
         String address = scanner.nextLine().trim();
 
-        System.out.println("Enter member phone number:");
-        int phoneNumber = scanner.nextInt();
-        scanner.nextLine();
+        System.out.println("Phone number: ");
+        int phoneNumber = getIntInput();
 
-        System.out.println("Is the member active? Yes or No:");
-        boolean isActive = scanner.nextLine().trim().equalsIgnoreCase("yes");
+        //this option could need an if statement
+        System.out.println("Is the member active? Y/N : ");
+        boolean isActive = scanner.nextLine().trim().equalsIgnoreCase("y");
 
-        System.out.println("Is the member a competitive swimmer? Yes or No:");
-        boolean isCompetitive = scanner.nextLine().trim().equalsIgnoreCase("yes");
+        //this option could need an if statement
+        System.out.println("Register member as competitive? Y/N :");
+        boolean isCompetitive = scanner.nextLine().trim().equalsIgnoreCase("y");
 
-        Swimmer newMember = new Swimmer(name, surName, age, isActive, address, phoneNumber, isCompetitive);
+        Swimmer newMember = new Swimmer(name, surName, age, isActive, address,phoneNumber, isCompetitive);
         controller.getMemberList().addMember(newMember);
-        System.out.println("Member added successfully!");
+        System.out.println("\nMember added successfully!");
+
+    } //----- method added for int phone number invalid input
+    private int getIntInput() {
+        while (!scanner.hasNextInt()) {
+            System.out.println("Invalid input. Please enter a valid number.");
+            scanner.next();
+        }
+        int input = scanner.nextInt();
+        scanner.nextLine();  // Consume newline
+        return input;
     }
 
     private void showMembers() {

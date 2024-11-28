@@ -1,5 +1,6 @@
 package Model;
-
+import java.time.LocalDate;
+import java.time.Period;
 public abstract class Member {
 
     // Attributes
@@ -14,10 +15,13 @@ public abstract class Member {
     private String swimDiscipline;
     private double swimTime;
     private boolean isCompetitive;
+    private String swimStroke;
+    private double timePerformance;
+    private LocalDate age;
 
 
     //Constructor
-    public Member(String name, String surName, int age, String address, int phoneNumber, boolean isActive, boolean isCompetetive) {
+    public Member(String name, String surName, LocalDate age, String address, int phoneNumber, boolean isActive, boolean isCompetetive) {
         this.name = capitalizeFirstLetter(name);
         this.surname = capitalizeFirstLetter(surName);
         this.age = age;
@@ -28,7 +32,7 @@ public abstract class Member {
     }
 
     // Constructor
-    public Member(String name, String surName, int age, boolean isActive) {
+    public Member(String name, String surName, LocalDate age, boolean isActive) {
         this.name = name;
         this.surname = surName;
         this.age = age;
@@ -36,9 +40,9 @@ public abstract class Member {
     }
 
 
-    public Member(String swimDiscipline, double time) {
-        this.swimDiscipline = swimDiscipline;
-        this.swimDiscipline = swimDiscipline;
+    public Member(String swimStroke, double timePreformance) {
+        this.swimStroke = swimStroke;
+        this.timePreformance = timePreformance;
     }
 
     //Method to capitalize first letter in name
@@ -46,7 +50,7 @@ public abstract class Member {
         return word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase();
     }
 
-    //
+    //-----suggestion to remove and be handled by contingent class instead
     public double calculateContingent() {
         return 0;
     }
@@ -69,8 +73,13 @@ public abstract class Member {
     }
 
     public int getAge() {
-        return age;
+        return Period.between(age, LocalDate.now()).getYears();
     }
+    /*public LocalDate getAge() {
+        return age;*\
+
+     */
+
 
     public boolean isActive() {
         return isActive;
@@ -89,9 +98,11 @@ public abstract class Member {
     }
 
     // Determines if the member is a junior based on age
-    public boolean isJunior() {
-        return age < 18;
-    }
+    //-------------suggestion to remove this method and use membershipType method instead
+   /* public boolean isJunior() {
+        return age < 18;\
+
+    */
 
     // *** SETTERS *** //
     public void setName(String name) {
@@ -143,6 +154,8 @@ public abstract class Member {
 
     public void setAge(int age) {
         if (age <= 0) {
+    public void setAge(LocalDate age) {
+        if (age == null ||age.isAfter(LocalDate.now())) {
             throw new IllegalArgumentException("Age must be greater than zero.");
         }
         this.age = age;
@@ -168,7 +181,7 @@ public abstract class Member {
     public String toString() {
         return String.format(
                 "Name: %s, Age: %d, Active: %b, Junior: %b, Competetive: %b",
-                name, age, isActive, isJunior(), isCompetetive
+                name, age, isActive, isCompetetive
         );
     }
 }
