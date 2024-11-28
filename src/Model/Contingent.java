@@ -5,7 +5,7 @@ public class Contingent {
     private static final double PASSIVE_FEE = 500.0;
     private static final double ACTIVE_JUNIOR_FEE = 1000.0;
     private static final double ACTIVE_SENIOR_FEE = 1600.0;
-    private static final double ACTIVE_PENSIONIST_FEE = 1200.0;
+    private static final double ACTIVE_RETIREES_FEE = 1200.0;
 
     // Calculate contingent based on MembershipType
     public static double calculateContingent(MembershipType type) {
@@ -16,8 +16,8 @@ public class Contingent {
                 return ACTIVE_JUNIOR_FEE;
             case ACTIVE_SENIOR:
                 return ACTIVE_SENIOR_FEE;
-            case ACTIVE_PENSIONIST:
-                return ACTIVE_PENSIONIST_FEE;
+            case ACTIVE_RETIREE:
+                return ACTIVE_RETIREES_FEE;
             default:
                 throw new IllegalArgumentException("Invalid membership type");
         }
