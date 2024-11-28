@@ -34,6 +34,7 @@ public class UserInterface {
             switch (choice) {
                 case "add", "1" -> addMember();
                 case "members", "2" -> showMembers();
+                case "edit member", "3" -> editMember();
                 case "exit", "0" -> {
                     System.out.println("Exiting program...");
                     running = false;
@@ -84,4 +85,54 @@ public class UserInterface {
             }
         }
     }
-}
+
+    public boolean editMember() {
+        System.out.print("Enter Username ");
+        String title = scanner.nextLine().trim();
+        Member memberToEdit = getMemberByUsername(name);
+
+        if (memberToEdit == null) {
+            System.out.println("model.Member not found.");
+            return;
+        }
+
+        System.out.print("Enter first name (press Enter to keep current): ");
+        String newName = scanner.nextLine().trim();
+        if (!newName.isEmpty()) memberToEdit.setName(newName);
+
+        System.out.print("Enter surname (press Enter to keep current): ");
+        String newSurname = scanner.nextLine().trim();
+        if (!newSurname.isEmpty()) memberToEdit.setSurname(newSurname);
+
+        System.out.print("Enter new age (press Enter to keep current): ");
+        int newAge = scanner.nextLine().trim();
+        if (!newAge.isEmpty()) memberToEdit.setAge(newAge);
+
+        System.out.print("Is the member active? y/n (press Enter to keep current): ");
+        String = scanner.nextLine().trim();
+        if (!isActiveInput.isEmpty()) memberToEdit.setIsActive(isActiveInput.equalsIgnoreCase("y"));
+
+        System.out.print("Enter new address (press Enter to keep current): ");
+        String newAddress = scanner.nextLine().trim();
+        if (!newAddress.isEmpty()) memberToEdit.setAddress(newAddress);
+
+        System.out.print("Enter new phone number (press Enter to keep current): ");
+        int newPhoneNumber = scanner.nextLine().trim();
+        if (!newPhoneNumber.isEmpty()) memberToEdit.setPhoneNumber(newPhoneNumber);
+
+        System.out.print("Is the member a competition swimmer? y/n (press Enter to keep current): ");
+        String = scanner.nextLine().trim();
+        if (!isCompetetive.isEmpty()) memberToEdit.setIsCompetetive(isCompetetive.equalsIgnoreCase("y"));
+
+        System.out.print("Enter swim discipline (press Enter to keep current): ");
+        String newSwimDiscipline = scanner.nextLine().trim();
+        if (!newSwimDiscipline.isEmpty()) memberToEdit.setSwimDiscipline(newSwimDiscipline);
+
+        System.out.print("Enter swim time (press Enter to keep current): ");
+        String newSwimTime = scanner.nextLine().trim();
+        if (!newSwimTime.isEmpty()) memberToEdit.setSwimTime(newSwimTime);
+
+
+
+
+
