@@ -5,13 +5,15 @@ public abstract class Member {
     // Attributes
     private String name;
     private String surname;
+    private String username;
     private int age; // Determines if the member is junior or senior
     private boolean isActive; // Determines if the member participates actively
     private String address;
     private int phoneNumber;
     private boolean isCompetetive;
     private String swimDiscipline;
-    private double swimTime;
+    private String swimTime;
+    private boolean isCompetitive;
 
 
     //Constructor
@@ -58,6 +60,10 @@ public abstract class Member {
         return surname;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
     public int getAge() {
         return age;
     }
@@ -91,11 +97,26 @@ public abstract class Member {
         this.name = name;
     }
 
+    public void setUsername(String username) {
+        if(username == null || username.isEmpty()) {
+            throw new IllegalArgumentException(("Username can not be empty"));
+        }
+        this.username = username;
+    }
+
     public void setSurname(String surname) {
         if (surname == null || surname.isEmpty()) {
             throw new IllegalArgumentException("Surname cannot be null or empty.");
         }
         this.surname = surname;
+    }
+
+    public void setSwimTime(String swimTime) {
+        this.swimTime = swimTime;
+    }
+
+    public void setIsCompetitive(boolean isCompetitive) {
+        this.isCompetitive = isCompetitive;
     }
 
     public void setAddress(String address) {
