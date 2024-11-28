@@ -4,20 +4,20 @@ public abstract class Member {
 
     // Attributes
     private String name;
-    private String surName;
+    private String surname;
     private int age; // Determines if the member is junior or senior
     private boolean isActive; // Determines if the member participates actively
     private String address;
     private int phoneNumber;
     private boolean isCompetetive;
     private String swimDiscipline;
-    private double time;
+    private double swimTime;
 
 
     //Constructor
     public Member(String name, String surName, int age, String address, int phoneNumber, boolean isActive, boolean isCompetetive) {
         this.name = capitalizeFirstLetter(name);
-        this.surName = capitalizeFirstLetter(surName);
+        this.surname = capitalizeFirstLetter(surName);
         this.age = age;
         this.address = address;
         this.phoneNumber = phoneNumber;
@@ -28,7 +28,7 @@ public abstract class Member {
     // Constructor
     public Member(String name, String surName, int age, boolean isActive) {
         this.name = name;
-        this.surName = surName;
+        this.surname = surName;
         this.age = age;
         this.isActive = isActive;
     }
@@ -54,8 +54,8 @@ public abstract class Member {
         return name;
     }
 
-    public String getSurName() {
-        return surName;
+    public String getSurname() {
+        return surname;
     }
 
     public int getAge() {
@@ -91,11 +91,46 @@ public abstract class Member {
         this.name = name;
     }
 
+    public void setSurname(String surname) {
+        if (surname == null || surname.isEmpty()) {
+            throw new IllegalArgumentException("Surname cannot be null or empty.");
+        }
+        this.surname = surname;
+    }
+
+    public void setAddress(String address) {
+        if (address == null || address.isEmpty()) {
+            throw new IllegalArgumentException("Address cannot be null or empty.");
+        }
+        this.address = address;
+    }
+
+    public void setSwimDiscipline(String swimDiscipline) {
+        if (swimDiscipline == null || swimDiscipline.isEmpty()) {
+            throw new IllegalArgumentException("Swim discipline cannot be null or empty.");
+        }
+        this.swimDiscipline = swimDiscipline;
+    }
+
+    public void setSwimTime(double swimTime) {
+        if (swimTime <= 0) {
+            throw new IllegalArgumentException("Swim time must be greater than zero.");
+        }
+        this.swimTime = swimTime;
+    }
+
     public void setAge(int age) {
         if (age <= 0) {
             throw new IllegalArgumentException("Age must be greater than zero.");
         }
         this.age = age;
+    }
+
+    public void setPhoneNumber(int age) {
+        if (phoneNumber <= 0) {
+            throw new IllegalArgumentException("Phone number must be greater than zero.");
+        }
+        this.phoneNumber = phoneNumber;
     }
 
     public void setIsActive(boolean isActive) {
