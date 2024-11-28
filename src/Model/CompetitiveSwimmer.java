@@ -1,5 +1,6 @@
 package Model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +10,8 @@ public class CompetitiveSwimmer extends Member {
     private List<CompetitiveResults> competitiveResults; // List of competition results
 
     // Constructor for CompetitiveSwimmer
-    public CompetitiveSwimmer(String name, String surName, int age, boolean isActive) {
-        super(name, surName,  age, isActive);
+    public CompetitiveSwimmer(String name, String surName, LocalDate age, boolean isActive) {
+        super(name, surName,age,"",0, isActive,true);
         this.swimStrokes = new ArrayList<>();
         this.trainingResults = new ArrayList<>();
         this.competitiveResults = new ArrayList<>();

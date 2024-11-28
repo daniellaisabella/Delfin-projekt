@@ -1,32 +1,34 @@
 package Model;
-
+import java.time.LocalDate;
+import java.time.Period;
 public abstract class Member {
 
     // Attributes
     private String name;
     private String surName;
-    private int age; // Determines if the member is junior or senior
     private boolean isActive; // Determines if the member participates actively
     private String address;
     private int phoneNumber;
     private boolean isCompetetive;
     private String swimStroke;
     private double timePreformance;
+    private LocalDate age;
 
 
     //Constructor
-    public Member(String name, String surName, int age, String address, int phoneNumber, boolean isActive, boolean isCompetetive) {
+    public Member(String name, String surName, LocalDate age, String address, int phoneNumber, boolean isActive, boolean isCompetetive) {
         this.name = capitalizeFirstLetter(name);
         this.surName = capitalizeFirstLetter(surName);
         this.age = age;
         this.address = address;
+
         this.phoneNumber = phoneNumber;
         this.isActive = isActive;
         this.isCompetetive = isCompetetive;
     }
 
     // Constructor
-    public Member(String name, String surName, int age, boolean isActive) {
+    public Member(String name, String surName, LocalDate age, boolean isActive) {
         this.name = name;
         this.surName = surName;
         this.age = age;
@@ -60,8 +62,13 @@ public abstract class Member {
     }
 
     public int getAge() {
-        return age;
+        return Period.between(age, LocalDate.now()).getYears();
     }
+    /*public LocalDate getAge() {
+        return age;*\
+
+     */
+
 
     public boolean isActive() {
         return isActive;
@@ -81,9 +88,10 @@ public abstract class Member {
 
     // Determines if the member is a junior based on age
     //-------------suggestion to remove this method and use membershipType method instead
-    public boolean isJunior() {
-        return age < 18;
-    }
+   /* public boolean isJunior() {
+        return age < 18;\
+
+    */
 
     // *** SETTERS *** //
     public void setName(String name) {
@@ -93,8 +101,8 @@ public abstract class Member {
         this.name = name;
     }
 
-    public void setAge(int age) {
-        if (age <= 0) {
+    public void setAge(LocalDate age) {
+        if (age == null ||age.isAfter(LocalDate.now())) {
             throw new IllegalArgumentException("Age must be greater than zero.");
         }
         this.age = age;
@@ -113,7 +121,7 @@ public abstract class Member {
     public String toString() {
         return String.format(
                 "Name: %s, Age: %d, Active: %b, Junior: %b, Competetive: %b",
-                name, age, isActive, isJunior(), isCompetetive
+                name, age, isActive, isCompetetive
         );
     }
 }

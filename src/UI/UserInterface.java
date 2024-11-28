@@ -1,5 +1,8 @@
 package UI;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -54,10 +57,16 @@ try{
         System.out.println("Surname: ");
         String surName = scanner.nextLine().trim();
 
-        // ændringer tilføjes sammen imorgen ift. brug af java time import & parse
-        System.out.println("Age: ");
-        int age = scanner.nextInt();
-        scanner.nextLine();
+        System.out.println("Date of birth [DD-MM-YYYY]: ");
+        LocalDate age= null;
+        while (age == null) {
+            try {
+                String dobString = scanner.nextLine().trim();
+                age = LocalDate.parse(dobString, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date format. Please use DD-MM-YYYY.");
+            }
+        }
 
         System.out.println("Adress Line 1 [Street name] : ");
         scanner.nextLine();
