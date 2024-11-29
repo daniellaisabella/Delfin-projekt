@@ -34,8 +34,16 @@ public class UserInterface {
         }
     }
 
-
-
+    private String authenticate(String username, String password) {
+        if (username.equals("admin") && password.equals("admin123")) {
+            return "Admin";
+        } else if (username.equals("treasurer") && password.equals("treasurer123")) {
+            return "Treasurer";
+        } else if (username.equals("coach") && password.equals("coach123")) {
+            return "Coach";
+        }
+        return null;
+    }
 
     public UserInterface() {
         this.controller = new Controller();
