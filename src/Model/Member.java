@@ -9,7 +9,7 @@ public abstract class Member {
     private String name;
     private String surname;
     private String username;
-    private LocalDate birthDate; // Used to calculate age
+    private LocalDate age; // Used to calculate age
     private boolean isActive; // Determines if the member participates actively
     private String address;
     private int phoneNumber;
@@ -19,10 +19,10 @@ public abstract class Member {
     private double swimTime;
 
     // Constructor
-    public Member(String name, String surname, LocalDate birthDate, String address, int phoneNumber, String mail, boolean isActive, boolean isCompetitive) {
+    public Member(String name, String surname, LocalDate age, String address, int phoneNumber, String mail, boolean isActive, boolean isCompetitive) {
         this.name = capitalizeFirstLetter(name);
         this.surname = capitalizeFirstLetter(surname);
-        this.birthDate = birthDate;
+        this.age = age;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.mail = mail;
@@ -31,10 +31,10 @@ public abstract class Member {
     }
 
     // Constructor with fewer attributes
-    public Member(String name, String surname, LocalDate birthDate, boolean isActive) {
+    public Member(String name, String surname, LocalDate age, boolean isActive) {
         this.name = capitalizeFirstLetter(name);
         this.surname = capitalizeFirstLetter(surname);
-        this.birthDate = birthDate;
+        this.age = age;
         this.isActive = isActive;
     }
 
@@ -43,9 +43,9 @@ public abstract class Member {
         return word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase();
     }
 
-    // Calculate age based on birthDate
+    // Calculate age based on age
     public int getAge() {
-        return Period.between(birthDate, LocalDate.now()).getYears();
+        return Period.between(age, LocalDate.now()).getYears();
     }
 
     // Display member details
@@ -53,7 +53,7 @@ public abstract class Member {
     public String toString() {
         return String.format(
                 "Name: %s %s, Age: %d, Active: %b, Competitive: %b",
-                name, surname, getAge(), isActive, isCompetitive
+                name, surname, age, isActive, isCompetitive
         );
     }
 
@@ -70,22 +70,13 @@ public abstract class Member {
         return username;
     }
 
-    public double getSwimTime() {
-        return swimTime;
-    }
 
-    public int getAge() {
-        return Period.between(age, LocalDate.now()).getYears();
-    }
+
     /*public LocalDate getAge() {
         return age;*\
 
      */
 
-
-    public boolean isActive() {
-        return isActive;
-    }
 
     public String getAddress() {
         return address;
