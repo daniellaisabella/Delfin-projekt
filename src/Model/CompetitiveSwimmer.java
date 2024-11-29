@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CompetitiveSwimmer extends Member {
-    private List<String> swimStrokes; // List of swimming disciplines
+    private List<String> swimStrokes; // List of stroke styles
     private List<TrainingResults> trainingResults; // List of training results
     private List<CompetitiveResults> competitiveResults; // List of competition results
 
@@ -24,12 +24,12 @@ public class CompetitiveSwimmer extends Member {
         }
     }
 
-    // Add a competition result for a specific discipline
-    public void addCompetitionResult(String swimStrokes, double timePreformance, int placement) {
-        competitiveResults.add(new CompetitiveResults(swimStrokes, timePreformance, placement));
+    // Add a competition result for a specific stroke style
+    public void addCompetitionResult(String swimStrokes, double timePerformance, int placement) {
+        competitiveResults.add(new CompetitiveResults(swimStrokes, timePerformance, placement));
     }
 
-    // Get the list of swim disciplines
+    // Get the list of swim stroke styles
     public List<String> getSwimStrokes() {
         return swimStrokes;
     }

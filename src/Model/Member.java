@@ -15,7 +15,7 @@ public abstract class Member {
     private int phoneNumber;
     private String mail;
     private boolean isCompetitive;
-    private String swimDiscipline;
+    private String swimStroke;
     private double timePerformance;
 
     // Constructor
@@ -98,8 +98,8 @@ public abstract class Member {
         return isCompetitive;
     }
 
-    public String getSwimDiscipline() {
-        return swimDiscipline;
+    public String getSwimStroke() {
+        return swimStroke;
     }
 
     public double getTimePerformance() {
@@ -157,11 +157,11 @@ public abstract class Member {
         this.isCompetitive = isCompetitive;
     }
 
-    public void setSwimDiscipline(String swimDiscipline) {
-        if (swimDiscipline == null || swimDiscipline.isEmpty()) {
-            throw new IllegalArgumentException("Swim discipline cannot be null or empty.");
+    public void setSwimStroke(String swimStroke) {
+        if (swimStroke == null || swimStroke.isEmpty()) {
+            throw new IllegalArgumentException("Swim stroke cannot be null or empty.");
         }
-        this.swimDiscipline = swimDiscipline;
+        this.swimStroke = swimStroke;
     }
 
     public void setTimePerformance(double timePerformance) {
