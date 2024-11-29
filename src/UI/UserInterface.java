@@ -46,9 +46,9 @@ public class UserInterface {
     }
 
     private void addMember() {
-        System.out.println("[Please enter the following details to register a new member]");
+        System.out.println("\n[Please enter the following details to register a new member]");
 
-        System.out.print("First name [Include middle name if applicable]: ");
+        System.out.print("\nFirst name [Include middle name if applicable]: ");
         String name = scanner.nextLine().trim();
 
         System.out.print("Surname: ");
