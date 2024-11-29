@@ -70,15 +70,40 @@ public class UserInterface {
         System.out.println("[2] View all members");
     }
 
+    private void handleAdminChoice(String choice) {
+        switch (choice) {
+            case "1" -> addMember();
+            case "2" -> showMembers();
+            default -> System.out.println("Invalid choice.");
+        }
+    }
+
     private void displayTreasurerMenu() {
         System.out.println("[1] View expected payments");
         System.out.println("[2] View actual payments");
         System.out.println("[3] View members in arrears");
     }
 
+    private void handleTreasurerChoice(String choice) {
+        switch (choice) {
+            case "1" -> System.out.println("Expected payments functionality coming soon...");
+            case "2" -> System.out.println("Actual payments functionality coming soon...");
+            case "3" -> System.out.println("View members in arrears functionality coming soon...");
+            default -> System.out.println("Invalid choice.");
+        }
+    }
+
     private void displayCoachMenu() {
         System.out.println("[1] View swimmers");
         System.out.println("[2] View disciplines and competition times");
+    }
+
+    private void handleCoachChoice(String choice) {
+        switch (choice) {
+            case "1" -> showMembers();
+            case "2" -> System.out.println("View competition times functionality coming soon...");
+            default -> System.out.println("Invalid choice.");
+        }
     }
 
     private void handleRoleChoice(String choice) {
