@@ -81,7 +81,13 @@ public class UserInterface {
         System.out.println("[2] View disciplines and competition times");
     }
 
-
+    private void handleRoleChoice(String choice) {
+        switch (loggedInRole) {
+            case "Administrator" -> handleAdminChoice(choice);
+            case "Kasserer" -> handleTreasurerChoice(choice);
+            case "Træner" -> handleCoachChoice(choice);
+        }
+    }
 
     private void addMember() {
         System.out.println("[Please enter the following details to register a new member]");
