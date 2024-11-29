@@ -12,10 +12,13 @@ public abstract class Member {
     private boolean isCompetetive;
     private String swimDiscipline;
     private double time;
+    private Model.MembershipType membershipType;
+
+    private enum MembershipType {ACTIVE, PENSIONIST, JUNIOR, SENIOR};
 
 
     //Constructor
-    public Member(String name, String surName, int age, String address, int phoneNumber, boolean isActive, boolean isCompetetive) {
+    public Member(String name, String surName, int age, String address, int phoneNumber, boolean isActive, boolean isCompetetive, MembershipType membershipType) {
         this.name = capitalizeFirstLetter(name);
         this.surName = capitalizeFirstLetter(surName);
         this.age = age;
@@ -26,7 +29,7 @@ public abstract class Member {
     }
 
     // Constructor
-    public Member(String name, String surName, int age, boolean isActive) {
+    public Member(String name, String surName, int age, String address, int phoneNumber, boolean isActive) {
         this.name = name;
         this.surName = surName;
         this.age = age;
@@ -44,10 +47,10 @@ public abstract class Member {
         return word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase();
     }
 
-    //
     public double calculateContingent() {
-        return 0;
+        return Contingent.calculateContingent(this.membershipType);
     }
+
 
     // *** GETTERS *** //
     public String getName() {
@@ -79,7 +82,7 @@ public abstract class Member {
     }
 
     // Determines if the member is a junior based on age
-    public boolean isJunior() {
+    public boolean  isJunior() {
         return age < 18;
     }
 

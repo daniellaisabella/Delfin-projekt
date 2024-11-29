@@ -1,6 +1,7 @@
 package Model;
-public class Contingent {
 
+
+public class Contingent {
     // Constants for fees
     private static final double PASSIVE_FEE = 500.0;
     private static final double ACTIVE_JUNIOR_FEE = 1000.0;
@@ -12,15 +13,14 @@ public class Contingent {
         switch (type) {
             case PASSIVE:
                 return PASSIVE_FEE;
-            case ACTIVE_JUNIOR:
+            case JUNIOR:
                 return ACTIVE_JUNIOR_FEE;
-            case ACTIVE_SENIOR:
+            case SENIOR:
                 return ACTIVE_SENIOR_FEE;
-            case ACTIVE_PENSIONIST:
+            case PENSIONIST:
                 return ACTIVE_PENSIONIST_FEE;
             default:
                 throw new IllegalArgumentException("Invalid membership type");
         }
     }
 }
-

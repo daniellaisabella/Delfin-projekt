@@ -1,9 +1,5 @@
 package Model;
 
-import Model.CompetitiveResults;
-import Model.Member;
-import Model.TrainingResults;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +10,7 @@ public class CompetitiveSwimmer extends Member {
 
     // Constructor for CompetitiveSwimmer
     public CompetitiveSwimmer(String name, String surName, int age, boolean isActive) {
-        super(name, surName,  age, isActive);
+        super(name, surName,  age, address, phoneNumber, isActive, isCompetetive, membershipType);
         this.swimDisciplines = new ArrayList<>();
         this.trainingResults = new ArrayList<>();
         this.competitiveResults = new ArrayList<>();

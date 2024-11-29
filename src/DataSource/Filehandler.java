@@ -1,5 +1,6 @@
 package DataSource;
 
+import Model.MembershipType;
 import Model.Swimmer;
 
 import java.io.File;
@@ -12,22 +13,21 @@ import java.util.ArrayList;
 import java.util.stream.Stream;
 
 public class Filehandler {
-    private final String filePatch = "Members.txt";
+    private final String filePath = "src/DataSource/Members.txt";
     ArrayList<Swimmer> members = new ArrayList<>();
 
     public ArrayList<Swimmer> loadMembers() {
-
         try {
             // Check if file exists before trying to read
-            if (!Files.exists(Paths.get(filePatch))) {
+            if (!Files.exists(Paths.get(filePath))) {
                 System.out.println("File not found. Returning an empty member list.");
                 return members;
             }
 
-            try (Stream<String> lines = Files.lines(Paths.get(filePatch))) {
+            try (Stream<String> lines = Files.lines(Paths.get(filePath))) {
                 lines.forEach(line -> {
                     String[] data = line.split(",");
-                    if (data.length == 7) {
+                    if (data.length == 8) {
                         String name = data[0];
                         String surName = data[1];
                         int age = Integer.parseInt(data[2]);
@@ -35,26 +35,23 @@ public class Filehandler {
                         String address = data[4];
                         int phoneNumber = Integer.parseInt(data[5]);
                         boolean isCompetetive = Boolean.parseBoolean(data[6]);
+                        MembershipType membershipType = MembershipType.valueOf(data[7]);
 
-
-                        members.add(new Swimmer(name, surName, age, isActive, address, phoneNumber, isCompetetive));
-
-
+                        members.add(new Swimmer(name, surName, age, isActive, address, phoneNumber, isCompetetive, membershipType));
                     }
                 });
             }
-
 
             System.out.println("Loaded " + members.size() + " members from the file.");
         } catch (IOException e) {
             e.printStackTrace();
         }
         return members;
-
     }
 
+
     public boolean saveMember(ArrayList<Swimmer> members) {
-        try (PrintStream output = new PrintStream(new File(filePatch))) {
+        try (PrintStream output = new PrintStream(new File(filePath))) {
             System.out.println("Saving " + members.size() + " movies to the file.");
             for (Swimmer m : members) {
                 output.println(m.getName() + "," + m.getSurName() + "," + m.getAge() + "," + m.isActive() + "," + m.getAddress() + "," + m.getPhoneNumber() + "," + m.isCompetetive());
