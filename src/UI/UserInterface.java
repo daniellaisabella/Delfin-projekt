@@ -65,36 +65,23 @@ public class UserInterface {
         }
     }
 
-    public UserInterface() {
-        this.controller = new Controller();
-        this.scanner = new Scanner(System.in);
+    private void displayAdminMenu() {
+        System.out.println("[1] Register new member");
+        System.out.println("[2] View all members");
     }
 
-    void displayMenu() {
-        System.out.println("\n---- Administration ----");
-        System.out.println("[1] Register a new member to the club");
-        System.out.println("[2] View the list of members");
-        System.out.println("[0] Exit the program");
+    private void displayTreasurerMenu() {
+        System.out.println("[1] View expected payments");
+        System.out.println("[2] View actual payments");
+        System.out.println("[3] View members in arrears");
     }
 
-//    public void startProgram() {
-//        boolean running = true;
-//        while (running) {
-//            displayMenu();
-//            System.out.print("Enter your choice: ");
-//            String choice = scanner.nextLine().trim().toLowerCase();
-//
-//            switch (choice) {
-//                case "1" -> addMember();
-//                case "2" -> showMembers();
-//                case "0" -> {
-//                    System.out.println("Exiting program...");
-//                    running = false;
-//                }
-//                default -> System.out.println("Invalid choice. Please try again.");
-//            }
-//        }
-//    }
+    private void displayCoachMenu() {
+        System.out.println("[1] View swimmers");
+        System.out.println("[2] View disciplines and competition times");
+    }
+
+
 
     private void addMember() {
         System.out.println("[Please enter the following details to register a new member]");
