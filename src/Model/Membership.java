@@ -29,24 +29,28 @@ public class Membership extends Member {
                 getName(), getSurname(), getAge(), membershipType, isActive(), isCompetitive(), calculateAnnualContingent());
     }
 
-    // Calculate annual contingent based on membership type and age
+    //calculating contingent base don age
     public int calculateAnnualContingent() {
-        int juniorFee = 1000;
-        int seniorFee = 1600;
-        int pensionistFee = 1200;
-        int passiveMembershipFee = 500;
-
+        int juniorContingent = 1000;
+        int seniorContingent = 1600;
+        int pensionistContingent = 1200;
+        int passiveContingent = 500;
+        int annualContingent = 0;
         int age = getAge();
 
-        if (!isActive()) {
-            return passiveMembershipFee;
-        } else if (age < 18) {
-            return juniorFee;
-        } else if (age >= 18 && age < 60) {
-            return seniorFee;
+        if (isActive()) {
+            if (age < 18) {
+                annualContingent = juniorContingent;
+            } else if (age >= 18 && age < 59) {
+                annualContingent = seniorContingent;
+            } else if (age >= 60) {
+                annualContingent = pensionistContingent;
+            }
         } else {
-            return pensionistFee;
+            annualContingent = passiveContingent;
         }
+        return annualContingent;
+    }
     }
 
     // Method to check payment status (commented out as it needs additional logic)
@@ -61,4 +65,4 @@ public class Membership extends Member {
         }
     }
     */
-}
+
