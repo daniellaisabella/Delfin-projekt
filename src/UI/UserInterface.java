@@ -45,6 +45,26 @@ public class UserInterface {
         return null;
     }
 
+    private void runRoleMenu() {
+        boolean loggedIn = true;
+        while (loggedIn) {
+            System.out.println("\n--- " + loggedInRole + " Menu ---");
+            switch (loggedInRole) {
+                case "Administrator" -> displayAdminMenu();
+                case "Kasserer" -> displayTreasurerMenu();
+                case "Træner" -> displayCoachMenu();
+            }
+
+            System.out.print("Enter choice or 0 to log out: ");
+            String choice = scanner.nextLine();
+            if (choice.equals("0")) {
+                loggedIn = false;
+            } else {
+                handleRoleChoice(choice);
+            }
+        }
+    }
+
     public UserInterface() {
         this.controller = new Controller();
         this.scanner = new Scanner(System.in);
