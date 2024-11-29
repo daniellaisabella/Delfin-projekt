@@ -13,6 +13,29 @@ import Model.Swimmer;
 public class UserInterface {
     private Controller controller;
     private Scanner scanner;
+    private String loggedInRole;
+
+    public void startProgram() {
+        boolean running = true;
+        while (running) {
+            System.out.println("Welcome - Please login");
+            System.out.println("Enter username");
+            String username = scanner.nextLine();
+            System.out.println("Enter password");
+            String password = scanner.nextLine();
+
+            loggeInRole = authenticate(username, password);
+            if (loggedInRole != null) {
+                System.out.println("Logged in as " + loggedInRole);
+                runRoleMenu();
+            } else {
+                System.out.println("Invalid credentials. Try again.");
+            }
+        }
+    }
+
+
+
 
     public UserInterface() {
         this.controller = new Controller();
@@ -26,24 +49,24 @@ public class UserInterface {
         System.out.println("[0] Exit the program");
     }
 
-    public void startProgram() {
-        boolean running = true;
-        while (running) {
-            displayMenu();
-            System.out.print("Enter your choice: ");
-            String choice = scanner.nextLine().trim().toLowerCase();
-
-            switch (choice) {
-                case "1" -> addMember();
-                case "2" -> showMembers();
-                case "0" -> {
-                    System.out.println("Exiting program...");
-                    running = false;
-                }
-                default -> System.out.println("Invalid choice. Please try again.");
-            }
-        }
-    }
+//    public void startProgram() {
+//        boolean running = true;
+//        while (running) {
+//            displayMenu();
+//            System.out.print("Enter your choice: ");
+//            String choice = scanner.nextLine().trim().toLowerCase();
+//
+//            switch (choice) {
+//                case "1" -> addMember();
+//                case "2" -> showMembers();
+//                case "0" -> {
+//                    System.out.println("Exiting program...");
+//                    running = false;
+//                }
+//                default -> System.out.println("Invalid choice. Please try again.");
+//            }
+//        }
+//    }
 
     private void addMember() {
         System.out.println("[Please enter the following details to register a new member]");
