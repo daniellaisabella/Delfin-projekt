@@ -16,7 +16,7 @@ public abstract class Member {
     private String mail;
     private boolean isCompetitive;
     private String swimDiscipline;
-    private double swimTime;
+    private double timePerformance;
 
     // Constructor
     public Member(String name, String surname, LocalDate age, String address, int phoneNumber, String mail, boolean isActive, boolean isCompetitive) {
@@ -102,8 +102,8 @@ public abstract class Member {
         return swimDiscipline;
     }
 
-    public double getSwimTime() {
-        return swimTime;
+    public double getTimePerformance() {
+        return timePerformance;
     }
 
     // *** SETTERS *** //
@@ -164,11 +164,11 @@ public abstract class Member {
         this.swimDiscipline = swimDiscipline;
     }
 
-    public void setSwimTime(double swimTime) {
-        if (swimTime <= 0) {
+    public void setTimePerformance(double timePerformance) {
+        if (timePerformance <= 0) {
             throw new IllegalArgumentException("Swim time must be greater than zero.");
         }
-        this.swimTime = swimTime;
+        this.timePerformance = timePerformance;
     }
 }
 
