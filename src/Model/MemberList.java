@@ -17,7 +17,8 @@ public class MemberList {
         return members;
     }
 
-
-
-
+    public Member getMemberByUsername(String username) {
+        return null;
+    }
 }
+

@@ -1,7 +1,8 @@
 package DataSource;
 
 import Model.Swimmer;
-
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -30,11 +31,12 @@ public class Filehandler {
                     if (data.length == 7) {
                         String name = data[0];
                         String surName = data[1];
-                        int age = Integer.parseInt(data[2]);
+                        LocalDate age = LocalDate.parse(data[2], DateTimeFormatter.ISO_LOCAL_DATE);
                         boolean isActive = Boolean.parseBoolean(data[3]);
                         String address = data[4];
                         int phoneNumber = Integer.parseInt(data[5]);
-                        boolean isCompetetive = Boolean.parseBoolean(data[6]);
+                        String mail = data[6];
+                        boolean isCompetetive = Boolean.parseBoolean(data[7]);
 
 
                         members.add(new Swimmer(name, surName, age, isActive, address, phoneNumber, isCompetetive));
@@ -57,7 +59,7 @@ public class Filehandler {
         try (PrintStream output = new PrintStream(new File(filePatch))) {
             System.out.println("Saving " + members.size() + " movies to the file.");
             for (Swimmer m : members) {
-                output.println(m.getName() + "," + m.getSurName() + "," + m.getAge() + "," + m.isActive() + "," + m.getAddress() + "," + m.getPhoneNumber() + "," + m.isCompetetive());
+                output.println(m.getName() + "," + m.getSurname() + "," + m.getAge() + "," + m.isActive() + "," + m.getAddress() + "," + m.getPhoneNumber() + "," + m.getMail()+ "," + m.isCompetetive());
             }
             return true;
         } catch (FileNotFoundException e) {

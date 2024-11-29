@@ -1,5 +1,8 @@
 package UI;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -18,16 +21,16 @@ public class UserInterface {
 
     void displayMenu() {
         System.out.println("\n---- Administration ----");
-        System.out.println("- [enter] the following number [1] to [register] a new member to the club");
-        System.out.println("- [enter] the following number [2] to [view] the list of members");
-        System.out.println("- [enter] the following number [0] to [exit] the program");
+        System.out.println("[1] Register a new member to the club");
+        System.out.println("[2] View the list of members");
+        System.out.println("[0] Exit the program");
     }
 
     public void startProgram() {
         boolean running = true;
-        displayMenu();
-try{
         while (running) {
+            displayMenu();
+            System.out.print("Enter your choice: ");
             String choice = scanner.nextLine().trim().toLowerCase();
 
             switch (choice) {
@@ -39,58 +42,59 @@ try{
                 }
                 default -> System.out.println("Invalid choice. Please try again.");
             }
-            if (running) displayMenu();
-        }
-    } finally {
-        scanner.close();
-
         }
     }
+
     private void addMember() {
         System.out.println("[Please enter the following details to register a new member]");
-        System.out.println("\nFirst name [Please include middle name if applicable]: ");
+
+        System.out.print("First name [Include middle name if applicable]: ");
         String name = scanner.nextLine().trim();
 
-        System.out.println("Surname: ");
+        System.out.print("Surname: ");
         String surName = scanner.nextLine().trim();
 
-        // ændringer tilføjes sammen imorgen ift. brug af java time import & parse
-        System.out.println("Age: ");
-        int age = scanner.nextInt();
-        scanner.nextLine();
+        System.out.print("Date of birth [DD-MM-YYYY]: ");
+        LocalDate birthDate = null;
+        while (birthDate == null) {
+            try {
+                String dobString = scanner.nextLine().trim();
+                birthDate = LocalDate.parse(dobString, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date format. Please use DD-MM-YYYY.");
+            }
+        }
 
-        System.out.println("Adress Line 1 [Street name] : ");
-        scanner.nextLine();
-        System.out.println("Address Line 2 [Street number] : ");
-        scanner.nextLine();
-        System.out.println("Zip code: ");
-        scanner.nextLine();
-        System.out.println("City: ");
+        System.out.print("Address [Street name and number]: ");
         String address = scanner.nextLine().trim();
 
-        System.out.println("Phone number: ");
+        System.out.print("City: ");
+        String city = scanner.nextLine().trim();
+
+        System.out.print("Phone number: ");
         int phoneNumber = getIntInput();
 
-        //this option could need an if statement
-        System.out.println("Is the member active? Y/N : ");
+        System.out.print("Email: ");
+        String email = scanner.nextLine().trim();
+
+        System.out.print("Is the member active? Y/N: ");
         boolean isActive = scanner.nextLine().trim().equalsIgnoreCase("y");
 
-        //this option could need an if statement
-        System.out.println("Register member as competitive? Y/N :");
+        System.out.print("Register member as competitive? Y/N: ");
         boolean isCompetitive = scanner.nextLine().trim().equalsIgnoreCase("y");
 
-        Swimmer newMember = new Swimmer(name, surName, age, isActive, address,phoneNumber, isCompetitive);
+        Swimmer newMember = new Swimmer(name, surName, birthDate, isActive, address, phoneNumber, isCompetitive);
         controller.getMemberList().addMember(newMember);
         System.out.println("\nMember added successfully!");
+    }
 
-    } //----- method added for int phone number invalid input
     private int getIntInput() {
         while (!scanner.hasNextInt()) {
             System.out.println("Invalid input. Please enter a valid number.");
             scanner.next();
         }
         int input = scanner.nextInt();
-        scanner.nextLine();  // Consume newline
+        scanner.nextLine(); // Consume newline
         return input;
     }
 
@@ -102,7 +106,6 @@ try{
         } else {
             System.out.println("Members on the list:");
             for (Member member : members) {
-                System.out.println(member);
             }
         }
     }

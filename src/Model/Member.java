@@ -1,70 +1,73 @@
 package Model;
 
+import java.time.LocalDate;
+import java.time.Period;
+
 public abstract class Member {
 
     // Attributes
     private String name;
-    private String surName;
-    private int age; // Determines if the member is junior or senior
+    private String surname;
+    private String username;
+    private LocalDate birthDate; // Used to calculate age
     private boolean isActive; // Determines if the member participates actively
     private String address;
     private int phoneNumber;
-    private boolean isCompetetive;
-    private String swimStroke;
-    private double timePreformance;
-
-
-    //Constructor
-    public Member(String name, String surName, int age, String address, int phoneNumber, boolean isActive, boolean isCompetetive) {
-        this.name = capitalizeFirstLetter(name);
-        this.surName = capitalizeFirstLetter(surName);
-        this.age = age;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.isActive = isActive;
-        this.isCompetetive = isCompetetive;
-    }
+    private String mail;
+    private boolean isCompetitive;
+    private String swimDiscipline;
+    private double swimTime;
 
     // Constructor
-    public Member(String name, String surName, int age, boolean isActive) {
-        this.name = name;
-        this.surName = surName;
-        this.age = age;
+    public Member(String name, String surname, LocalDate birthDate, String address, int phoneNumber, String mail, boolean isActive, boolean isCompetitive) {
+        this.name = capitalizeFirstLetter(name);
+        this.surname = capitalizeFirstLetter(surname);
+        this.birthDate = birthDate;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.mail = mail;
+        this.isActive = isActive;
+        this.isCompetitive = isCompetitive;
+    }
+
+    // Constructor with fewer attributes
+    public Member(String name, String surname, LocalDate birthDate, boolean isActive) {
+        this.name = capitalizeFirstLetter(name);
+        this.surname = capitalizeFirstLetter(surname);
+        this.birthDate = birthDate;
         this.isActive = isActive;
     }
 
-
-    public Member(String swimStroke, double timePreformance) {
-        this.swimStroke = swimStroke;
-        this.timePreformance = timePreformance;
-    }
-
-    //Method to capitalize first letter in name
+    // Method to capitalize the first letter of a name
     private String capitalizeFirstLetter(String word) {
         return word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase();
     }
 
-    //-----suggestion to remove and be handled by contingent class instead
-    public double calculateContingent() {
-        return 0;
+    // Calculate age based on birthDate
+    public int getAge() {
+        return Period.between(birthDate, LocalDate.now()).getYears();
     }
 
+    // Display member details
+    @Override
+    public String toString() {
+        return String.format(
+                "Name: %s %s, Age: %d, Active: %b, Competitive: %b",
+                name, surname, getAge(), isActive, isCompetitive
+        );
+    }
 
     // *** GETTERS *** //
     public String getName() {
         return name;
     }
 
-    public String getSurName() {
-        return surName;
+    public String getSurname() {
+        return surname;
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public boolean isActive() {
-        return isActive;
+    public String getUsername() {
+        return username;
     }
 
     public String getAddress() {
@@ -75,14 +78,24 @@ public abstract class Member {
         return phoneNumber;
     }
 
-    public boolean isCompetetive() {
-        return isCompetetive;
+    public String getMail() {
+        return mail;
     }
 
-    // Determines if the member is a junior based on age
-    //-------------suggestion to remove this method and use membershipType method instead
-    public boolean isJunior() {
-        return age < 18;
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public boolean isCompetitive() {
+        return isCompetitive;
+    }
+
+    public String getSwimDiscipline() {
+        return swimDiscipline;
+    }
+
+    public double getSwimTime() {
+        return swimTime;
     }
 
     // *** SETTERS *** //
@@ -90,32 +103,64 @@ public abstract class Member {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Name cannot be null or empty.");
         }
-        this.name = name;
+        this.name = capitalizeFirstLetter(name);
     }
 
-    public void setAge(int age) {
-        if (age <= 0) {
-            throw new IllegalArgumentException("Age must be greater than zero.");
+    public void setSurname(String surname) {
+        if (surname == null || surname.isEmpty()) {
+            throw new IllegalArgumentException("Surname cannot be null or empty.");
         }
-        this.age = age;
+        this.surname = capitalizeFirstLetter(surname);
+    }
+
+    public void setUsername(String username) {
+        if (username == null || username.isEmpty()) {
+            throw new IllegalArgumentException("Username cannot be null or empty.");
+        }
+        this.username = username;
+    }
+
+    public void setAddress(String address) {
+        if (address == null || address.isEmpty()) {
+            throw new IllegalArgumentException("Address cannot be null or empty.");
+        }
+        this.address = address;
+    }
+
+    public void setPhoneNumber(int phoneNumber) {
+        if (phoneNumber <= 0) {
+            throw new IllegalArgumentException("Phone number must be a positive integer.");
+        }
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setMail(String mail) {
+        if (mail == null || mail.isEmpty() || !mail.contains("@")) {
+            throw new IllegalArgumentException("Invalid email address.");
+        }
+        this.mail = mail;
     }
 
     public void setIsActive(boolean isActive) {
         this.isActive = isActive;
     }
 
-    public void setIsCompetetive(boolean isCompetetive) {
-        this.isCompetetive = isCompetetive;
+    public void setIsCompetitive(boolean isCompetitive) {
+        this.isCompetitive = isCompetitive;
     }
 
-    // Display member details
-    @Override
-    public String toString() {
-        return String.format(
-                "Name: %s, Age: %d, Active: %b, Junior: %b, Competetive: %b",
-                name, age, isActive, isJunior(), isCompetetive
-        );
+    public void setSwimDiscipline(String swimDiscipline) {
+        if (swimDiscipline == null || swimDiscipline.isEmpty()) {
+            throw new IllegalArgumentException("Swim discipline cannot be null or empty.");
+        }
+        this.swimDiscipline = swimDiscipline;
+    }
+
+    public void setSwimTime(double swimTime) {
+        if (swimTime <= 0) {
+            throw new IllegalArgumentException("Swim time must be greater than zero.");
+        }
+        this.swimTime = swimTime;
     }
 }
-
 
