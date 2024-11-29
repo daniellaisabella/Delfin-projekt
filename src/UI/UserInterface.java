@@ -21,9 +21,9 @@ public class UserInterface {
 
     void displayMenu() {
         System.out.println("\n---- Administration ----");
-        System.out.println("- To [register] a new member to the club [enter] the following number --> [1]");
-        System.out.println("- To [view] the list of all club members [enter] the following number --> [2] ");
-        System.out.println("- To [exit] the program please [enter] the following number --> [0] ");
+        System.out.println("- To [Register] a new member to the club [enter] the following number --> [1]");
+        System.out.println("- To [View] the list of all club members [enter] the following number --> [2] ");
+        System.out.println("- To [Exit] the program please [enter] the following number --> [0] ");
     }
 
     public void startProgram() {
