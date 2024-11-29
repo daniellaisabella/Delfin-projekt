@@ -29,29 +29,23 @@ public class Membership extends Member {
                 getName(), getSurname(), getAge(), membershipType, isActive(), isCompetitive(), calculateAnnualContingent());
     }
 
-    //calculating contingent base don age
+    //calculating contingent based on age & active/passive
     public int calculateAnnualContingent() {
         int juniorContingent = 1000;
         int seniorContingent = 1600;
         int pensionistContingent = 1200;
         int passiveContingent = 500;
-        int annualContingent = 0;
         int age = getAge();
 
         if (isActive()) {
-            if (age < 18) {
-                annualContingent = juniorContingent;
-            } else if (age >= 18 && age < 59) {
-                annualContingent = seniorContingent;
-            } else if (age >= 60) {
-                annualContingent = pensionistContingent;
-            }
+            if (age <= 17) return juniorContingent;
+            if (age <= 59) return seniorContingent;
+            return pensionistContingent;
         } else {
-            annualContingent = passiveContingent;
+            return passiveContingent;
         }
-        return annualContingent;
     }
-    }
+}
 
     // Method to check payment status (commented out as it needs additional logic)
     // This method assumes there is an `outstandingFee` attribute to track payment status
