@@ -9,12 +9,6 @@ public class MemberList {
         this.members = memberList;
     }
 
-    public void addMembers(ArrayList<Swimmer> members) {
-        for (Member member : members) {
-            this.members.add(member);
-        }
-    }
-
     public void addMember(Member member) {
         members.add(member);
     }
@@ -23,5 +17,8 @@ public class MemberList {
         return members;
     }
 
-
+    public Member getMemberByUsername(String username) {
+        return null;
+    }
 }
+

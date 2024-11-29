@@ -1,8 +1,11 @@
 package Model;
-public enum MembershipType {
-        PASSIVE,
-        JUNIOR,
-        SENIOR,
-        PENSIONIST;
-}
 
+public enum MembershipType {
+
+        PASSIVE,
+        ACTIVE_JUNIOR,
+        ACTIVE_SENIOR,
+        ACTIVE_RETIREE
+
+
+}
