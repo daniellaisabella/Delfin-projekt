@@ -21,9 +21,9 @@ public class UserInterface {
 
     void displayMenu() {
         System.out.println("\n---- Administration ----");
-        System.out.println("[1] Register a new member to the club");
-        System.out.println("[2] View the list of members");
-        System.out.println("[0] Exit the program");
+        System.out.println("- To [register] a new member to the club [enter] the following number --> [1]");
+        System.out.println("- To [view] the list of all club members [enter] the following number --> [2] ");
+        System.out.println("- To [exit] the program please [enter] the following number --> [0] ");
     }
 
     public void startProgram() {
@@ -55,11 +55,11 @@ public class UserInterface {
         String surName = scanner.nextLine().trim();
 
         System.out.print("Date of birth [DD-MM-YYYY]: ");
-        LocalDate birthDate = null;
-        while (birthDate == null) {
+        LocalDate age = null;
+        while (age== null) {
             try {
                 String dobString = scanner.nextLine().trim();
-                birthDate = LocalDate.parse(dobString, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+                age = LocalDate.parse(dobString, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
             } catch (DateTimeParseException e) {
                 System.out.println("Invalid date format. Please use DD-MM-YYYY.");
             }
@@ -72,16 +72,16 @@ public class UserInterface {
         System.out.print("Phone number: ");
         int phoneNumber = getIntInput();
 
-        System.out.print("Email: ");
+        System.out.print("Email address: ");
         String email = scanner.nextLine().trim();
 
-        System.out.print("Is the member active? Y/N: ");
+        System.out.print("Register as active membership? Y/N: ");
         boolean isActive = scanner.nextLine().trim().equalsIgnoreCase("y");
 
-        System.out.print("Register member as competitive? Y/N: ");
+        System.out.print("Register member as a competitive swimmer? Y/N: ");
         boolean isCompetitive = scanner.nextLine().trim().equalsIgnoreCase("y");
 
-        Swimmer newMember = new Swimmer(name, surName, birthDate, isActive, address, phoneNumber,email, isCompetitive);
+        Swimmer newMember = new Swimmer(name, surName, age, isActive, address, phoneNumber,email, isCompetitive);
         controller.getMemberList().addMember(newMember);
         System.out.println("\nMember added successfully!");
     }
