@@ -65,11 +65,9 @@ public class UserInterface {
             }
         }
 
-        System.out.print("Address [Street name and number]: ");
+        System.out.print("Address [Street name, number and city]: ");
         String address = scanner.nextLine().trim();
 
-        System.out.print("City: ");
-        String city = scanner.nextLine().trim();
 
         System.out.print("Phone number: ");
         int phoneNumber = getIntInput();
@@ -83,7 +81,7 @@ public class UserInterface {
         System.out.print("Register member as competitive? Y/N: ");
         boolean isCompetitive = scanner.nextLine().trim().equalsIgnoreCase("y");
 
-        Swimmer newMember = new Swimmer(name, surName, birthDate, isActive, address, phoneNumber, isCompetitive);
+        Swimmer newMember = new Swimmer(name, surName, birthDate, isActive, address, phoneNumber,email, isCompetitive);
         controller.getMemberList().addMember(newMember);
         System.out.println("\nMember added successfully!");
     }

@@ -1,4 +1,7 @@
 package Model;
+
+import static Model.MembershipType.*;
+
 public class Contingent {
 
     // Constants for fees
@@ -8,7 +11,7 @@ public class Contingent {
     private static final double ACTIVE_RETIREES_FEE = 1200.0;
 
     // Calculate contingent based on MembershipType
-    public static double calculateContingent() {
+    public static double calculateContingent(MembershipType type) {
         switch (type) {
             case PASSIVE:
                 return PASSIVE_FEE;

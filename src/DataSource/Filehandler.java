@@ -39,7 +39,7 @@ public class Filehandler {
                         boolean isCompetetive = Boolean.parseBoolean(data[7]);
 
 
-                        members.add(new Swimmer(name, surName, age, isActive, address, phoneNumber, isCompetetive));
+                        members.add(new Swimmer(name, surName, age, isActive, address, phoneNumber,mail, isCompetetive));
 
 
                     }
@@ -59,7 +59,7 @@ public class Filehandler {
         try (PrintStream output = new PrintStream(new File(filePatch))) {
             System.out.println("Saving " + members.size() + " movies to the file.");
             for (Swimmer m : members) {
-                output.println(m.getName() + "," + m.getSurname() + "," + m.getAge() + "," + m.isActive() + "," + m.getAddress() + "," + m.getPhoneNumber() + "," + m.getMail()+ "," + m.isCompetetive());
+                output.println(m.getName() + "," + m.getSurname() + "," + m.getAge() + "," + m.isActive() + "," + m.getAddress() + "," + m.getPhoneNumber() + "," + m.getMail()+ "," + m.isCompetitive());
             }
             return true;
         } catch (FileNotFoundException e) {
