@@ -4,27 +4,28 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
 
-import Model.Controller;
-import Model.Member;
-import Model.Swimmer;
+import DataSource.Filehandler;
+import Model.*;
 
 public class UserInterface {
-    private Controller controller;
-    private Scanner scanner;
-    private String loggedInRole;
+    private Controller controller = new Controller();
+    private Scanner scanner = new Scanner(System.in); // Scanner initialiseret korrekt
+    private String loggedInRole; // Holder styr på, hvilken bruger der er logget ind
+    private Filehandler filehandler = new Filehandler();
 
     public void startProgram() {
         boolean running = true;
         while (running) {
             System.out.println("Welcome - Please login");
-            System.out.println("Enter username");
+            System.out.print("Enter username: ");
             String username = scanner.nextLine();
-            System.out.println("Enter password");
+            System.out.print("Enter password: ");
             String password = scanner.nextLine();
 
-            loggeInRole = authenticate(username, password);
+            loggedInRole = authenticate(username, password);
             if (loggedInRole != null) {
                 System.out.println("Logged in as " + loggedInRole);
                 runRoleMenu();
@@ -32,15 +33,16 @@ public class UserInterface {
                 System.out.println("Invalid credentials. Try again.");
             }
         }
+        scanner.close(); // Lukker scanner for at frigive ressourcer
     }
 
     private String authenticate(String username, String password) {
         if (username.equals("admin") && password.equals("admin123")) {
-            return "Admin";
+            return "Administrator";
         } else if (username.equals("treasurer") && password.equals("treasurer123")) {
-            return "Treasurer";
+            return "Kasserer";
         } else if (username.equals("coach") && password.equals("coach123")) {
-            return "Coach";
+            return "Træner";
         }
         return null;
     }
@@ -65,6 +67,16 @@ public class UserInterface {
         }
     }
 
+    private void handleRoleChoice(String choice) {
+        switch (loggedInRole) {
+            case "Administrator" -> handleAdminChoice(choice);
+            case "Kasserer" -> handleTreasurerChoice(choice);
+            case "Træner" -> handleCoachChoice(choice);
+            default -> System.out.println("Invalid role.");
+        }
+    }
+
+    // --- Administrator-funktioner ---
     private void displayAdminMenu() {
         System.out.println("[1] Register new member");
         System.out.println("[2] View all members");
@@ -75,42 +87,6 @@ public class UserInterface {
             case "1" -> addMember();
             case "2" -> showMembers();
             default -> System.out.println("Invalid choice.");
-        }
-    }
-
-    private void displayTreasurerMenu() {
-        System.out.println("[1] View expected payments");
-        System.out.println("[2] View actual payments");
-        System.out.println("[3] View members in arrears");
-    }
-
-    private void handleTreasurerChoice(String choice) {
-        switch (choice) {
-            case "1" -> System.out.println("Expected payments functionality coming soon...");
-            case "2" -> System.out.println("Actual payments functionality coming soon...");
-            case "3" -> System.out.println("View members in arrears functionality coming soon...");
-            default -> System.out.println("Invalid choice.");
-        }
-    }
-
-    private void displayCoachMenu() {
-        System.out.println("[1] View swimmers");
-        System.out.println("[2] View disciplines and competition times");
-    }
-
-    private void handleCoachChoice(String choice) {
-        switch (choice) {
-            case "1" -> showMembers();
-            case "2" -> System.out.println("View competition times functionality coming soon...");
-            default -> System.out.println("Invalid choice.");
-        }
-    }
-
-    private void handleRoleChoice(String choice) {
-        switch (loggedInRole) {
-            case "Administrator" -> handleAdminChoice(choice);
-            case "Kasserer" -> handleTreasurerChoice(choice);
-            case "Træner" -> handleCoachChoice(choice);
         }
     }
 
@@ -137,7 +113,6 @@ public class UserInterface {
         System.out.print("Address [Street name, number and city]: ");
         String address = scanner.nextLine().trim();
 
-
         System.out.print("Phone number: ");
         int phoneNumber = getIntInput();
 
@@ -150,7 +125,7 @@ public class UserInterface {
         System.out.print("Register member as competitive? Y/N: ");
         boolean isCompetitive = scanner.nextLine().trim().equalsIgnoreCase("y");
 
-        Swimmer newMember = new Swimmer(name, surName, birthDate, isActive, address, phoneNumber,email, isCompetitive);
+        Swimmer newMember = new Swimmer(name, surName, birthDate, isActive, address, phoneNumber, email, isCompetitive);
         controller.getMemberList().addMember(newMember);
         System.out.println("\nMember added successfully!");
     }
@@ -173,6 +148,97 @@ public class UserInterface {
         } else {
             System.out.println("Members on the list:");
             for (Member member : members) {
+                System.out.println(member);
+            }
+        }
+    }
+
+    // --- Kasserer-funktioner ---
+    private void displayTreasurerMenu() {
+        System.out.println("[1] View expected payments");
+        System.out.println("[2] View actual payments");
+        System.out.println("[3] View members in arrears");
+    }
+
+    private void handleTreasurerChoice(String choice) {
+        switch (choice) {
+            case "1" -> viewExpectedPayments();
+            case "2" -> viewActualPayments();
+            case "3" -> viewArrears();
+            default -> System.out.println("Invalid choice.");
+        }
+    }
+
+    private void viewExpectedPayments() {
+        ArrayList<Swimmer> members = filehandler.loadMembers();
+        double totalExpected = 0;
+        for (Swimmer member : members) {
+            totalExpected += Contingent.calculateContingent(member.getMembershipType());
+        }
+        System.out.println("Total forventet kontingentbetaling: " + totalExpected + " DKK");
+    }
+
+    private void viewActualPayments() {
+        Map<String, Double> payments = filehandler.loadPayments();
+        if (payments.isEmpty()) {
+            System.out.println("Ingen betalinger er registreret.");
+        } else {
+            System.out.println("Aktuelle betalinger:");
+            payments.forEach((username, amount) ->
+                    System.out.println("Bruger: " + username + ", Betalt: " + amount + " DKK"));
+        }
+    }
+
+    private void viewArrears() {
+        ArrayList<Swimmer> members = filehandler.loadMembers();
+        Map<String, Double> payments = filehandler.loadPayments();
+
+        System.out.println("Medlemmer i restance:");
+        for (Swimmer member : members) {
+            double expected = Contingent.calculateContingent(member.getMembershipType());
+            double paid = payments.getOrDefault(member.getUsername(), 0.0);
+            if (paid < expected) {
+                System.out.printf("Bruger: %s, Forventet: %.2f DKK, Betalt: %.2f DKK, Restance: %.2f DKK%n",
+                        member.getUsername(), expected, paid, expected - paid);
+            }
+        }
+    }
+
+    // --- Træner-funktioner ---
+    private void displayCoachMenu() {
+        System.out.println("[1] View swimmers");
+        System.out.println("[2] View disciplines and competition times");
+    }
+
+    private void handleCoachChoice(String choice) {
+        switch (choice) {
+            case "1" -> showSwimmers();
+            case "2" -> showCompetitionTimes();
+            default -> System.out.println("Invalid choice.");
+        }
+    }
+
+    private void showSwimmers() {
+        ArrayList<Member> members = controller.getMemberList().getMembers();
+        if (members.isEmpty()) {
+            System.out.println("No swimmers found.");
+        } else {
+            System.out.println("Swimmers:");
+            for (Member member : members) {
+                if (member.isCompetitive()) {
+                    System.out.println(member);
+                }
+            }
+        }
+    }
+
+    private void showCompetitionTimes() {
+        ArrayList<Member> members = controller.getMemberList().getMembers();
+        System.out.println("Competition times:");
+        for (Member member : members) {
+            if (member instanceof Swimmer) {
+                Swimmer swimmer = (Swimmer) member;
+                System.out.println(swimmer.getName() + "'s competition times: " + swimmer.getCompetitiveResults());
             }
         }
     }

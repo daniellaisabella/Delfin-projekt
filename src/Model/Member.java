@@ -17,7 +17,7 @@ public abstract class Member {
     private boolean isCompetitive;
     private String swimDiscipline;
     private double swimTime;
-
+    private MembershipType membershipType;
     // Constructor
     public Member(String name, String surname, LocalDate birthDate, String address, int phoneNumber, String mail, boolean isActive, boolean isCompetitive) {
         this.name = capitalizeFirstLetter(name);
@@ -58,6 +58,11 @@ public abstract class Member {
     }
 
     // *** GETTERS *** //
+
+    public MembershipType getMembershipType() {
+        return membershipType;
+    }
+
     public String getName() {
         return name;
     }
@@ -99,6 +104,11 @@ public abstract class Member {
     }
 
     // *** SETTERS *** //
+
+    public void setMembershipType(MembershipType membershipType) {
+        this.membershipType = membershipType;
+    }
+
     public void setName(String name) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Name cannot be null or empty.");
