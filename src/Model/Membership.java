@@ -26,25 +26,11 @@ public class Membership extends Member {
     public String toString() {
         return String.format(
                 "Name: %s %s, Age: %d, Membership Type: %s, Active: %b, Competitive: %b, Annual Contingent: %d DKK",
-                getName(), getSurname(), getAge(), membershipType, isActive(), isCompetitive(), calculateAnnualContingent());
+                getName(), getSurname(), getAge(), membershipType, isActive(), isCompetitive());
     }
 
     //calculating contingent based on age & active/passive
-    public int calculateAnnualContingent() {
-        int juniorContingent = 1000;
-        int seniorContingent = 1600;
-        int pensionistContingent = 1200;
-        int passiveContingent = 500;
-        int age = getAge();
 
-        if (isActive()) {
-            if (age <= 17) return juniorContingent;
-            if (age <= 59) return seniorContingent;
-            return pensionistContingent;
-        } else {
-            return passiveContingent;
-        }
-    }
 }
 
     // Method to check payment status (commented out as it needs additional logic)
