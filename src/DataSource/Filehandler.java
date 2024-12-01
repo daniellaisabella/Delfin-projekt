@@ -10,6 +10,7 @@ import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.stream.Stream;
 
 public class Filehandler {
@@ -67,6 +68,10 @@ public class Filehandler {
             return false;
 
         }
+    }
+
+    public Map<String, Double> loadPayments() {
+        return Map.of();
     }
 }
 

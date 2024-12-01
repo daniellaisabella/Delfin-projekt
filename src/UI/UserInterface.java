@@ -4,44 +4,89 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
 
-import Model.Controller;
-import Model.Member;
-import Model.Swimmer;
+import DataSource.Filehandler;
+import Model.*;
 
 public class UserInterface {
-    private Controller controller;
-    private Scanner scanner;
-
-    public UserInterface() {
-        this.controller = new Controller();
-        this.scanner = new Scanner(System.in);
-    }
-
-    void displayMenu() {
-        System.out.println("\n---- Administration ----");
-        System.out.println("- To [Register] a new member to the club [enter] the following number --> [1]");
-        System.out.println("- To [View] the list of all club members [enter] the following number --> [2] ");
-        System.out.println("- To [Exit] the program please [enter] the following number --> [0] ");
-    }
+    private Controller controller = new Controller();
+    private Scanner scanner = new Scanner(System.in); // Scanner initialiseret korrekt
+    private String loggedInRole; // Holder styr på, hvilken bruger der er logget ind
+    private Filehandler filehandler = new Filehandler();
 
     public void startProgram() {
         boolean running = true;
         while (running) {
-            displayMenu();
-            System.out.print("Enter your choice: ");
-            String choice = scanner.nextLine().trim().toLowerCase();
+            System.out.println("Welcome - Please login");
+            System.out.print("Enter username: ");
+            String username = scanner.nextLine();
+            System.out.print("Enter password: ");
+            String password = scanner.nextLine();
 
-            switch (choice) {
-                case "1" -> addMember();
-                case "2" -> showMembers();
-                case "0" -> {
-                    System.out.println("Exiting program...");
-                    running = false;
-                }
-                default -> System.out.println("Invalid choice. Please try again.");
+            loggedInRole = authenticate(username, password);
+            if (loggedInRole != null) {
+                System.out.println("Logged in as " + loggedInRole);
+                runRoleMenu();
+            } else {
+                System.out.println("Invalid credentials. Try again.");
             }
+        }
+        scanner.close(); // Lukker scanner for at frigive ressourcer
+    }
+
+    private String authenticate(String username, String password) {
+        if (username.equals("admin") && password.equals("admin123")) {
+            return "Administrator";
+        } else if (username.equals("treasurer") && password.equals("treasurer123")) {
+            return "Kasserer";
+        } else if (username.equals("coach") && password.equals("coach123")) {
+            return "Træner";
+        }
+        return null;
+    }
+
+    private void runRoleMenu() {
+        boolean loggedIn = true;
+        while (loggedIn) {
+            System.out.println("\n--- " + loggedInRole + " Menu ---");
+            switch (loggedInRole) {
+                case "Administrator" -> displayAdminMenu();
+                case "Kasserer" -> displayTreasurerMenu();
+                case "Træner" -> displayCoachMenu();
+            }
+
+            System.out.print("Enter choice or 0 to log out: ");
+            String choice = scanner.nextLine();
+            if (choice.equals("0")) {
+                loggedIn = false;
+            } else {
+                handleRoleChoice(choice);
+            }
+        }
+    }
+
+    private void handleRoleChoice(String choice) {
+        switch (loggedInRole) {
+            case "Administrator" -> handleAdminChoice(choice);
+            case "Kasserer" -> handleTreasurerChoice(choice);
+            case "Træner" -> handleCoachChoice(choice);
+            default -> System.out.println("Invalid role.");
+        }
+    }
+
+    // --- Administrator-funktioner ---
+    private void displayAdminMenu() {
+        System.out.println("[1] Register new member");
+        System.out.println("[2] View all members");
+    }
+
+    private void handleAdminChoice(String choice) {
+        switch (choice) {
+            case "1" -> addMember();
+            case "2" -> showMembers();
+            default -> System.out.println("Invalid choice.");
         }
     }
 
@@ -104,6 +149,97 @@ public class UserInterface {
         } else {
             System.out.println("Members on the list:");
             for (Member member : members) {
+                System.out.println(member);
+            }
+        }
+    }
+
+    // --- Kasserer-funktioner ---
+    private void displayTreasurerMenu() {
+        System.out.println("[1] View expected payments");
+        System.out.println("[2] View actual payments");
+        System.out.println("[3] View members in arrears");
+    }
+
+    private void handleTreasurerChoice(String choice) {
+        switch (choice) {
+            case "1" -> viewExpectedPayments();
+            case "2" -> viewActualPayments();
+            case "3" -> viewArrears();
+            default -> System.out.println("Invalid choice.");
+        }
+    }
+
+    private void viewExpectedPayments() {
+        ArrayList<Swimmer> members = filehandler.loadMembers();
+        double totalExpected = 0;
+        for (Swimmer member : members) {
+            totalExpected += Contingent.calculateContingent(member.getMembershipType());
+        }
+        System.out.println("Total forventet kontingentbetaling: " + totalExpected + " DKK");
+    }
+
+    private void viewActualPayments() {
+        Map<String, Double> payments = filehandler.loadPayments();
+        if (payments.isEmpty()) {
+            System.out.println("Ingen betalinger er registreret.");
+        } else {
+            System.out.println("Aktuelle betalinger:");
+            payments.forEach((username, amount) ->
+                    System.out.println("Bruger: " + username + ", Betalt: " + amount + " DKK"));
+        }
+    }
+
+    private void viewArrears() {
+        ArrayList<Swimmer> members = filehandler.loadMembers();
+        Map<String, Double> payments = filehandler.loadPayments();
+
+        System.out.println("Medlemmer i restance:");
+        for (Swimmer member : members) {
+            double expected = Contingent.calculateContingent(member.getMembershipType());
+            double paid = payments.getOrDefault(member.getUsername(), 0.0);
+            if (paid < expected) {
+                System.out.printf("Bruger: %s, Forventet: %.2f DKK, Betalt: %.2f DKK, Restance: %.2f DKK%n",
+                        member.getUsername(), expected, paid, expected - paid);
+            }
+        }
+    }
+
+    // --- Træner-funktioner ---
+    private void displayCoachMenu() {
+        System.out.println("[1] View swimmers");
+        System.out.println("[2] View disciplines and competition times");
+    }
+
+    private void handleCoachChoice(String choice) {
+        switch (choice) {
+            case "1" -> showSwimmers();
+            case "2" -> showCompetitionTimes();
+            default -> System.out.println("Invalid choice.");
+        }
+    }
+
+    private void showSwimmers() {
+        ArrayList<Member> members = controller.getMemberList().getMembers();
+        if (members.isEmpty()) {
+            System.out.println("No swimmers found.");
+        } else {
+            System.out.println("Swimmers:");
+            for (Member member : members) {
+                if (member.isCompetitive()) {
+                    System.out.println(member);
+                }
+            }
+        }
+    }
+
+    private void showCompetitionTimes() {
+        ArrayList<Member> members = controller.getMemberList().getMembers();
+        System.out.println("Competition times:");
+        for (Member member : members) {
+            if (member instanceof Swimmer) {
+                Swimmer swimmer = (Swimmer) member;
+                System.out.println(swimmer.getName() + "'s competition times: " + swimmer.getCompetitiveResults());
             }
         }
     }

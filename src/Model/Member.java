@@ -58,6 +58,11 @@ public abstract class Member {
     }
 
     // *** GETTERS *** //
+
+    public MembershipType getMembershipType() {
+        return membershipType;
+    }
+
     public String getName() {
         return name;
     }
@@ -107,6 +112,11 @@ public abstract class Member {
     }
 
     // *** SETTERS *** //
+
+    public void setMembershipType(MembershipType membershipType) {
+        this.membershipType = membershipType;
+    }
+
     public void setName(String name) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Name cannot be null or empty.");
