@@ -1,73 +1,58 @@
 package DataSource;
 
 import Model.Member;
-import Model.Swimmer;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Scanner;
-
 
 public class Filehandler {
-    private final String filePath = "Members.csv";
-    ArrayList<Swimmer> members = new ArrayList<>();
 
-    public ArrayList<Swimmer> loadMembers() {
-        File file = new File(filePath);
+    private static final String FILE_PATH = "members.csv";
 
-        try (Scanner scanner = new Scanner(file)) {
-            while (scanner.hasNextLine()){
-            String line = scanner.nextLine();
-            String[] data = line.split(",");
+    public ArrayList<Member> loadMembers() {
+        ArrayList<Member> members = new ArrayList<>();
+        File file = new File(FILE_PATH);
 
-            if (data.length == 8) {
-                String name = data[0];
-                String surName = data[1];
-                LocalDate age = LocalDate.parse(data[2], DateTimeFormatter.ISO_LOCAL_DATE);
-                boolean isActive = Boolean.parseBoolean(data[3]);
-                String address = data[4];
-                int phoneNumber = Integer.parseInt(data[5]);
-                String mail = data[6];
-                boolean isCompetetive = Boolean.parseBoolean(data[7]);
-
-
-                members.add(new Swimmer(name, surName, age, isActive, address, phoneNumber, mail, isCompetetive));
-
-
-            }
+        if (!file.exists()) {
+            System.out.println("CSV file not found. Returning an empty list.");
+            createEmptyCSVFile(); // Opret en tom CSV-fil
+            return members;
         }
 
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                // Parse og tilføj medlemmer til listen (implementér parsing efter behov)
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading CSV file: " + e.getMessage());
+        }
 
-        System.out.println("Loaded " + members.size() + " members from the CSV file.");
-    } catch(FileNotFoundException e) {
-        System.out.println("CSV file not found. Returning an empty list.");
-    } catch(Exception e) {
-        System.out.println("Error reading CSV file: " + e.getMessage());
-    }
         return members;
-}
+    }
 
-
-
+    private void createEmptyCSVFile() {
+        try (PrintWriter writer = new PrintWriter(new File(FILE_PATH))) {
+            writer.println("Name,Surname,Age,Active"); // Kolonnenavne, tilpas efter dit format
+        } catch (IOException e) {
+            System.out.println("Error creating CSV file: " + e.getMessage());
+        }
+    }
 
     public boolean saveMember(ArrayList<Member> members) {
-        try (PrintStream output = new PrintStream(new File(filePath))) {
-            System.out.println("Saving " + members.size() + " movies to the file.");
-            for (Member m : members) {
-                output.println(m.getName() + "," + m.getSurname() + "," + m.getAge() + "," + m.isActive() + "," + m.getAddress() + "," + m.getPhoneNumber() + "," + m.getMail()+ "," + m.isCompetitive());
+        try (PrintWriter writer = new PrintWriter(new File(FILE_PATH))) {
+            for (Member member : members) {
+                writer.printf("%s,%s,%d,%b%n",
+                        member.getName(),
+                        member.getSurname(),
+                        member.getAge(),
+                        member.isActive());
             }
             return true;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("Error saving members: " + e.getMessage());
             return false;
-
         }
     }
 
@@ -75,6 +60,3 @@ public class Filehandler {
         return Map.of();
     }
 }
-
-
-

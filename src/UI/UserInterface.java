@@ -17,7 +17,7 @@ public class UserInterface {
     private Filehandler filehandler = new Filehandler();
 
     public UserInterface() {
-        ArrayList<Swimmer> loadedMembers = filehandler.loadMembers();
+        ArrayList<Member> loadedMembers = filehandler.loadMembers();
         if (loadedMembers != null) {
             controller.getMemberList().getMembers().addAll(loadedMembers);
         }
@@ -159,7 +159,7 @@ public class UserInterface {
 
     private void showMembers() {
         ArrayList<Member> members = controller.getMemberList().getMembers();
-        System.out.println("Debug: Number of members in the list: " + members.size());
+        System.out.println("Number of members in the list: " + members.size());
 
         if (members.isEmpty()) {
             System.out.println("No members on the list.");
@@ -188,9 +188,9 @@ public class UserInterface {
     }
 
     private void viewExpectedPayments() {
-        ArrayList<Swimmer> members = filehandler.loadMembers();
+        ArrayList<Member> members = filehandler.loadMembers();
         double totalExpected = 0;
-        for (Swimmer member : members) {
+        for (Member member : members) {
             totalExpected += Contingent.calculateContingent(member.getMembershipType());
         }
         System.out.println("Total expected fee payment: " + totalExpected + " DKK");
@@ -208,11 +208,11 @@ public class UserInterface {
     }
 
     private void viewArrears() {
-        ArrayList<Swimmer> members = filehandler.loadMembers();
+        ArrayList<Member> members = filehandler.loadMembers();
         Map<String, Double> payments = filehandler.loadPayments();
 
         System.out.println("Members in debt");
-        for (Swimmer member : members) {
+        for (Member member : members) {
             double expected = Contingent.calculateContingent(member.getMembershipType());
             double paid = payments.getOrDefault(member.getUsername(), 0.0);
             if (paid < expected) {
