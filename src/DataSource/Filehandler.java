@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class Filehandler {
 
-    private static final String FILE_PATH = "members.csv";
+    private static final String FILE_PATH = "src/DataSource/Members.csv";
 
     // Method to load members from a CSV file
     public ArrayList<Member> loadMembers() {

@@ -3,6 +3,8 @@ package Model;
 public class TrainingResults {
     private String swimStroke;
     private double timePerformance;
+    private String discipline;
+    private double time;
 
     public void trainingResults(String swimStroke, double timePerformance) {
         this.swimStroke = swimStroke;
