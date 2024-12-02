@@ -18,8 +18,6 @@ public abstract class Member {
     private boolean isCompetitive;
     private String swimStroke;
     private double timePerformance;
-    private MembershipType membershipType;
-    private String MembershipType;
 
     // Constructor
     public Member(String name, String surname, LocalDate age, String address, int phoneNumber, String mail, boolean isActive, boolean isCompetitive) {
@@ -62,8 +60,8 @@ public abstract class Member {
 
     // *** GETTERS *** //
 
-    public String getMembershipType() {
-        return MembershipType;
+    public Model.MembershipType getMembershipType() {
+        return membershipType;
     }
 
     public String getName() {

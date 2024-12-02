@@ -12,7 +12,7 @@ public class Membership extends Member {
     }
 
     // Getter for membershipType
-    public String getMembershipType() {
+    public Model.MembershipType getMembershipType() {
         return membershipType;
     }
 
