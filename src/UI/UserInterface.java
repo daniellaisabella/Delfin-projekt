@@ -52,9 +52,9 @@ public class UserInterface {
         while (loggedIn) {
             System.out.println("\n--- " + loggedInRole + " Menu ---");
             switch (loggedInRole) {
-                case "Administrator" -> displayAdminMenu();
-                case "Kasserer" -> displayTreasurerMenu();
-                case "Træner" -> displayCoachMenu();
+                case "Admin" -> displayAdminMenu();
+                case "Treasurer" -> displayTreasurerMenu();
+                case "Coach" -> displayCoachMenu();
             }
 
             System.out.print("Enter choice or 0 to log out: ");
@@ -176,17 +176,17 @@ public class UserInterface {
         for (Swimmer member : members) {
             totalExpected += Contingent.calculateContingent(member.getMembershipType());
         }
-        System.out.println("Total forventet kontingentbetaling: " + totalExpected + " DKK");
+        System.out.println("Total expected fee payment: " + totalExpected + " DKK");
     }
 
     private void viewActualPayments() {
         Map<String, Double> payments = filehandler.loadPayments();
         if (payments.isEmpty()) {
-            System.out.println("Ingen betalinger er registreret.");
+            System.out.println("No payments are registered");
         } else {
-            System.out.println("Aktuelle betalinger:");
+            System.out.println("Actual payments:");
             payments.forEach((username, amount) ->
-                    System.out.println("Bruger: " + username + ", Betalt: " + amount + " DKK"));
+                    System.out.println("Member: " + username + ", Paid: " + amount + " DKK"));
         }
     }
 
