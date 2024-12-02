@@ -18,6 +18,7 @@ public abstract class Member {
     private boolean isCompetitive;
     private String swimStroke;
     private double timePerformance;
+    private MembershipType membershipType;
     private String MembershipType;
 
     // Constructor
@@ -171,14 +172,14 @@ public abstract class Member {
 
     public void setSwimStroke(String swimStroke) {
         if (swimStroke == null || swimStroke.isEmpty()) {
-            throw new IllegalArgumentException("Swim stroke cannot be null or empty.");
+            throw new IllegalArgumentException("Invalid swim stroke");
         }
         this.swimStroke = swimStroke;
     }
 
     public void setTimePerformance(double timePerformance) {
         if (timePerformance <= 0) {
-            throw new IllegalArgumentException("Swim time must be greater than zero.");
+            throw new IllegalArgumentException("Invalid swim time");
         }
         this.timePerformance = timePerformance;
     }
