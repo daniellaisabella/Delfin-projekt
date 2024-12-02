@@ -127,9 +127,16 @@ public class UserInterface {
         boolean isCompetitive = scanner.nextLine().trim().equalsIgnoreCase("y");
 
         Swimmer newMember = new Swimmer(name, surName, age, isActive, address, phoneNumber,email, isCompetitive);
+        // Tilføj medlem til listen
         controller.getMemberList().addMember(newMember);
-        System.out.println("\nMember added successfully!");
+        // Gem medlemmer i CSV-filen automatisk
+        ArrayList<Member> members = controller.getMemberList().getMembers();
+        if(filehandler.saveMember(members)) {
+            System.out.println("Member added and saved successfully");
+        } else {
+        System.out.println("\nMember added, but saving to file failed");
     }
+        }
 
     private int getIntInput() {
         while (!scanner.hasNextInt()) {
