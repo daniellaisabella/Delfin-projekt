@@ -16,6 +16,7 @@ public class UserInterface {
     private String loggedInRole; // Holder styr på, hvilken bruger der er logget ind
     private Filehandler filehandler = new Filehandler();
 
+    //-----------------------Log in------------------------------
     public void startProgram() {
         boolean running = true;
         while (running) {
@@ -38,23 +39,27 @@ public class UserInterface {
 
     private String authenticate(String username, String password) {
         if (username.equals("admin") && password.equals("admin123")) {
-            return "Administrator";
+            return "Admin";
         } else if (username.equals("treasurer") && password.equals("treasurer123")) {
-            return "Kasserer";
+            return "Treasurer";
         } else if (username.equals("coach") && password.equals("coach123")) {
-            return "Træner";
+            return "Coach";
         }
         return null;
     }
-
+    //-----------------------------------------------------------------
     private void runRoleMenu() {
         boolean loggedIn = true;
         while (loggedIn) {
             System.out.println("\n--- " + loggedInRole + " Menu ---");
             switch (loggedInRole) {
-                case "Administrator" -> displayAdminMenu();
-                case "Kasserer" -> displayTreasurerMenu();
-                case "Træner" -> displayCoachMenu();
+                case "Admin" -> displayAdminMenu();
+                case "Treasurer" -> displayTreasurerMenu();
+                case "Coach" -> displayCoachMenu();
+                default -> {
+                    System.out.println("Role not recognized: " + loggedInRole); // Debug statement
+                    loggedIn = false; // Exit if an invalid role is detected
+                }
             }
 
             System.out.print("Enter choice or 0 to log out: ");
@@ -69,13 +74,13 @@ public class UserInterface {
 
     private void handleRoleChoice(String choice) {
         switch (loggedInRole) {
-            case "Administrator" -> handleAdminChoice(choice);
-            case "Kasserer" -> handleTreasurerChoice(choice);
-            case "Træner" -> handleCoachChoice(choice);
+            case "Admin" -> handleAdminChoice(choice);
+            case "Treasurer" -> handleTreasurerChoice(choice);
+            case "Coach" -> handleCoachChoice(choice);
             default -> System.out.println("Invalid role.");
         }
     }
-
+    //-------------------Admin menu---------------------------
     // --- Administrator-funktioner ---
     private void displayAdminMenu() {
         System.out.println("[1] Register new member");
@@ -91,20 +96,20 @@ public class UserInterface {
     }
 
     private void addMember() {
-        System.out.println("[Please enter the following details to register a new member]");
+        System.out.println("\n[Please enter the following details to register a new member]");
 
-        System.out.print("First name [Include middle name if applicable]: ");
+        System.out.print("\nFirst name [Include middle name if applicable]: ");
         String name = scanner.nextLine().trim();
 
         System.out.print("Surname: ");
         String surName = scanner.nextLine().trim();
 
         System.out.print("Date of birth [DD-MM-YYYY]: ");
-        LocalDate birthDate = null;
-        while (birthDate == null) {
+        LocalDate age = null;
+        while (age== null) {
             try {
                 String dobString = scanner.nextLine().trim();
-                birthDate = LocalDate.parse(dobString, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+                age = LocalDate.parse(dobString, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
             } catch (DateTimeParseException e) {
                 System.out.println("Invalid date format. Please use DD-MM-YYYY.");
             }
@@ -116,19 +121,26 @@ public class UserInterface {
         System.out.print("Phone number: ");
         int phoneNumber = getIntInput();
 
-        System.out.print("Email: ");
+        System.out.print("Email address: ");
         String email = scanner.nextLine().trim();
 
-        System.out.print("Is the member active? Y/N: ");
+        System.out.print("Register as active membership? Y/N: ");
         boolean isActive = scanner.nextLine().trim().equalsIgnoreCase("y");
 
-        System.out.print("Register member as competitive? Y/N: ");
+        System.out.print("Register member as a competitive swimmer? Y/N: ");
         boolean isCompetitive = scanner.nextLine().trim().equalsIgnoreCase("y");
 
-        Swimmer newMember = new Swimmer(name, surName, birthDate, isActive, address, phoneNumber, email, isCompetitive);
+        Swimmer newMember = new Swimmer(name, surName, age, isActive, address, phoneNumber,email, isCompetitive);
+        // Tilføj medlem til listen
         controller.getMemberList().addMember(newMember);
-        System.out.println("\nMember added successfully!");
+        // Gem medlemmer i CSV-filen automatisk
+        ArrayList<Member> members = controller.getMemberList().getMembers();
+        if(filehandler.saveMember(members)) {
+            System.out.println("Member added and saved successfully");
+        } else {
+        System.out.println("\nMember added, but saving to file failed");
     }
+        }
 
     private int getIntInput() {
         while (!scanner.hasNextInt()) {
@@ -139,7 +151,7 @@ public class UserInterface {
         scanner.nextLine(); // Consume newline
         return input;
     }
-
+    //-----------------------------------------------------------------
     private void showMembers() {
         ArrayList<Member> members = controller.getMemberList().getMembers();
 
@@ -152,7 +164,7 @@ public class UserInterface {
             }
         }
     }
-
+    //---------------------------Treasury menu--------------------------
     // --- Kasserer-funktioner ---
     private void displayTreasurerMenu() {
         System.out.println("[1] View expected payments");
@@ -175,17 +187,17 @@ public class UserInterface {
         for (Swimmer member : members) {
             totalExpected += Contingent.calculateContingent(member.getMembershipType());
         }
-        System.out.println("Total forventet kontingentbetaling: " + totalExpected + " DKK");
+        System.out.println("Total expected fee payment: " + totalExpected + " DKK");
     }
 
     private void viewActualPayments() {
         Map<String, Double> payments = filehandler.loadPayments();
         if (payments.isEmpty()) {
-            System.out.println("Ingen betalinger er registreret.");
+            System.out.println("No payments are registered");
         } else {
-            System.out.println("Aktuelle betalinger:");
+            System.out.println("Actual payments:");
             payments.forEach((username, amount) ->
-                    System.out.println("Bruger: " + username + ", Betalt: " + amount + " DKK"));
+                    System.out.println("Member: " + username + ", Paid: " + amount + " DKK"));
         }
     }
 
@@ -193,17 +205,17 @@ public class UserInterface {
         ArrayList<Swimmer> members = filehandler.loadMembers();
         Map<String, Double> payments = filehandler.loadPayments();
 
-        System.out.println("Medlemmer i restance:");
+        System.out.println("Members in debt");
         for (Swimmer member : members) {
             double expected = Contingent.calculateContingent(member.getMembershipType());
             double paid = payments.getOrDefault(member.getUsername(), 0.0);
             if (paid < expected) {
-                System.out.printf("Bruger: %s, Forventet: %.2f DKK, Betalt: %.2f DKK, Restance: %.2f DKK%n",
+                System.out.printf("Member: %s, Expected: %.2f DKK, Paid: %.2f DKK, Outstanding: %.2f DKK%n",
                         member.getUsername(), expected, paid, expected - paid);
             }
         }
     }
-
+    //----------------------Coach Menu------------------------------
     // --- Træner-funktioner ---
     private void displayCoachMenu() {
         System.out.println("[1] View swimmers");

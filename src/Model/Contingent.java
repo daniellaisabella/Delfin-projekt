@@ -1,8 +1,14 @@
 package Model;
+import java.time.LocalDate;
+import java.time.Period;
 
 import static Model.MembershipType.*;
 
 public class Contingent {
+    private final LocalDate age;
+    private final boolean isActive;
+    Contingent contingent = new Contingent();
+    int annualContingent = contingent.calculateAnnualContingent();
 
     // Constants for fees
     private static final double PASSIVE_FEE = 500.0;
@@ -25,7 +31,34 @@ public class Contingent {
                 throw new IllegalArgumentException("Invalid membership type");
         }
     }
-}
+       public Contingent() {
+            this.age = LocalDate.now();
+            this.isActive = true;
+        }
 
-//add method to determine membership type based on age, and active/pasive
+        public int calculateAnnualContingent() {
+            int juniorContingent = 1000;
+            int seniorContingent = 1600;
+            int pensionistContingent = 1200;
+            int passiveContingent = 500;
+            int age = calculateAge(this.age);
+
+            if (isActive) {
+                if (age < 18) return juniorContingent;
+                if (age < 60 && age >= 18) return seniorContingent;
+                return pensionistContingent;
+            } else {
+                return passiveContingent;
+            }
+        }
+
+        private int calculateAge(LocalDate age) {
+            LocalDate today = LocalDate.now();
+            Period Period;
+            return java.time.Period.between(this.age, today).getYears();
+        }
+    }
+
+
+
 
