@@ -90,7 +90,7 @@ public class UserInterface {
             default -> System.out.println("Invalid choice.");
         }
     }
-
+    //-----------------------------------------------------------------
     private void addMember() {
         System.out.println("\n[Please enter the following details to register a new member]");
 
@@ -131,7 +131,7 @@ public class UserInterface {
         controller.getMemberList().addMember(newMember);
         System.out.println("\nMember added successfully!");
     }
-
+//-------------------- funktion til telefon nr int input -----------
     private int getIntInput() {
         while (!scanner.hasNextInt()) {
             System.out.println("Invalid input. Please enter a valid number.");
