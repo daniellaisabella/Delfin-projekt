@@ -99,7 +99,7 @@ public class UserInterface {
 
         System.out.print("Surname: ");
         String surName = scanner.nextLine().trim();
-
+//-------------------------------Date formatter------------
         System.out.print("Date of birth [DD-MM-YYYY]: ");
         LocalDate age = null;
         while (age== null) {
@@ -110,7 +110,7 @@ public class UserInterface {
                 System.out.println("Invalid date format. Please use DD-MM-YYYY.");
             }
         }
-
+//-----------------------------
         System.out.print("Address [Street name, number and city]: ");
         String address = scanner.nextLine().trim();
 
