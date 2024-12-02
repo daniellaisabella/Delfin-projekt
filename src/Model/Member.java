@@ -9,7 +9,7 @@ public abstract class Member {
     private String name;
     private String surname;
     private String username;
-    private LocalDate age; // Used to calculate age
+    private int age; // Used to calculate age
     private boolean isActive; // Determines if the member participates actively
     private MembershipType membershipType;
     private String address;
@@ -20,7 +20,7 @@ public abstract class Member {
     private double timePerformance;
 
     // Constructor
-    public Member(String name, String surname, LocalDate age, String address, int phoneNumber, String mail, boolean isActive, boolean isCompetitive) {
+    public Member(String name, String surname, int age, String address, int phoneNumber, String mail, boolean isActive, boolean isCompetitive) {
         this.name = capitalizeFirstLetter(name);
         this.surname = capitalizeFirstLetter(surname);
         this.age = age;
@@ -32,7 +32,7 @@ public abstract class Member {
     }
 
     // Constructor with fewer attributes
-    public Member(String name, String surname, LocalDate age, boolean isActive) {
+    public Member(String name, String surname, int age, boolean isActive) {
         this.name = capitalizeFirstLetter(name);
         this.surname = capitalizeFirstLetter(surname);
         this.age = age;
@@ -46,7 +46,7 @@ public abstract class Member {
 
     // Calculate age based on age
     public int getAge() {
-        return Period.between(age, LocalDate.now()).getYears();
+        return age;
     }
 
     // Display member details

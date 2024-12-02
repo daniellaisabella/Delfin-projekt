@@ -19,10 +19,10 @@ public class TrainingResults {
 
 
     //Result method ????
-    public void addResult(String discipline, double time) {
-        this.discipline = discipline;
-        this.time = time;
-    }
+//    public void addResult(String discipline, double time) {
+//        this.discipline = discipline;
+//        this.time = time;
+//    }
 
 
     // Display results details

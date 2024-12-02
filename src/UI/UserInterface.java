@@ -109,16 +109,9 @@ public class UserInterface {
         System.out.print("Surname: ");
         String surName = scanner.nextLine().trim();
 
-        System.out.print("Date of birth [DD-MM-YYYY]: ");
-        LocalDate age = null;
-        while (age == null) {
-            try {
-                String dobString = scanner.nextLine().trim();
-                age = LocalDate.parse(dobString, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-            } catch (DateTimeParseException e) {
-                System.out.println("Invalid date format. Please use DD-MM-YYYY.");
-            }
-        }
+        System.out.print("Age: ");
+        int age = scanner.nextInt();
+        scanner.nextLine();
 
         System.out.print("Address [Street name, number and city]: ");
         String address = scanner.nextLine().trim();

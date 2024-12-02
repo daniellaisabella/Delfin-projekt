@@ -18,6 +18,10 @@ public class Filehandler {
         File file = new File(filePath);
 
         try (Scanner scanner = new Scanner(file)) {
+
+            scanner.nextLine();  // Skip the header line
+            System.out.println();
+
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] data = line.split(",");
@@ -25,7 +29,7 @@ public class Filehandler {
                 if (data.length == 8) {
                     String name = data[0];
                     String surName = data[1];
-                    LocalDate age = LocalDate.parse(data[2], DateTimeFormatter.ISO_LOCAL_DATE);
+                    int age = Integer.parseInt(data[2]);
                     boolean isActive = Boolean.parseBoolean(data[3]);
                     String address = data[4];
                     int phoneNumber = Integer.parseInt(data[5]);
