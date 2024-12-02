@@ -12,7 +12,7 @@ public class Membership extends Member {
     }
 
     // Getter for membershipType
-    public MembershipType getMembershipType() {
+    public String getMembershipType() {
         return membershipType;
     }
 
