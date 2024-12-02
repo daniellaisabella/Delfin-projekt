@@ -1,6 +1,6 @@
 package Model;
 
-public enum swimStroke {
+public enum SwimStroke {
     BUTTERFLY,
     CRAWL,
     BACKSTROKE,
