@@ -6,6 +6,3 @@ public class Main {
         ui.startProgram();
     }
 }
-
-
-//members.txt -> csv fil

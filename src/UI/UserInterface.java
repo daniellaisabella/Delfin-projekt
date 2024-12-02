@@ -39,7 +39,7 @@ public class UserInterface {
 
     private String authenticate(String username, String password) {
         if (username.equals("admin") && password.equals("admin123")) {
-            return "Administrator";
+            return "Admin";
         } else if (username.equals("treasurer") && password.equals("treasurer123")) {
             return "Treasurer";
         } else if (username.equals("coach") && password.equals("coach123")) {
@@ -56,6 +56,10 @@ public class UserInterface {
                 case "Admin" -> displayAdminMenu();
                 case "Treasurer" -> displayTreasurerMenu();
                 case "Coach" -> displayCoachMenu();
+                default -> {
+                    System.out.println("Role not recognized: " + loggedInRole); // Debug statement
+                    loggedIn = false; // Exit if an invalid role is detected
+                }
             }
 
             System.out.print("Enter choice or 0 to log out: ");
@@ -113,7 +117,6 @@ public class UserInterface {
 
         System.out.print("Address [Street name, number and city]: ");
         String address = scanner.nextLine().trim();
-
 
         System.out.print("Phone number: ");
         int phoneNumber = getIntInput();
