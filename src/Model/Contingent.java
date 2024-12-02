@@ -1,6 +1,6 @@
 package Model;
 
-import static Model.MembershipType.*;
+
 
 public class Contingent {
     private final int age;

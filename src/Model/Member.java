@@ -1,12 +1,15 @@
 package Model;
 
+import java.time.LocalDate;
+import java.time.Period;
+
 public abstract class Member {
 
     // Attributes
     private String name;
     private String surname;
     private String username;
-    private int age; // Changed to int to store age directly
+    private int age; // Used to calculate age
     private boolean isActive; // Determines if the member participates actively
     private MembershipType membershipType;
     private String address;
@@ -16,11 +19,11 @@ public abstract class Member {
     private String swimStroke;
     private double timePerformance;
 
-    // Constructor with full attributes
+    // Constructor
     public Member(String name, String surname, int age, String address, int phoneNumber, String mail, boolean isActive, boolean isCompetitive) {
         this.name = capitalizeFirstLetter(name);
         this.surname = capitalizeFirstLetter(surname);
-        this.age = age; // Assign age as int
+        this.age = age;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.mail = mail;
@@ -32,7 +35,7 @@ public abstract class Member {
     public Member(String name, String surname, int age, boolean isActive) {
         this.name = capitalizeFirstLetter(name);
         this.surname = capitalizeFirstLetter(surname);
-        this.age = age; // Assign age as int
+        this.age = age;
         this.isActive = isActive;
     }
 
@@ -41,9 +44,9 @@ public abstract class Member {
         return word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase();
     }
 
-    // Getter for age
+    // Calculate age based on age
     public int getAge() {
-        return age; // Returns age directly
+        return age;
     }
 
     // Display member details
@@ -57,7 +60,7 @@ public abstract class Member {
 
     // *** GETTERS *** //
 
-    public MembershipType getMembershipType() {
+    public Model.MembershipType getMembershipType() {
         return membershipType;
     }
 
@@ -72,6 +75,14 @@ public abstract class Member {
     public String getUsername() {
         return username;
     }
+
+
+
+    /*public LocalDate getAge() {
+        return age;*\
+
+     */
+
 
     public String getAddress() {
         return address;
@@ -171,3 +182,4 @@ public abstract class Member {
         this.timePerformance = timePerformance;
     }
 }
+

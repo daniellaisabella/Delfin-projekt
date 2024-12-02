@@ -1,78 +1,77 @@
 package DataSource;
-
 import Model.Member;
 import Model.Swimmer;
-
-import java.io.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Filehandler {
+    private final String filePath = "src/DataSource/Members.csv";
+    ArrayList<Swimmer> members = new ArrayList<>();
 
-    private static final String FILE_PATH = "src/DataSource/Members.csv";
+    public ArrayList<Swimmer> loadMembers() {
+        File file = new File(filePath);
 
-    // Method to load members from a CSV file
-    public ArrayList<Member> loadMembers() {
-        ArrayList<Member> members = new ArrayList<>();
-        File file = new File(FILE_PATH);
+        try (Scanner scanner = new Scanner(file)) {
 
-        if (!file.exists()) {
-            System.out.println("CSV file not found. Returning an empty list.");
-            createEmptyCSVFile(); // Create an empty CSV file
-            return members;
-        }
+            scanner.nextLine();  // Skip the header line
+            System.out.println();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line;
-            br.readLine();
-            while ((line = br.readLine()) != null) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
                 String[] data = line.split(",");
-                String name = data[0];
-                String surname = data[1];
-                int age = Integer.parseInt(data[2]); // Parse age as an integer
-                boolean isActive = Boolean.parseBoolean(data[3]);
-                String address = data[4];
-                int phoneNumber = Integer.parseInt(data[5]);
-                String mail = data[6];
-                boolean isCompetetive = Boolean.parseBoolean(data[7]);
-                members.add(new Swimmer(name, surname, age, isActive, address, phoneNumber, mail, isCompetetive));
+
+                if (data.length == 8) {
+                    String name = data[0];
+                    String surName = data[1];
+                    int age = Integer.parseInt(data[2]);
+                    boolean isActive = Boolean.parseBoolean(data[3]);
+                    String address = data[4];
+                    int phoneNumber = Integer.parseInt(data[5]);
+                    String mail = data[6];
+                    boolean isCompetetive = Boolean.parseBoolean(data[7]);
+
+
+                    members.add(new Swimmer(name, surName, age, isActive, address, phoneNumber, mail, isCompetetive));
+
+
+                }
             }
-        } catch (IOException | NumberFormatException e) {
+
+
+            System.out.println("Loaded " + members.size() + " members from the CSV file.");
+        } catch (FileNotFoundException e) {
+            System.out.println("CSV file not found. Returning an empty list.");
+        } catch (Exception e) {
             System.out.println("Error reading CSV file: " + e.getMessage());
         }
-
         return members;
     }
 
-    // Method to create an empty CSV file with column headers
-    private void createEmptyCSVFile() {
-        try (PrintWriter writer = new PrintWriter(new File(FILE_PATH))) {
-            writer.println("Name,Surname,Age,Active"); // Column headers
-        } catch (IOException e) {
-            System.out.println("Error creating CSV file: " + e.getMessage());
-        }
-    }
 
-    // Method to save members to a CSV file
     public boolean saveMember(ArrayList<Member> members) {
-        try (PrintWriter writer = new PrintWriter(new File(FILE_PATH))) {
-            writer.println("Name,Surname,Age,Active"); // Write column headers
-            for (Member member : members) {
-                writer.printf("%s,%s,%d,%b%n",
-                        member.getName(),
-                        member.getSurname(),
-                        member.getAge(), // Write age as an integer
-                        member.isActive());
+        try (PrintStream output = new PrintStream(filePath)) {
+            System.out.println("Saving " + members.size() + " movies to the file.");
+            for (Member m : members) {
+                output.println(m.getName() + "," + m.getSurname() + "," + m.getAge() + "," + m.isActive() + "," + m.getAddress() + "," + m.getPhoneNumber() + "," + m.getMail() + "," + m.isCompetitive());
             }
             return true;
-        } catch (IOException e) {
-            System.out.println("Error saving members: " + e.getMessage());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
             return false;
+
         }
     }
 
-    // Mock implementation for loading payments (update as necessary)
     public Map<String, Double> loadPayments() {
         return Map.of();
     }
 }
+
+
+
