@@ -20,9 +20,9 @@ public class Controller {
 
     // Load members from file and add them to the member list
     public void loadMembers() throws FileNotFoundException {
-        ArrayList<Member> loadedMembers = filehandler.loadMembers();  // Load members from file
+        ArrayList<Swimmer> loadedMembers = filehandler.loadMembers();  // Load members from file
         if (loadedMembers != null && !loadedMembers.isEmpty()) {
-            for (Member member : loadedMembers) {
+            for (Swimmer member : loadedMembers) {
                 memberList.addMember(member);  // Update member list with individual members
             }
             System.out.println("Loaded " + loadedMembers.size() + " members from file.");
