@@ -69,9 +69,9 @@ public class UserInterface {
 
     private void handleRoleChoice(String choice) {
         switch (loggedInRole) {
-            case "Administrator" -> handleAdminChoice(choice);
-            case "Kasserer" -> handleTreasurerChoice(choice);
-            case "Træner" -> handleCoachChoice(choice);
+            case "Admin" -> handleAdminChoice(choice);
+            case "Treasurer" -> handleTreasurerChoice(choice);
+            case "Coach" -> handleCoachChoice(choice);
             default -> System.out.println("Invalid role.");
         }
     }
@@ -194,12 +194,12 @@ public class UserInterface {
         ArrayList<Swimmer> members = filehandler.loadMembers();
         Map<String, Double> payments = filehandler.loadPayments();
 
-        System.out.println("Medlemmer i restance:");
+        System.out.println("Members in debt");
         for (Swimmer member : members) {
             double expected = Contingent.calculateContingent(member.getMembershipType());
             double paid = payments.getOrDefault(member.getUsername(), 0.0);
             if (paid < expected) {
-                System.out.printf("Bruger: %s, Forventet: %.2f DKK, Betalt: %.2f DKK, Restance: %.2f DKK%n",
+                System.out.printf("Member: %s, Expected: %.2f DKK, Paid: %.2f DKK, Outstanding: %.2f DKK%n",
                         member.getUsername(), expected, paid, expected - paid);
             }
         }
