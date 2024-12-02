@@ -8,4 +8,4 @@ public class Main {
 }
 
 
-//members.txt -> csv file
+//members.txt -> csv fil
