@@ -12,11 +12,17 @@ import Model.*;
 
 public class UserInterface {
     private Controller controller = new Controller();
-    private Scanner scanner = new Scanner(System.in); // Scanner initialiseret korrekt
-    private String loggedInRole; // Holder styr på, hvilken bruger der er logget ind
+    private Scanner scanner = new Scanner(System.in);
+    private String loggedInRole;
     private Filehandler filehandler = new Filehandler();
 
-    //-----------------------Log in------------------------------
+    public UserInterface() {
+        ArrayList<Swimmer> loadedMembers = filehandler.loadMembers();
+        if (loadedMembers != null) {
+            controller.getMemberList().getMembers().addAll(loadedMembers);
+        }
+    }
+
     public void startProgram() {
         boolean running = true;
         while (running) {
@@ -34,12 +40,12 @@ public class UserInterface {
                 System.out.println("Invalid credentials. Try again.");
             }
         }
-        scanner.close(); // Lukker scanner for at frigive ressourcer
+        scanner.close();
     }
 
     private String authenticate(String username, String password) {
         if (username.equals("admin") && password.equals("admin123")) {
-            return "Administrator";
+            return "Admin";
         } else if (username.equals("treasurer") && password.equals("treasurer123")) {
             return "Treasurer";
         } else if (username.equals("coach") && password.equals("coach123")) {
@@ -47,7 +53,7 @@ public class UserInterface {
         }
         return null;
     }
-    //-----------------------------------------------------------------
+
     private void runRoleMenu() {
         boolean loggedIn = true;
         while (loggedIn) {
@@ -56,6 +62,10 @@ public class UserInterface {
                 case "Admin" -> displayAdminMenu();
                 case "Treasurer" -> displayTreasurerMenu();
                 case "Coach" -> displayCoachMenu();
+                default -> {
+                    System.out.println("Role not recognized: " + loggedInRole);
+                    loggedIn = false;
+                }
             }
 
             System.out.print("Enter choice or 0 to log out: ");
@@ -76,8 +86,7 @@ public class UserInterface {
             default -> System.out.println("Invalid role.");
         }
     }
-    //-------------------Admin menu---------------------------
-    // --- Administrator-funktioner ---
+
     private void displayAdminMenu() {
         System.out.println("[1] Register new member");
         System.out.println("[2] View all members");
@@ -102,7 +111,7 @@ public class UserInterface {
 //-------------------------------Date formatter------------
         System.out.print("Date of birth [DD-MM-YYYY]: ");
         LocalDate age = null;
-        while (age== null) {
+        while (age == null) {
             try {
                 String dobString = scanner.nextLine().trim();
                 age = LocalDate.parse(dobString, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
@@ -113,7 +122,6 @@ public class UserInterface {
 //-----------------------------
         System.out.print("Address [Street name, number and city]: ");
         String address = scanner.nextLine().trim();
-
 
         System.out.print("Phone number: ");
         int phoneNumber = getIntInput();
@@ -127,9 +135,16 @@ public class UserInterface {
         System.out.print("Register member as a competitive swimmer? Y/N: ");
         boolean isCompetitive = scanner.nextLine().trim().equalsIgnoreCase("y");
 
-        Swimmer newMember = new Swimmer(name, surName, age, isActive, address, phoneNumber,email, isCompetitive);
+        Swimmer newMember = new Swimmer(name, surName, age, isActive, address, phoneNumber, email, isCompetitive);
+
         controller.getMemberList().addMember(newMember);
-        System.out.println("\nMember added successfully!");
+        ArrayList<Member> members = controller.getMemberList().getMembers();
+
+        if (filehandler.saveMember(members)) {
+            System.out.println("Member added and saved successfully");
+        } else {
+            System.out.println("\nMember added, but saving to file failed");
+        }
     }
 //-------------------- funktion til telefon nr int input -----------
     private int getIntInput() {
@@ -138,24 +153,25 @@ public class UserInterface {
             scanner.next();
         }
         int input = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        scanner.nextLine();
         return input;
     }
-    //-----------------------------------------------------------------
+
     private void showMembers() {
         ArrayList<Member> members = controller.getMemberList().getMembers();
+        System.out.println("Debug: Number of members in the list: " + members.size());
 
         if (members.isEmpty()) {
             System.out.println("No members on the list.");
         } else {
             System.out.println("Members on the list:");
+            filehandler.loadMembers();
             for (Member member : members) {
                 System.out.println(member);
             }
         }
     }
-    //---------------------------Treasury menu--------------------------
-    // --- Kasserer-funktioner ---
+
     private void displayTreasurerMenu() {
         System.out.println("[1] View expected payments");
         System.out.println("[2] View actual payments");
@@ -205,8 +221,7 @@ public class UserInterface {
             }
         }
     }
-    //----------------------Coach Menu------------------------------
-    // --- Træner-funktioner ---
+
     private void displayCoachMenu() {
         System.out.println("[1] View swimmers");
         System.out.println("[2] View disciplines and competition times");
