@@ -11,6 +11,7 @@ public abstract class Member {
     private String username;
     private LocalDate age; // Used to calculate age
     private boolean isActive; // Determines if the member participates actively
+    private MembershipType membershipType;
     private String address;
     private int phoneNumber;
     private String mail;
@@ -59,7 +60,7 @@ public abstract class Member {
 
     // *** GETTERS *** //
 
-    public MembershipType getMembershipType() {
+    public Model.MembershipType getMembershipType() {
         return membershipType;
     }
 
@@ -119,35 +120,35 @@ public abstract class Member {
 
     public void setName(String name) {
         if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("Name cannot be null or empty.");
+            throw new IllegalArgumentException("Invalid name");
         }
         this.name = capitalizeFirstLetter(name);
     }
 
     public void setSurname(String surname) {
         if (surname == null || surname.isEmpty()) {
-            throw new IllegalArgumentException("Surname cannot be null or empty.");
+            throw new IllegalArgumentException("Invalid surname");
         }
         this.surname = capitalizeFirstLetter(surname);
     }
 
     public void setUsername(String username) {
         if (username == null || username.isEmpty()) {
-            throw new IllegalArgumentException("Username cannot be null or empty.");
+            throw new IllegalArgumentException("Invalid username");
         }
         this.username = username;
     }
 
     public void setAddress(String address) {
         if (address == null || address.isEmpty()) {
-            throw new IllegalArgumentException("Address cannot be null or empty.");
+            throw new IllegalArgumentException("Invalid address");
         }
         this.address = address;
     }
 
     public void setPhoneNumber(int phoneNumber) {
         if (phoneNumber <= 0) {
-            throw new IllegalArgumentException("Phone number must be a positive integer.");
+            throw new IllegalArgumentException("Invalid phone number");
         }
         this.phoneNumber = phoneNumber;
     }
@@ -169,14 +170,14 @@ public abstract class Member {
 
     public void setSwimStroke(String swimStroke) {
         if (swimStroke == null || swimStroke.isEmpty()) {
-            throw new IllegalArgumentException("Swim stroke cannot be null or empty.");
+            throw new IllegalArgumentException("Invalid swim stroke");
         }
         this.swimStroke = swimStroke;
     }
 
     public void setTimePerformance(double timePerformance) {
         if (timePerformance <= 0) {
-            throw new IllegalArgumentException("Swim time must be greater than zero.");
+            throw new IllegalArgumentException("Invalid swim time");
         }
         this.timePerformance = timePerformance;
     }

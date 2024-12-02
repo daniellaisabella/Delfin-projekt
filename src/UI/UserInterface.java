@@ -16,6 +16,7 @@ public class UserInterface {
     private String loggedInRole; // Holder styr på, hvilken bruger der er logget ind
     private Filehandler filehandler = new Filehandler();
 
+    //-----------------------Log in------------------------------
     public void startProgram() {
         boolean running = true;
         while (running) {
@@ -40,21 +41,21 @@ public class UserInterface {
         if (username.equals("admin") && password.equals("admin123")) {
             return "Administrator";
         } else if (username.equals("treasurer") && password.equals("treasurer123")) {
-            return "Kasserer";
+            return "Treasurer";
         } else if (username.equals("coach") && password.equals("coach123")) {
-            return "Træner";
+            return "Coach";
         }
         return null;
     }
-
+    //-----------------------------------------------------------------
     private void runRoleMenu() {
         boolean loggedIn = true;
         while (loggedIn) {
             System.out.println("\n--- " + loggedInRole + " Menu ---");
             switch (loggedInRole) {
-                case "Administrator" -> displayAdminMenu();
-                case "Kasserer" -> displayTreasurerMenu();
-                case "Træner" -> displayCoachMenu();
+                case "Admin" -> displayAdminMenu();
+                case "Treasurer" -> displayTreasurerMenu();
+                case "Coach" -> displayCoachMenu();
             }
 
             System.out.print("Enter choice or 0 to log out: ");
@@ -69,13 +70,13 @@ public class UserInterface {
 
     private void handleRoleChoice(String choice) {
         switch (loggedInRole) {
-            case "Administrator" -> handleAdminChoice(choice);
-            case "Kasserer" -> handleTreasurerChoice(choice);
-            case "Træner" -> handleCoachChoice(choice);
+            case "Admin" -> handleAdminChoice(choice);
+            case "Treasurer" -> handleTreasurerChoice(choice);
+            case "Coach" -> handleCoachChoice(choice);
             default -> System.out.println("Invalid role.");
         }
     }
-
+    //-------------------Admin menu---------------------------
     // --- Administrator-funktioner ---
     private void displayAdminMenu() {
         System.out.println("[1] Register new member");
@@ -147,7 +148,7 @@ public class UserInterface {
         scanner.nextLine(); // Consume newline
         return input;
     }
-
+    //-----------------------------------------------------------------
     private void showMembers() {
         ArrayList<Member> members = controller.getMemberList().getMembers();
 
@@ -160,7 +161,7 @@ public class UserInterface {
             }
         }
     }
-
+    //---------------------------Treasury menu--------------------------
     // --- Kasserer-funktioner ---
     private void displayTreasurerMenu() {
         System.out.println("[1] View expected payments");
@@ -183,17 +184,17 @@ public class UserInterface {
         for (Swimmer member : members) {
             totalExpected += Contingent.calculateContingent(member.getMembershipType());
         }
-        System.out.println("Total forventet kontingentbetaling: " + totalExpected + " DKK");
+        System.out.println("Total expected fee payment: " + totalExpected + " DKK");
     }
 
     private void viewActualPayments() {
         Map<String, Double> payments = filehandler.loadPayments();
         if (payments.isEmpty()) {
-            System.out.println("Ingen betalinger er registreret.");
+            System.out.println("No payments are registered");
         } else {
-            System.out.println("Aktuelle betalinger:");
+            System.out.println("Actual payments:");
             payments.forEach((username, amount) ->
-                    System.out.println("Bruger: " + username + ", Betalt: " + amount + " DKK"));
+                    System.out.println("Member: " + username + ", Paid: " + amount + " DKK"));
         }
     }
 
@@ -201,17 +202,17 @@ public class UserInterface {
         ArrayList<Swimmer> members = filehandler.loadMembers();
         Map<String, Double> payments = filehandler.loadPayments();
 
-        System.out.println("Medlemmer i restance:");
+        System.out.println("Members in debt");
         for (Swimmer member : members) {
             double expected = Contingent.calculateContingent(member.getMembershipType());
             double paid = payments.getOrDefault(member.getUsername(), 0.0);
             if (paid < expected) {
-                System.out.printf("Bruger: %s, Forventet: %.2f DKK, Betalt: %.2f DKK, Restance: %.2f DKK%n",
+                System.out.printf("Member: %s, Expected: %.2f DKK, Paid: %.2f DKK, Outstanding: %.2f DKK%n",
                         member.getUsername(), expected, paid, expected - paid);
             }
         }
     }
-
+    //----------------------Coach Menu------------------------------
     // --- Træner-funktioner ---
     private void displayCoachMenu() {
         System.out.println("[1] View swimmers");
