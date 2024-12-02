@@ -59,7 +59,7 @@ public class Filehandler {
 
     public boolean saveMember(ArrayList<Member> members) {
         try (PrintStream output = new PrintStream(new File(filePath))) {
-            System.out.println("Saving " + members.size() + " movies to the file.");
+            System.out.println("Saving " + members.size() + " member to the file.");
             for (Member m : members) {
                 output.println(m.getName() + "," + m.getSurname() + "," + m.getAge() + "," + m.isActive() + "," + m.getAddress() + "," + m.getPhoneNumber() + "," + m.getMail()+ "," + m.isCompetitive());
             }
