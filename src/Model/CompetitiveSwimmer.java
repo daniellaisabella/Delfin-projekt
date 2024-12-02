@@ -1,6 +1,5 @@
 package Model;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,8 +9,8 @@ public class CompetitiveSwimmer extends Member {
     private List<CompetitiveResults> competitiveResults; // List of competition results
 
     // Constructor for CompetitiveSwimmer
-    public CompetitiveSwimmer(String name, String surName, LocalDate age, boolean isActive) {
-        super(name, surName,age, isActive);
+    public CompetitiveSwimmer(String name, String surName, int age, boolean isActive) {
+        super(name, surName, age, isActive); // Updated to accept age as int
         this.swimStrokes = new ArrayList<>();
         this.trainingResults = new ArrayList<>();
         this.competitiveResults = new ArrayList<>();
@@ -25,8 +24,8 @@ public class CompetitiveSwimmer extends Member {
     }
 
     // Add a competition result for a specific stroke style
-    public void addCompetitionResult(String swimStrokes, double timePerformance, int placement) {
-        competitiveResults.add(new CompetitiveResults(swimStrokes, timePerformance, placement));
+    public void addCompetitionResult(String swimStroke, double timePerformance, int placement) {
+        competitiveResults.add(new CompetitiveResults(swimStroke, timePerformance, placement));
     }
 
     // Get the list of swim stroke styles
@@ -47,12 +46,8 @@ public class CompetitiveSwimmer extends Member {
     // Override toString() to display swimmer details
     @Override
     public String toString() {
-        return "name = " + getName() + ", age = " + getAge() + ", swimStrokes = " + swimStrokes + ", trainingResults = " + trainingResults
-        + ", competitiveResults=" + competitiveResults;
+        return "Name: " + getName() + ", Age: " + getAge() + ", Active: " + isActive() +
+                ", Swim Strokes: " + swimStrokes + ", Training Results: " + trainingResults +
+                ", Competitive Results: " + competitiveResults;
     }
 }
-
-
-
-
-

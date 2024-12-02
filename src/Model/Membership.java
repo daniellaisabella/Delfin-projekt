@@ -1,12 +1,11 @@
 package Model;
 
-import java.time.LocalDate;
-
 public class Membership extends Member {
 
     private MembershipType membershipType;
 
-    public Membership(String name, String surName, LocalDate age, String address, int phoneNumber, String mail, boolean isActive, boolean isCompetitive, MembershipType membershipType) {
+    // Constructor updated to use int age instead of LocalDate
+    public Membership(String name, String surName, int age, String address, int phoneNumber, String mail, boolean isActive, boolean isCompetitive, MembershipType membershipType) {
         super(name, surName, age, address, phoneNumber, mail, isActive, isCompetitive);
         this.membershipType = membershipType;
     }
@@ -29,20 +28,5 @@ public class Membership extends Member {
                 getName(), getSurname(), getAge(), membershipType, isActive(), isCompetitive());
     }
 
-    //calculating contingent based on age & active/passive
-
+    // Additional methods for payment tracking or contingent calculation can be added here
 }
-
-    // Method to check payment status (commented out as it needs additional logic)
-    // This method assumes there is an `outstandingFee` attribute to track payment status
-    /*
-    public boolean hasPaid() {
-        if (outstandingFee == 0) {
-            return true;
-        } else {
-            System.out.println("Member has outstanding fee: " + outstandingFee);
-            return false;
-        }
-    }
-    */
-

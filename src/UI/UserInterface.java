@@ -1,8 +1,5 @@
 package UI;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
@@ -109,16 +106,8 @@ public class UserInterface {
         System.out.print("Surname: ");
         String surName = scanner.nextLine().trim();
 
-        System.out.print("Date of birth [DD-MM-YYYY]: ");
-        LocalDate age = null;
-        while (age == null) {
-            try {
-                String dobString = scanner.nextLine().trim();
-                age = LocalDate.parse(dobString, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-            } catch (DateTimeParseException e) {
-                System.out.println("Invalid date format. Please use DD-MM-YYYY.");
-            }
-        }
+        System.out.print("Age: ");
+        int age = getIntInput(); // Read the age as an integer
 
         System.out.print("Address [Street name, number and city]: ");
         String address = scanner.nextLine().trim();
@@ -165,7 +154,6 @@ public class UserInterface {
             System.out.println("No members on the list.");
         } else {
             System.out.println("Members on the list:");
-            filehandler.loadMembers();
             for (Member member : members) {
                 System.out.println(member);
             }

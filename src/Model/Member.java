@@ -1,15 +1,12 @@
 package Model;
 
-import java.time.LocalDate;
-import java.time.Period;
-
 public abstract class Member {
 
     // Attributes
     private String name;
     private String surname;
     private String username;
-    private LocalDate age; // Used to calculate age
+    private int age; // Changed to int to store age directly
     private boolean isActive; // Determines if the member participates actively
     private MembershipType membershipType;
     private String address;
@@ -19,11 +16,11 @@ public abstract class Member {
     private String swimStroke;
     private double timePerformance;
 
-    // Constructor
-    public Member(String name, String surname, LocalDate age, String address, int phoneNumber, String mail, boolean isActive, boolean isCompetitive) {
+    // Constructor with full attributes
+    public Member(String name, String surname, int age, String address, int phoneNumber, String mail, boolean isActive, boolean isCompetitive) {
         this.name = capitalizeFirstLetter(name);
         this.surname = capitalizeFirstLetter(surname);
-        this.age = age;
+        this.age = age; // Assign age as int
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.mail = mail;
@@ -32,10 +29,10 @@ public abstract class Member {
     }
 
     // Constructor with fewer attributes
-    public Member(String name, String surname, LocalDate age, boolean isActive) {
+    public Member(String name, String surname, int age, boolean isActive) {
         this.name = capitalizeFirstLetter(name);
         this.surname = capitalizeFirstLetter(surname);
-        this.age = age;
+        this.age = age; // Assign age as int
         this.isActive = isActive;
     }
 
@@ -44,9 +41,9 @@ public abstract class Member {
         return word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase();
     }
 
-    // Calculate age based on age
+    // Getter for age
     public int getAge() {
-        return Period.between(age, LocalDate.now()).getYears();
+        return age; // Returns age directly
     }
 
     // Display member details
@@ -60,7 +57,7 @@ public abstract class Member {
 
     // *** GETTERS *** //
 
-    public Model.MembershipType getMembershipType() {
+    public MembershipType getMembershipType() {
         return membershipType;
     }
 
@@ -75,14 +72,6 @@ public abstract class Member {
     public String getUsername() {
         return username;
     }
-
-
-
-    /*public LocalDate getAge() {
-        return age;*\
-
-     */
-
 
     public String getAddress() {
         return address;
@@ -182,4 +171,3 @@ public abstract class Member {
         this.timePerformance = timePerformance;
     }
 }
-
