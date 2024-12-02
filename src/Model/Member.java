@@ -17,6 +17,7 @@ public abstract class Member {
     private boolean isCompetitive;
     private String swimStroke;
     private double timePerformance;
+    private MembershipType membershipType;
 
     // Constructor
     public Member(String name, String surname, LocalDate age, String address, int phoneNumber, String mail, boolean isActive, boolean isCompetitive) {
