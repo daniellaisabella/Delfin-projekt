@@ -17,6 +17,14 @@ public class TrainingResults {
         return timePerformance;
     }
 
+
+    //Result method ????
+//    public void addResult(String discipline, double time) {
+//        this.discipline = discipline;
+//        this.time = time;
+//    }
+
+
     // Display results details
     @Override
     public String toString() {

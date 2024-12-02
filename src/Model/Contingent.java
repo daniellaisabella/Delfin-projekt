@@ -2,7 +2,7 @@ package Model;
 import java.time.LocalDate;
 import java.time.Period;
 
-import static Model.MembershipType.*;
+
 
 public class Contingent {
     private final LocalDate age;

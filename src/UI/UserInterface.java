@@ -99,7 +99,7 @@ public class UserInterface {
             default -> System.out.println("Invalid choice.");
         }
     }
-    //-----------------------------------------------------------------
+
     private void addMember() {
         System.out.println("\n[Please enter the following details to register a new member]");
 
@@ -108,18 +108,11 @@ public class UserInterface {
 
         System.out.print("Surname: ");
         String surName = scanner.nextLine().trim();
-//-------------------------------Date formatter------------
-        System.out.print("Date of birth [DD-MM-YYYY]: ");
-        LocalDate age = null;
-        while (age == null) {
-            try {
-                String dobString = scanner.nextLine().trim();
-                age = LocalDate.parse(dobString, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-            } catch (DateTimeParseException e) {
-                System.out.println("Invalid date format. Please use DD-MM-YYYY.");
-            }
-        }
-//-----------------------------
+
+        System.out.print("Age: ");
+        int age = scanner.nextInt();
+        scanner.nextLine();
+
         System.out.print("Address [Street name, number and city]: ");
         String address = scanner.nextLine().trim();
 
@@ -146,7 +139,7 @@ public class UserInterface {
             System.out.println("\nMember added, but saving to file failed");
         }
     }
-//-------------------- funktion til telefon nr int input -----------
+
     private int getIntInput() {
         while (!scanner.hasNextInt()) {
             System.out.println("Invalid input. Please enter a valid number.");

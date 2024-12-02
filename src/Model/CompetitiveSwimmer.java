@@ -10,7 +10,7 @@ public class CompetitiveSwimmer extends Member {
     private List<CompetitiveResults> competitiveResults; // List of competition results
 
     // Constructor for CompetitiveSwimmer
-    public CompetitiveSwimmer(String name, String surName, LocalDate age, boolean isActive) {
+    public CompetitiveSwimmer(String name, String surName, int age, boolean isActive) {
         super(name, surName,age, isActive);
         this.swimStrokes = new ArrayList<>();
         this.trainingResults = new ArrayList<>();
