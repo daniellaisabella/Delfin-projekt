@@ -16,6 +16,7 @@ public class UserInterface {
     private String loggedInRole; // Holder styr på, hvilken bruger der er logget ind
     private Filehandler filehandler = new Filehandler();
 
+    //-----------------------Log in------------------------------
     public void startProgram() {
         boolean running = true;
         while (running) {
@@ -46,7 +47,7 @@ public class UserInterface {
         }
         return null;
     }
-
+    //-----------------------------------------------------------------
     private void runRoleMenu() {
         boolean loggedIn = true;
         while (loggedIn) {
@@ -75,7 +76,7 @@ public class UserInterface {
             default -> System.out.println("Invalid role.");
         }
     }
-
+    //-------------------Admin menu---------------------------
     // --- Administrator-funktioner ---
     private void displayAdminMenu() {
         System.out.println("[1] Register new member");
@@ -140,7 +141,7 @@ public class UserInterface {
         scanner.nextLine(); // Consume newline
         return input;
     }
-
+    //-----------------------------------------------------------------
     private void showMembers() {
         ArrayList<Member> members = controller.getMemberList().getMembers();
 
@@ -153,7 +154,7 @@ public class UserInterface {
             }
         }
     }
-
+    //---------------------------Treasury menu--------------------------
     // --- Kasserer-funktioner ---
     private void displayTreasurerMenu() {
         System.out.println("[1] View expected payments");
@@ -204,7 +205,7 @@ public class UserInterface {
             }
         }
     }
-
+    //----------------------Coach Menu------------------------------
     // --- Træner-funktioner ---
     private void displayCoachMenu() {
         System.out.println("[1] View swimmers");
