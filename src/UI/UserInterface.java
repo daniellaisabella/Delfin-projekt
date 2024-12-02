@@ -40,9 +40,9 @@ public class UserInterface {
         if (username.equals("admin") && password.equals("admin123")) {
             return "Administrator";
         } else if (username.equals("treasurer") && password.equals("treasurer123")) {
-            return "Kasserer";
+            return "Treasurer";
         } else if (username.equals("coach") && password.equals("coach123")) {
-            return "Træner";
+            return "Coach";
         }
         return null;
     }
