@@ -24,7 +24,7 @@ public class Filehandler {
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
-            br.readLine(); // Skip the header line
+            br.readLine();
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(",");
                 String name = data[0];

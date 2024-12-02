@@ -107,7 +107,7 @@ public class UserInterface {
         String surName = scanner.nextLine().trim();
 
         System.out.print("Age: ");
-        int age = getIntInput(); // Read the age as an integer
+        int age = scanner.nextInt();
 
         System.out.print("Address [Street name, number and city]: ");
         String address = scanner.nextLine().trim();
