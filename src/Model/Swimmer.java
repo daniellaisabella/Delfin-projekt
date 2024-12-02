@@ -1,5 +1,6 @@
 package Model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,6 @@ public class Swimmer extends Member {
         return competitiveResults;
     }
 
-    public void addCompetitiveResult(CompetitiveResults result) {
-        this.competitiveResults.add(result);
-    }
+
+
 }
