@@ -145,9 +145,15 @@ public class UserInterface {
         scanner.nextLine();
         return input;
     }
+
+
     private void showMembers() {
         ArrayList<Member> members = controller.getMemberList().getMembers();
 //        System.out.println("Debug: Number of members in the list: " + members.size());
+        ArrayList<Swimmer> loadedMembers = filehandler.loadMembers();
+        if (loadedMembers != null) {
+            controller.getMemberList().getMembers().addAll(loadedMembers);
+        }
         System.out.println("Number of members in the list: " + members.size());
 
         if (members.isEmpty()) {
