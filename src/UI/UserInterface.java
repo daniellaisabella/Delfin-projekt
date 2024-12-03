@@ -13,9 +13,16 @@ public class UserInterface {
     private Filehandler filehandler = new Filehandler();
 
     public UserInterface() {
+
+    }
+
+    public boolean load2() {
         ArrayList<Swimmer> loadedMembers = filehandler.loadMembers();
         if (loadedMembers != null) {
             controller.getMemberList().getMembers().addAll(loadedMembers);
+            return true; // Loading successful
+        } else {
+            return false; // Loading failed
         }
     }
 
@@ -145,9 +152,12 @@ public class UserInterface {
         scanner.nextLine();
         return input;
     }
+
+
     private void showMembers() {
         ArrayList<Member> members = controller.getMemberList().getMembers();
 //        System.out.println("Debug: Number of members in the list: " + members.size());
+
         System.out.println("Number of members in the list: " + members.size());
 
         if (members.isEmpty()) {
@@ -158,6 +168,7 @@ public class UserInterface {
                 System.out.println(member);
             }
         }
+
     }
 
     private void displayTreasurerMenu() {
