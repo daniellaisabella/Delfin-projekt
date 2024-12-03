@@ -9,6 +9,7 @@ public abstract class Member {
     private String mail;
     private String membershipType; // "active" or "passive"
     private String memberType;     // "competition" or "fitness enthusiast"
+    private int membershipPrice;   // Price for membership
 
     public Member(String name, String surname, int age, String address, int phoneNumber, String mail, String membershipType, String memberType) {
         this.name = capitalizeFirstLetter(name);
@@ -19,6 +20,7 @@ public abstract class Member {
         this.mail = mail;
         this.membershipType = validateMembershipType(membershipType);
         this.memberType = validateMemberType(memberType);
+        this.membershipPrice = calculateMembershipPrice();
     }
 
     private String capitalizeFirstLetter(String word) {
@@ -40,6 +42,18 @@ public abstract class Member {
             throw new IllegalArgumentException("Invalid member type. Must be 'competition' or 'fitness enthusiast'.");
         }
         return type.toLowerCase();
+    }
+
+    private int calculateMembershipPrice() {
+        if (membershipType.equals("passive")) {
+            return 500; // Passive membership price
+        } else if (age < 18) {
+            return 1000; // Active junior price
+        } else if (age < 60) {
+            return 1600; // Active senior price
+        } else {
+            return 1200; // Active retiree price
+        }
     }
 
     public String getName() {
@@ -74,9 +88,15 @@ public abstract class Member {
         return memberType;
     }
 
+    public int getMembershipPrice() {
+        return membershipPrice;
+    }
+
     @Override
     public String toString() {
-        return String.format("Name: %s %s, Age: %d, Address: %s, Phone: %d, Email: %s, Membership Type: %s, Member Type: %s",
-                name, surname, age, address, phoneNumber, mail, membershipType, memberType);
+        return String.format(
+                "Name: %s %s, Age: %d, Address: %s, Phone: %d, Email: %s, Membership Type: %s, Member Type: %s, Membership Price: %d",
+                name, surname, age, address, phoneNumber, mail, membershipType, memberType, membershipPrice
+        );
     }
 }
