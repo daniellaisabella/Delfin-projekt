@@ -1,48 +1,33 @@
 package Model;
 
-import java.time.LocalDate;
-
 public class Membership extends Member {
+    private String membershipType; // "active" or "passive"
 
-    private MembershipType membershipType;
-
-    public Membership(String name, String surName, int age, String address, int phoneNumber, String mail, boolean isActive, boolean isCompetitive, MembershipType membershipType) {
-        super(name, surName, age, address, phoneNumber, mail, isActive, isCompetitive);
-        this.membershipType = membershipType;
+    // Constructor
+    public Membership(String name, String surName, int age, String address, int phoneNumber, String mail, String membershipType, String memberType) {
+        super(name, surName, age, address, phoneNumber, mail, membershipType, memberType); // Kald til super-konstruktor
+        this.membershipType = membershipType.toLowerCase();
     }
 
     // Getter for membershipType
-    public Model.MembershipType getMembershipType() {
+    public String getMembershipType() {
         return membershipType;
     }
 
     // Setter for membershipType
-    public void setMembershipType(MembershipType membershipType) {
-        this.membershipType = membershipType;
+    public void setMembershipType(String membershipType) {
+        if (!membershipType.equalsIgnoreCase("active") && !membershipType.equalsIgnoreCase("passive")) {
+            throw new IllegalArgumentException("Invalid membership type. Must be 'active' or 'passive'.");
+        }
+        this.membershipType = membershipType.toLowerCase();
     }
 
     // Override toString for detailed member information
     @Override
     public String toString() {
         return String.format(
-                "Name: %s %s, Age: %d, Membership Type: %s, Active: %b, Competitive: %b, Annual Contingent: %d DKK",
-                getName(), getSurname(), getAge(), membershipType, isActive(), isCompetitive());
+                "Name: %s %s, Age: %d, Membership Type: %s, Address: %s, Phone: %d, Email: %s",
+                getName(), getSurname(), getAge(), membershipType, getAddress(), getPhoneNumber(), getMail()
+        );
     }
-
-    //calculating contingent based on age & active/passive
-
 }
-
-    // Method to check payment status (commented out as it needs additional logic)
-    // This method assumes there is an `outstandingFee` attribute to track payment status
-    /*
-    public boolean hasPaid() {
-        if (outstandingFee == 0) {
-            return true;
-        } else {
-            System.out.println("Member has outstanding fee: " + outstandingFee);
-            return false;
-        }
-    }
-    */
-

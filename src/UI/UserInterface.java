@@ -1,6 +1,6 @@
 package UI;
+
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Scanner;
 
 import DataSource.Filehandler;
@@ -13,7 +13,6 @@ public class UserInterface {
     private Filehandler filehandler = new Filehandler();
 
     public UserInterface() {
-
     }
 
     public boolean load2() {
@@ -106,17 +105,16 @@ public class UserInterface {
     private void addMember() {
         System.out.println("\n[Please enter the following details to register a new member]");
 
-        System.out.print("\nFirst name [Include middle name if applicable]: ");
+        System.out.print("First name: ");
         String name = scanner.nextLine().trim();
 
         System.out.print("Surname: ");
         String surName = scanner.nextLine().trim();
 
         System.out.print("Age: ");
-        int age = scanner.nextInt();
-        scanner.nextLine();
+        int age = getIntInput();
 
-        System.out.print("Address [Street name, number and city]: ");
+        System.out.print("Address: ");
         String address = scanner.nextLine().trim();
 
         System.out.print("Phone number: ");
@@ -125,21 +123,17 @@ public class UserInterface {
         System.out.print("Email address: ");
         String email = scanner.nextLine().trim();
 
-        System.out.print("Register as active membership? Y/N: ");
-        boolean isActive = scanner.nextLine().trim().equalsIgnoreCase("y");
+        String membershipType = getMembershipTypeInput();
+        String memberType = getMemberTypeInput();
 
-        System.out.print("Register member as a competitive swimmer? Y/N: ");
-        boolean isCompetitive = scanner.nextLine().trim().equalsIgnoreCase("y");
-
-        Swimmer newMember = new Swimmer(name, surName, age, isActive, address, phoneNumber, email, isCompetitive);
-
+        Swimmer newMember = new Swimmer(name, surName, age, address, phoneNumber, email, membershipType, memberType);
         controller.getMemberList().addMember(newMember);
-        ArrayList<Member> members = controller.getMemberList().getMembers();
 
+        ArrayList<Member> members = controller.getMemberList().getMembers();
         if (filehandler.saveMember(members)) {
-            System.out.println("Member added and saved successfully");
+            System.out.println("Member added and saved successfully.");
         } else {
-            System.out.println("\nMember added, but saving to file failed");
+            System.out.println("\nMember added, but saving to file failed.");
         }
     }
 
@@ -149,17 +143,38 @@ public class UserInterface {
             scanner.next();
         }
         int input = scanner.nextInt();
-        scanner.nextLine();
+        scanner.nextLine(); // Clear the buffer
         return input;
     }
 
+    private String getMembershipTypeInput() {
+        while (true) {
+            System.out.print("Membership type (active/passive): ");
+            String input = scanner.nextLine().trim().toLowerCase();
+            if (input.equals("active") || input.equals("passive")) {
+                return input;
+            } else {
+                System.out.println("Invalid input. Please enter 'active' or 'passive'.");
+            }
+        }
+    }
+
+    private String getMemberTypeInput() {
+        while (true) {
+            System.out.print("Member type (competition/fitness enthusiast): ");
+            String input = scanner.nextLine().trim().toLowerCase();
+            if (input.equals("competition") || input.equals("fitness enthusiast")) {
+                return input;
+            } else {
+                System.out.println("Invalid input. Please enter 'competition' or 'fitness enthusiast'.");
+            }
+        }
+    }
 
     private void showMembers() {
         ArrayList<Member> members = controller.getMemberList().getMembers();
-//        System.out.println("Debug: Number of members in the list: " + members.size());
 
         System.out.println("Number of members in the list: " + members.size());
-
         if (members.isEmpty()) {
             System.out.println("No members on the list.");
         } else {
@@ -168,7 +183,6 @@ public class UserInterface {
                 System.out.println(member);
             }
         }
-
     }
 
     private void displayTreasurerMenu() {
@@ -179,45 +193,10 @@ public class UserInterface {
 
     private void handleTreasurerChoice(String choice) {
         switch (choice) {
-            case "1" -> viewExpectedPayments();
-            case "2" -> viewActualPayments();
-            case "3" -> viewArrears();
+            case "1" -> System.out.println("View expected payments (Not implemented)");
+            case "2" -> System.out.println("View actual payments (Not implemented)");
+            case "3" -> System.out.println("View members in arrears (Not implemented)");
             default -> System.out.println("Invalid choice.");
-        }
-    }
-
-    private void viewExpectedPayments() {
-        ArrayList<Swimmer> members = filehandler.loadMembers();
-        double totalExpected = 0;
-        for (Swimmer member : members) {
-            totalExpected += Contingent.calculateContingent(member.getMembershipType());
-        }
-        System.out.println("Total expected fee payment: " + totalExpected + " DKK");
-    }
-
-    private void viewActualPayments() {
-        Map<String, Double> payments = filehandler.loadPayments();
-        if (payments.isEmpty()) {
-            System.out.println("No payments are registered");
-        } else {
-            System.out.println("Actual payments:");
-            payments.forEach((username, amount) ->
-                    System.out.println("Member: " + username + ", Paid: " + amount + " DKK"));
-        }
-    }
-
-    private void viewArrears() {
-        ArrayList<Swimmer> members = filehandler.loadMembers();
-        Map<String, Double> payments = filehandler.loadPayments();
-
-        System.out.println("Members in debt");
-        for (Swimmer member : members) {
-            double expected = Contingent.calculateContingent(member.getMembershipType());
-            double paid = payments.getOrDefault(member.getUsername(), 0.0);
-            if (paid < expected) {
-                System.out.printf("Member: %s, Expected: %.2f DKK, Paid: %.2f DKK, Outstanding: %.2f DKK%n",
-                        member.getUsername(), expected, paid, expected - paid);
-            }
         }
     }
 
@@ -228,34 +207,9 @@ public class UserInterface {
 
     private void handleCoachChoice(String choice) {
         switch (choice) {
-            case "1" -> showSwimmers();
-            case "2" -> showCompetitionTimes();
+            case "1" -> System.out.println("View swimmers (Not implemented)");
+            case "2" -> System.out.println("View disciplines and competition times (Not implemented)");
             default -> System.out.println("Invalid choice.");
-        }
-    }
-
-    private void showSwimmers() {
-        ArrayList<Member> members = controller.getMemberList().getMembers();
-        if (members.isEmpty()) {
-            System.out.println("No swimmers found.");
-        } else {
-            System.out.println("Swimmers:");
-            for (Member member : members) {
-                if (member.isCompetitive()) {
-                    System.out.println(member);
-                }
-            }
-        }
-    }
-
-    private void showCompetitionTimes() {
-        ArrayList<Member> members = controller.getMemberList().getMembers();
-        System.out.println("Competition times:");
-        for (Member member : members) {
-            if (member instanceof Swimmer) {
-                Swimmer swimmer = (Swimmer) member;
-                System.out.println(swimmer.getName() + "'s competition times: " + swimmer.getCompetitiveResults());
-            }
         }
     }
 }

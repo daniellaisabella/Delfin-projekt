@@ -9,8 +9,8 @@ public class CompetitiveSwimmer extends Member {
     private List<CompetitiveResults> competitiveResults; // List of competition results
 
     // Constructor for CompetitiveSwimmer
-    public CompetitiveSwimmer(String name, String surName, int age, boolean isActive) {
-        super(name, surName, age, isActive); // Updated to accept age as int
+    public CompetitiveSwimmer(String name, String surName, int age, String membershipType, String address, int phoneNumber, String mail, String memberType) {
+        super(name, surName, age, address, phoneNumber, mail, membershipType, memberType); // Updated super call
         this.swimStrokes = new ArrayList<>();
         this.trainingResults = new ArrayList<>();
         this.competitiveResults = new ArrayList<>();
@@ -46,8 +46,9 @@ public class CompetitiveSwimmer extends Member {
     // Override toString() to display swimmer details
     @Override
     public String toString() {
-        return "Name: " + getName() + ", Age: " + getAge() + ", Active: " + isActive() +
-                ", Swim Strokes: " + swimStrokes + ", Training Results: " + trainingResults +
-                ", Competitive Results: " + competitiveResults;
+        return String.format(
+                "Name: %s %s, Age: %d, Membership Type: %s, Member Type: %s, Address: %s, Phone: %d, Email: %s, Swim Strokes: %s, Training Results: %s, Competitive Results: %s",
+                getName(), getSurname(), getAge(), getMembershipType(), getMemberType(), getAddress(), getPhoneNumber(), getMail(), swimStrokes, trainingResults, competitiveResults
+        );
     }
 }
