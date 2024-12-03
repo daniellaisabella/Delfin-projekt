@@ -3,10 +3,12 @@ package Model;
 public class TrainingResults {
     private String swimStroke;
     private double timePerformance;
+    private int placement;
 
-    public void trainingResults(String swimStroke, double timePerformance) {
+    public TrainingResults(String swimStroke, double timePerformance, int placement) {
         this.swimStroke = swimStroke;
         this.timePerformance = timePerformance;
+        this.placement = placement;
     }
 
     public String getSwimStroke() {
@@ -17,7 +19,9 @@ public class TrainingResults {
         return timePerformance;
     }
 
-
+    public int getPlacement() {
+        return placement;
+    }
     //Result method ????
 //    public void addResult(String discipline, double time) {
 //        this.discipline = discipline;
@@ -28,7 +32,7 @@ public class TrainingResults {
     // Display results details
     @Override
     public String toString() {
-        return "stroke style = " + swimStroke + ", time = " + timePerformance;
+        return "stroke style = " + swimStroke + ", time = " + timePerformance + ", placement = " + placement;
     }
 }
 
