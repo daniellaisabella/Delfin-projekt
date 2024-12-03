@@ -15,7 +15,4 @@ public class Swimmer extends Member {
     public List<CompetitiveResults> getCompetitiveResults() {
         return competitiveResults;
     }
-
-
-
 }

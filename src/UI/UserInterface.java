@@ -16,13 +16,6 @@ public class UserInterface {
     private String loggedInRole;
     private Filehandler filehandler = new Filehandler();
 
-    public UserInterface() {
-        ArrayList<Swimmer> loadedMembers = filehandler.loadMembers();
-        if (loadedMembers != null) {
-            controller.getMemberList().getMembers().addAll(loadedMembers);
-        }
-    }
-
     public void startProgram() {
         boolean running = true;
         while (running) {
@@ -152,7 +145,7 @@ public class UserInterface {
 
     private void showMembers() {
         ArrayList<Member> members = controller.getMemberList().getMembers();
-        System.out.println("Debug: Number of members in the list: " + members.size());
+        System.out.println("Number of members in the list: " + members.size());
 
         if (members.isEmpty()) {
             System.out.println("No members on the list.");

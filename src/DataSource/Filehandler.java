@@ -36,7 +36,6 @@ public class Filehandler {
                     String mail = data[6];
                     boolean isCompetetive = Boolean.parseBoolean(data[7]);
 
-
                     members.add(new Swimmer(name, surName, age, isActive, address, phoneNumber, mail, isCompetetive));
 
 
