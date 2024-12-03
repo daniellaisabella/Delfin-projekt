@@ -1,10 +1,11 @@
 package DataSource;
+
 import Model.Member;
 import Model.Swimmer;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Map;
@@ -16,7 +17,7 @@ public class Filehandler {
 
     public ArrayList<Swimmer> loadMembers() {
         File file = new File(filePath);
-
+        int initialSize = members.size();
         try (Scanner scanner = new Scanner(file)) {
 
             scanner.nextLine();  // Skip the header line
@@ -35,27 +36,33 @@ public class Filehandler {
                     int phoneNumber = Integer.parseInt(data[5]);
                     String mail = data[6];
                     boolean isCompetetive = Boolean.parseBoolean(data[7]);
-
                     members.add(new Swimmer(name, surName, age, isActive, address, phoneNumber, mail, isCompetetive));
 
 
                 }
+
+
             }
 
+            System.out.println("Loaded " + (members.size() - initialSize) + " members.");
 
-            System.out.println("Loaded " + members.size() + " members from the CSV file.");
         } catch (FileNotFoundException e) {
             System.out.println("CSV file not found. Returning an empty list.");
         } catch (Exception e) {
             System.out.println("Error reading CSV file: " + e.getMessage());
         }
+
         return members;
     }
-
-
     public boolean saveMember(ArrayList<Member> members) {
-        try (PrintStream output = new PrintStream(filePath)) {
-            System.out.println("Saving " + members.size() + " movies to the file.");
+        File file = new File(filePath);
+        try (PrintStream output = new PrintStream(new FileOutputStream(file, false))) {
+            // Check if the file exists and has content, otherwise write the header
+            if (file.length() == 0) {
+                output.println("Name,Surname,Age,Active,Membership,Phone,Email,Competitive");
+            }
+
+            System.out.println("Saving " + members.size() + " members to the file.");
             for (Member m : members) {
                 output.println(m.getName() + "," + m.getSurname() + "," + m.getAge() + "," + m.isActive() + "," + m.getAddress() + "," + m.getPhoneNumber() + "," + m.getMail() + "," + m.isCompetitive());
             }
@@ -63,7 +70,6 @@ public class Filehandler {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             return false;
-
         }
     }
 
