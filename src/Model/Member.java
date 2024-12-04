@@ -105,7 +105,7 @@ public abstract class Member {
     @Override
     public String toString() {
         return String.format(
-                "Name: %s %s, Age: %d, Address: %s, Phone: %d, Email: %s, Membership Type: %s, Member Type: %s, Membership Price: %d",
+          "Name: %s %s, Age: %d, Address: %s, Phone: %d, Email: %s, Membership Type: %s, Member Type: %s, Membership Price: %d",
                 name, surname, age, address, phoneNumber, mail, membershipType, memberType, membershipPrice
         );
     }

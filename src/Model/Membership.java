@@ -26,8 +26,9 @@ public class Membership extends Member {
     @Override
     public String toString() {
         return String.format(
+
                 "Name: %s %s, Age: %d, Membership Type: %s, Address: %s, Phone: %d, Email: %s",
-                getName(), getSurname(), getAge(), membershipType, getAddress(), getPhoneNumber(), getMail()
+                 getName(), getSurname(), getAge(), membershipType, getAddress(), getPhoneNumber(), getMail()
         );
     }
 }
