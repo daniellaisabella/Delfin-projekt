@@ -1,8 +1,4 @@
 package UI;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
@@ -17,9 +13,16 @@ public class UserInterface {
     private Filehandler filehandler = new Filehandler();
 
     public UserInterface() {
+
+    }
+
+    public boolean load2() {
         ArrayList<Swimmer> loadedMembers = filehandler.loadMembers();
         if (loadedMembers != null) {
             controller.getMemberList().getMembers().addAll(loadedMembers);
+            return true; // Loading successful
+        } else {
+            return false; // Loading failed
         }
     }
 
@@ -150,19 +153,22 @@ public class UserInterface {
         return input;
     }
 
+
     private void showMembers() {
         ArrayList<Member> members = controller.getMemberList().getMembers();
-        System.out.println("Debug: Number of members in the list: " + members.size());
+//        System.out.println("Debug: Number of members in the list: " + members.size());
+
+        System.out.println("Number of members in the list: " + members.size());
 
         if (members.isEmpty()) {
             System.out.println("No members on the list.");
         } else {
             System.out.println("Members on the list:");
-            filehandler.loadMembers();
             for (Member member : members) {
                 System.out.println(member);
             }
         }
+
     }
 
     private void displayTreasurerMenu() {

@@ -1,5 +1,6 @@
 package Model;
 
+import javax.xml.crypto.dsig.spec.HMACParameterSpec;
 import java.time.LocalDate;
 import java.time.Period;
 
@@ -10,33 +11,37 @@ public abstract class Member {
     private String surname;
     private String username;
     private int age; // Used to calculate age
-    private boolean isActive; // Determines if the member participates actively
+    private String active;
+    private String passive;
     private MembershipType membershipType;
     private String address;
     private int phoneNumber;
     private String mail;
-    private boolean isCompetitive;
+    private String Competitive;
+    private String fitnessEnthusiast;
     private String swimStroke;
     private double timePerformance;
 //---
     // Constructor
-    public Member(String name, String surname, int age, String address, int phoneNumber, String mail, boolean isActive, boolean isCompetitive) {
+    public Member(String name, String surname, int age, String address, int phoneNumber, String mail, String active, String passive, String competitive, String fitnessEnthusiast) {
         this.name = capitalizeFirstLetter(name);
         this.surname = capitalizeFirstLetter(surname);
         this.age = age;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.mail = mail;
-        this.isActive = isActive;
-        this.isCompetitive = isCompetitive;
+        this.active = active;
+        this.passive = passive;
+        this.Competitive = competitive;
+        this.fitnessEnthusiast = fitnessEnthusiast;
     }
 
     // Constructor with fewer attributes
-    public Member(String name, String surname, int age, boolean isActive) {
+    public Member(String name, String surname, int age, String active) {
         this.name = capitalizeFirstLetter(name);
         this.surname = capitalizeFirstLetter(surname);
         this.age = age;
-        this.isActive = isActive;
+        this.active = active;
     }
 
     // Method to capitalize the first letter of a name
@@ -54,7 +59,7 @@ public abstract class Member {
     public String toString() {
         return String.format(
                 "Name: %s %s, Age: %d, Active: %b, Competitive: %b",
-                name, surname, age, isActive, isCompetitive
+                name, surname, age, active, passive, Competitive, fitnessEnthusiast
         );
     }
 
@@ -76,14 +81,6 @@ public abstract class Member {
         return username;
     }
 
-
-
-    /*public LocalDate getAge() {
-        return age;*\
-
-     */
-
-
     public String getAddress() {
         return address;
     }
@@ -96,12 +93,20 @@ public abstract class Member {
         return mail;
     }
 
-    public boolean isActive() {
-        return isActive;
+    public String active() {
+        return active;
     }
 
-    public boolean isCompetitive() {
-        return isCompetitive;
+    public String passing() {
+        return passive;
+    }
+
+    public String Competitive() {
+        return Competitive;
+    }
+
+    public String getFitnessEnthusiast() {
+        return fitnessEnthusiast;
     }
 
     public String getSwimStroke() {
@@ -113,11 +118,6 @@ public abstract class Member {
     }
 
     // *** SETTERS *** //
-
-    public void setMembershipType(MembershipType membershipType) {
-        this.membershipType = membershipType;
-    }
-
     public void setName(String name) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Invalid name");
@@ -160,19 +160,18 @@ public abstract class Member {
         this.mail = mail;
     }
 
-    public void setIsActive(boolean isActive) {
-        this.isActive = isActive;
-    }
-
-    public void setIsCompetitive(boolean isCompetitive) {
-        this.isCompetitive = isCompetitive;
-    }
-
-    public void setSwimStroke(String swimStroke) {
-        if (swimStroke == null || swimStroke.isEmpty()) {
-            throw new IllegalArgumentException("Invalid swim stroke");
+    public void setActive(String active) {
+        if (active == null || active.isEmpty()) {
+            throw new IllegalArgumentException("Invalid membership type");
         }
-        this.swimStroke = swimStroke;
+        this.active = active;
+    }
+
+    public void setPassive(String passive) {
+        if (passive == null || passive.isEmpty()) {
+            throw new IllegalArgumentException("Invalid membership type");
+        }
+        this.passive = passive;
     }
 
     public void setTimePerformance(double timePerformance) {
@@ -180,6 +179,20 @@ public abstract class Member {
             throw new IllegalArgumentException("Invalid swim time");
         }
         this.timePerformance = timePerformance;
+    }
+
+    public void setCompetitive(String competitive) {
+        if (competitive == null || competitive.isEmpty()) {
+            throw new IllegalArgumentException("Invalid membership type");
+        }
+        this.competitive = competitive;
+    }
+
+    public void setFitnessEnthusiast(String fitnessEnthusiast) {
+        if (fitnessEnthusiast == null || fitnessEnthusiast.isEmpty()) {
+            throw new IllegalArgumentException("Invalid membership type");
+        }
+        this.fitnessEnthusiast = fitnessEnthusiast;
     }
 }
 

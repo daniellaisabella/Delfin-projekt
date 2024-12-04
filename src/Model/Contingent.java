@@ -1,20 +1,21 @@
 package Model;
-import java.time.LocalDate;
-import java.time.Period;
 
 
 
 public class Contingent {
-    private final LocalDate age;
+    private final int age;
     private final boolean isActive;
-    Contingent contingent = new Contingent();
-    int annualContingent = contingent.calculateAnnualContingent();
 
     // Constants for fees
     private static final double PASSIVE_FEE = 500.0;
     private static final double ACTIVE_JUNIOR_FEE = 1000.0;
     private static final double ACTIVE_SENIOR_FEE = 1600.0;
     private static final double ACTIVE_RETIREES_FEE = 1200.0;
+
+    public Contingent(int age, boolean isActive) {
+        this.age = age;
+        this.isActive = isActive;
+    }
 
     // Calculate contingent based on MembershipType
     public static double calculateContingent(MembershipType type) {
@@ -31,34 +32,28 @@ public class Contingent {
                 throw new IllegalArgumentException("Invalid membership type");
         }
     }
-       public Contingent() {
-            this.age = LocalDate.now();
-            this.isActive = true;
-        }
 
-        public int calculateAnnualContingent() {
-            int juniorContingent = 1000;
-            int seniorContingent = 1600;
-            int pensionistContingent = 1200;
-            int passiveContingent = 500;
-            int age = calculateAge(this.age);
+    public int calculateAnnualContingent() {
+        int juniorContingent = 1000;
+        int seniorContingent = 1600;
+        int pensionistContingent = 1200;
+        int passiveContingent = 500;
 
-            if (isActive) {
-                if (age < 18) return juniorContingent;
-                if (age < 60 && age >= 18) return seniorContingent;
-                return pensionistContingent;
-            } else {
-                return passiveContingent;
-            }
-        }
-
-        private int calculateAge(LocalDate age) {
-            LocalDate today = LocalDate.now();
-            Period Period;
-            return java.time.Period.between(this.age, today).getYears();
+        if (isActive) {
+            if (age < 18) return juniorContingent;
+            if (age < 60 && age >= 18) return seniorContingent;
+            return pensionistContingent;
+        } else {
+            return passiveContingent;
         }
     }
 
+    // Getters for age and isActive (if needed)
+    public int getAge() {
+        return age;
+    }
 
-
-
+    public boolean isActive() {
+        return isActive;
+    }
+}

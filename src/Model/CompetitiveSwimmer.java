@@ -1,5 +1,6 @@
 package Model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -119,7 +120,12 @@ public class CompetitiveSwimmer extends Member {
 
 
     // Override toString() to display swimmer details
-
+    @Override
+    public String toString() {
+        return "Name: " + getName() + ", Age: " + getAge() + ", Active: " + isActive() +
+                ", Swim Strokes: " + swimStrokes + ", Training Results: " + trainingResults +
+                ", Competitive Results: " + competitiveResults;
+    }
 }
 
 
