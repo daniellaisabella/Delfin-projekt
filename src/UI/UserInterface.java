@@ -123,7 +123,7 @@ public class UserInterface {
         controller.getMemberList().addMember(newMember);
 
         ArrayList<Member> members = controller.getMemberList().getMembers();
-        if (filehandler.saveMember(members)) {
+        if (controller.getFilehandler().saveMember(members)) {
             System.out.println("Member added successfully! Membership price: " + newMember.getMembershipPrice());
         } else {
             System.out.println("Failed to save member to file.");
@@ -185,34 +185,25 @@ public class UserInterface {
     }
 
     private void viewTopSwimmers() {
-        System.out.println("View top swimmers by stroke (Not implemented)");
+        System.out.println("Top swimmers functionality is not yet implemented.");
     }
 
     private void displayTreasurerMenu() {
         System.out.println("[1] View expected payments");
         System.out.println("[2] View actual payments");
-        System.out.println("[3] View members in arrears");
+        System.out.println("[3] Calculate arrears");
         System.out.println("[0] Logout");
     }
 
     private void handleTreasurerChoice(String choice) {
+        Treasurer treasurer = new Treasurer("treasurer", "treasurer123");
+        ArrayList<Member> members = controller.getMemberList().getMembers();
+
         switch (choice) {
-            case "1" -> viewExpectedPayments();
-            case "2" -> viewActualPayments();
-            case "3" -> viewMembersInArrears();
+            case "1" -> treasurer.viewExpectedPayments(members);
+            case "2" -> treasurer.viewActualPayments(members);
+            case "3" -> treasurer.calculateArrears(members);
             default -> System.out.println("Invalid choice.");
         }
-    }
-
-    private void viewExpectedPayments() {
-        System.out.println("Expected payments functionality (Not implemented)");
-    }
-
-    private void viewActualPayments() {
-        System.out.println("Actual payments functionality (Not implemented)");
-    }
-
-    private void viewMembersInArrears() {
-        System.out.println("Members in arrears functionality (Not implemented)");
     }
 }

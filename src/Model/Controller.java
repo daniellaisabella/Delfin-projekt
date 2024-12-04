@@ -1,4 +1,3 @@
-
 package Model;
 
 import DataSource.Filehandler;
@@ -6,15 +5,20 @@ import DataSource.Filehandler;
 import java.util.ArrayList;
 
 public class Controller {
-    private MemberList memberList;  // Manages the list of members
-    private Filehandler filehandler;  // Handles file input/output
+    private MemberList memberList;
+    private Filehandler filehandler;
 
     public Controller() {
-        memberList = new MemberList(new ArrayList<>());
         filehandler = new Filehandler();
+        ArrayList<Swimmer> loadedMembers = filehandler.loadMembers();
+        memberList = new MemberList(new ArrayList<>(loadedMembers));
     }
 
     public MemberList getMemberList() {
         return memberList;
+    }
+
+    public Filehandler getFilehandler() {
+        return filehandler;
     }
 }

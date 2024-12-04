@@ -10,6 +10,7 @@ public abstract class Member {
     private String membershipType; // "active" or "passive"
     private String memberType;     // "competition" or "fitness enthusiast"
     private int membershipPrice;   // Price for membership
+    private boolean hasPaid;       // Simulerer om medlemmet har betalt
 
     public Member(String name, String surname, int age, String address, int phoneNumber, String mail, String membershipType, String memberType) {
         this.name = capitalizeFirstLetter(name);
@@ -21,6 +22,7 @@ public abstract class Member {
         this.membershipType = validateMembershipType(membershipType);
         this.memberType = validateMemberType(memberType);
         this.membershipPrice = calculateMembershipPrice();
+        this.hasPaid = false; // Default er, at medlemmet ikke har betalt
     }
 
     private String capitalizeFirstLetter(String word) {
@@ -54,6 +56,14 @@ public abstract class Member {
         } else {
             return 1200; // Active retiree price
         }
+    }
+
+    public boolean hasPaid() {
+        return hasPaid;
+    }
+
+    public void setHasPaid(boolean hasPaid) {
+        this.hasPaid = hasPaid;
     }
 
     public String getName() {
