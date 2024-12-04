@@ -33,6 +33,10 @@ public class UserInterface {
     private String authenticate(String username, String password) {
         if (username.equals("admin") && password.equals("admin123")) {
             return "Admin";
+        } else if (username.equals("coach") && password.equals("coach123")) {
+            return "Coach";
+        } else if (username.equals("treasurer") && password.equals("treasurer123")) {
+            return "Treasurer";
         }
         return null;
     }
@@ -41,14 +45,35 @@ public class UserInterface {
         boolean loggedIn = true;
         while (loggedIn) {
             System.out.println("\n--- " + role + " Menu ---");
-            if ("Admin".equals(role)) {
-                displayAdminMenu();
-                String choice = scanner.nextLine();
-                if ("0".equals(choice)) {
-                    loggedIn = false;
-                } else {
-                    handleAdminChoice(choice);
+            switch (role) {
+                case "Admin" -> {
+                    displayAdminMenu();
+                    String choice = scanner.nextLine();
+                    if ("0".equals(choice)) {
+                        loggedIn = false;
+                    } else {
+                        handleAdminChoice(choice);
+                    }
                 }
+                case "Coach" -> {
+                    displayCoachMenu();
+                    String choice = scanner.nextLine();
+                    if ("0".equals(choice)) {
+                        loggedIn = false;
+                    } else {
+                        handleCoachChoice(choice);
+                    }
+                }
+                case "Treasurer" -> {
+                    displayTreasurerMenu();
+                    String choice = scanner.nextLine();
+                    if ("0".equals(choice)) {
+                        loggedIn = false;
+                    } else {
+                        handleTreasurerChoice(choice);
+                    }
+                }
+                default -> loggedIn = false;
             }
         }
     }
@@ -145,5 +170,49 @@ public class UserInterface {
                 System.out.println(member);
             }
         }
+    }
+
+    private void displayCoachMenu() {
+        System.out.println("[1] View top swimmers by stroke");
+        System.out.println("[0] Logout");
+    }
+
+    private void handleCoachChoice(String choice) {
+        switch (choice) {
+            case "1" -> viewTopSwimmers();
+            default -> System.out.println("Invalid choice.");
+        }
+    }
+
+    private void viewTopSwimmers() {
+        System.out.println("View top swimmers by stroke (Not implemented)");
+    }
+
+    private void displayTreasurerMenu() {
+        System.out.println("[1] View expected payments");
+        System.out.println("[2] View actual payments");
+        System.out.println("[3] View members in arrears");
+        System.out.println("[0] Logout");
+    }
+
+    private void handleTreasurerChoice(String choice) {
+        switch (choice) {
+            case "1" -> viewExpectedPayments();
+            case "2" -> viewActualPayments();
+            case "3" -> viewMembersInArrears();
+            default -> System.out.println("Invalid choice.");
+        }
+    }
+
+    private void viewExpectedPayments() {
+        System.out.println("Expected payments functionality (Not implemented)");
+    }
+
+    private void viewActualPayments() {
+        System.out.println("Actual payments functionality (Not implemented)");
+    }
+
+    private void viewMembersInArrears() {
+        System.out.println("Members in arrears functionality (Not implemented)");
     }
 }
