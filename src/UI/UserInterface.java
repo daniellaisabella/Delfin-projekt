@@ -166,6 +166,11 @@ public class UserInterface {
         if (members.isEmpty()) {
             System.out.println("No members on the list.");
         } else {
+            System.out.println("\n--- Member Details ---");
+
+
+            System.out.println( members.size()+" members on the list");
+            System.out.println();
             for (Member member : members) {
                 System.out.println(member);
             }
