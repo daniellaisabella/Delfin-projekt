@@ -196,7 +196,6 @@ public class UserInterface {
     private void displayTreasurerMenu() {
         System.out.println("[1] Payments and arrears");
         System.out.println("[2] Bookkeeping: register payments");
-
         System.out.println("[0] Logout");
     }
 
@@ -206,11 +205,8 @@ public class UserInterface {
 
         switch (choice) {
             case "1" -> treasurer.viewExpectedPayments(members);
-            case "2" -> treasurer.bookkeeping(members);
-
+            case "2" -> treasurer.registerPayment(members);
             default -> System.out.println("Invalid choice.");
         }
     }
-
-
 }
