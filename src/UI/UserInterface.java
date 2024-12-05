@@ -1,6 +1,6 @@
 package UI;
+
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Scanner;
 
 import DataSource.Filehandler;
@@ -9,22 +9,7 @@ import Model.*;
 public class UserInterface {
     private Controller controller = new Controller();
     private Scanner scanner = new Scanner(System.in);
-    private String loggedInRole;
     private Filehandler filehandler = new Filehandler();
-
-    public UserInterface() {
-
-    }
-
-    public boolean load2() {
-        ArrayList<Swimmer> loadedMembers = filehandler.loadMembers();
-        if (loadedMembers != null) {
-            controller.getMemberList().getMembers().addAll(loadedMembers);
-            return true; // Loading successful
-        } else {
-            return false; // Loading failed
-        }
-    }
 
     public void startProgram() {
         boolean running = true;
@@ -35,64 +20,68 @@ public class UserInterface {
             System.out.print("Enter password: ");
             String password = scanner.nextLine();
 
-            loggedInRole = authenticate(username, password);
+            String loggedInRole = authenticate(username, password);
             if (loggedInRole != null) {
                 System.out.println("Logged in as " + loggedInRole);
-                runRoleMenu();
+                runRoleMenu(loggedInRole);
             } else {
                 System.out.println("Invalid credentials. Try again.");
             }
         }
-        scanner.close();
     }
 
     private String authenticate(String username, String password) {
         if (username.equals("admin") && password.equals("admin123")) {
             return "Admin";
-        } else if (username.equals("treasurer") && password.equals("treasurer123")) {
-            return "Treasurer";
         } else if (username.equals("coach") && password.equals("coach123")) {
             return "Coach";
+        } else if (username.equals("treasurer") && password.equals("treasurer123")) {
+            return "Treasurer";
         }
         return null;
     }
 
-    private void runRoleMenu() {
+    private void runRoleMenu(String role) {
         boolean loggedIn = true;
         while (loggedIn) {
-            System.out.println("\n--- " + loggedInRole + " Menu ---");
-            switch (loggedInRole) {
-                case "Admin" -> displayAdminMenu();
-                case "Treasurer" -> displayTreasurerMenu();
-                case "Coach" -> displayCoachMenu();
-                default -> {
-                    System.out.println("Role not recognized: " + loggedInRole);
-                    loggedIn = false;
+            System.out.println("\n--- " + role + " Menu ---");
+            switch (role) {
+                case "Admin" -> {
+                    displayAdminMenu();
+                    String choice = scanner.nextLine();
+                    if ("0".equals(choice)) {
+                        loggedIn = false;
+                    } else {
+                        handleAdminChoice(choice);
+                    }
                 }
+                case "Coach" -> {
+                    displayCoachMenu();
+                    String choice = scanner.nextLine();
+                    if ("0".equals(choice)) {
+                        loggedIn = false;
+                    } else {
+                        handleCoachChoice(choice);
+                    }
+                }
+                case "Treasurer" -> {
+                    displayTreasurerMenu();
+                    String choice = scanner.nextLine();
+                    if ("0".equals(choice)) {
+                        loggedIn = false;
+                    } else {
+                        handleTreasurerChoice(choice);
+                    }
+                }
+                default -> loggedIn = false;
             }
-
-            System.out.print("Enter choice or 0 to log out: ");
-            String choice = scanner.nextLine();
-            if (choice.equals("0")) {
-                loggedIn = false;
-            } else {
-                handleRoleChoice(choice);
-            }
-        }
-    }
-
-    private void handleRoleChoice(String choice) {
-        switch (loggedInRole) {
-            case "Admin" -> handleAdminChoice(choice);
-            case "Treasurer" -> handleTreasurerChoice(choice);
-            case "Coach" -> handleCoachChoice(choice);
-            default -> System.out.println("Invalid role.");
         }
     }
 
     private void displayAdminMenu() {
         System.out.println("[1] Register new member");
         System.out.println("[2] View all members");
+        System.out.println("[0] Logout");
     }
 
     private void handleAdminChoice(String choice) {
@@ -106,17 +95,16 @@ public class UserInterface {
     private void addMember() {
         System.out.println("\n[Please enter the following details to register a new member]");
 
-        System.out.print("\nFirst name [Include middle name if applicable]: ");
+        System.out.print("First name: ");
         String name = scanner.nextLine().trim();
 
         System.out.print("Surname: ");
         String surName = scanner.nextLine().trim();
 
         System.out.print("Age: ");
-        int age = scanner.nextInt();
-        scanner.nextLine();
+        int age = getIntInput();
 
-        System.out.print("Address [Street name, number and city]: ");
+        System.out.print("Address: ");
         String address = scanner.nextLine().trim();
 
         System.out.print("Phone number: ");
@@ -125,21 +113,20 @@ public class UserInterface {
         System.out.print("Email address: ");
         String email = scanner.nextLine().trim();
 
-        System.out.print("Register as active membership? Y/N: ");
-        boolean isActive = scanner.nextLine().trim().equalsIgnoreCase("y");
+        System.out.print("Membership type (active/passive): ");
+        String membershipType = getMembershipTypeInput();
 
-        System.out.print("Register member as a competitive swimmer? Y/N: ");
-        boolean isCompetitive = scanner.nextLine().trim().equalsIgnoreCase("y");
+        System.out.print("Member type (competition/fitness enthusiast): ");
+        String memberType = getMemberTypeInput();
 
-        Swimmer newMember = new Swimmer(name, surName, age, isActive, address, phoneNumber, email, isCompetitive);
-
+        Swimmer newMember = new Swimmer(name, surName, age, address, phoneNumber, email, membershipType, memberType);
         controller.getMemberList().addMember(newMember);
-        ArrayList<Member> members = controller.getMemberList().getMembers();
 
-        if (filehandler.saveMember(members)) {
-            System.out.println("Member added and saved successfully");
+        ArrayList<Member> members = controller.getMemberList().getMembers();
+        if (controller.getFilehandler().saveMember(members)) {
+            System.out.println("Member added successfully! Membership price: " + newMember.getMembershipPrice());
         } else {
-            System.out.println("\nMember added, but saving to file failed");
+            System.out.println("Failed to save member to file.");
         }
     }
 
@@ -149,113 +136,81 @@ public class UserInterface {
             scanner.next();
         }
         int input = scanner.nextInt();
-        scanner.nextLine();
+        scanner.nextLine(); // Clear the buffer
         return input;
     }
 
+    private String getMembershipTypeInput() {
+        while (true) {
+            String input = scanner.nextLine().trim().toLowerCase();
+            if (input.equals("active") || input.equals("passive")) {
+                return input;
+            }
+            System.out.println("Invalid input. Please enter 'active' or 'passive'.");
+        }
+    }
+
+    private String getMemberTypeInput() {
+        while (true) {
+            String input = scanner.nextLine().trim().toLowerCase();
+            if (input.equals("competition") || input.equals("fitness enthusiast")) {
+                return input;
+            }
+            System.out.println("Invalid input. Please enter 'competition' or 'fitness enthusiast'.");
+        }
+    }
 
     private void showMembers() {
         ArrayList<Member> members = controller.getMemberList().getMembers();
-//        System.out.println("Debug: Number of members in the list: " + members.size());
-
-        System.out.println("Number of members in the list: " + members.size());
 
         if (members.isEmpty()) {
             System.out.println("No members on the list.");
         } else {
-            System.out.println("Members on the list:");
+            System.out.println("\n--- Member Details ---");
+
+
+            System.out.println( members.size()+" members in Delfinklubben");
+            System.out.println();
             for (Member member : members) {
                 System.out.println(member);
-            }
-        }
-
-    }
-
-    private void displayTreasurerMenu() {
-        System.out.println("[1] View expected payments");
-        System.out.println("[2] View actual payments");
-        System.out.println("[3] View members in arrears");
-    }
-
-    private void handleTreasurerChoice(String choice) {
-        switch (choice) {
-            case "1" -> viewExpectedPayments();
-            case "2" -> viewActualPayments();
-            case "3" -> viewArrears();
-            default -> System.out.println("Invalid choice.");
-        }
-    }
-
-    private void viewExpectedPayments() {
-        ArrayList<Swimmer> members = filehandler.loadMembers();
-        double totalExpected = 0;
-        for (Swimmer member : members) {
-            totalExpected += Contingent.calculateContingent(member.getMembershipType());
-        }
-        System.out.println("Total expected fee payment: " + totalExpected + " DKK");
-    }
-
-    private void viewActualPayments() {
-        Map<String, Double> payments = filehandler.loadPayments();
-        if (payments.isEmpty()) {
-            System.out.println("No payments are registered");
-        } else {
-            System.out.println("Actual payments:");
-            payments.forEach((username, amount) ->
-                    System.out.println("Member: " + username + ", Paid: " + amount + " DKK"));
-        }
-    }
-
-    private void viewArrears() {
-        ArrayList<Swimmer> members = filehandler.loadMembers();
-        Map<String, Double> payments = filehandler.loadPayments();
-
-        System.out.println("Members in debt");
-        for (Swimmer member : members) {
-            double expected = Contingent.calculateContingent(member.getMembershipType());
-            double paid = payments.getOrDefault(member.getUsername(), 0.0);
-            if (paid < expected) {
-                System.out.printf("Member: %s, Expected: %.2f DKK, Paid: %.2f DKK, Outstanding: %.2f DKK%n",
-                        member.getUsername(), expected, paid, expected - paid);
             }
         }
     }
 
     private void displayCoachMenu() {
-        System.out.println("[1] View swimmers");
-        System.out.println("[2] View disciplines and competition times");
+        System.out.println("[1] View top swimmers by stroke");
+        System.out.println("[0] Logout");
     }
 
     private void handleCoachChoice(String choice) {
         switch (choice) {
-            case "1" -> showSwimmers();
-            case "2" -> showCompetitionTimes();
+            case "1" -> viewTopSwimmers();
             default -> System.out.println("Invalid choice.");
         }
     }
 
-    private void showSwimmers() {
+    private void viewTopSwimmers() {
+        System.out.println("Top swimmers functionality is not yet implemented.");
+    }
+
+    private void displayTreasurerMenu() {
+        System.out.println("[1] Payments and arrears");
+        System.out.println("[2] Bookkeeping: register payments");
+
+        System.out.println("[0] Logout");
+    }
+
+    private void handleTreasurerChoice(String choice) {
+        Treasurer treasurer = new Treasurer("treasurer", "treasurer123");
         ArrayList<Member> members = controller.getMemberList().getMembers();
-        if (members.isEmpty()) {
-            System.out.println("No swimmers found.");
-        } else {
-            System.out.println("Swimmers:");
-            for (Member member : members) {
-                if (member.isCompetitive()) {
-                    System.out.println(member);
-                }
-            }
+
+        switch (choice) {
+            case "1" -> treasurer.viewExpectedPayments(members);
+            case "2" -> treasurer.bookkeeping(members);
+
+            default -> System.out.println("Invalid choice.");
         }
     }
 
-    private void showCompetitionTimes() {
-        ArrayList<Member> members = controller.getMemberList().getMembers();
-        System.out.println("Competition times:");
-        for (Member member : members) {
-            if (member instanceof Swimmer) {
-                Swimmer swimmer = (Swimmer) member;
-                System.out.println(swimmer.getName() + "'s competition times: " + swimmer.getCompetitiveResults());
-            }
-        }
-    }
+
 }

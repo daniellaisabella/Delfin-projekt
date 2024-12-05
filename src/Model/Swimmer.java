@@ -7,9 +7,8 @@ public class Swimmer extends Member {
     private List<CompetitiveResults> competitiveResults;
     private List <TrainingResults> trainingResults;
 
-    public Swimmer(String name, String surName, int age, boolean isActive,
-                   String address, int phoneNumber, String email, boolean isCompetitive) {
-        super(name, surName, age, address, phoneNumber, email, isActive, isCompetitive);
+    public Swimmer(String name, String surName, int age, String address, int phoneNumber, String mail, String membershipType, String memberType) {
+        super(name, surName, age, address, phoneNumber, mail, membershipType, memberType);
         this.competitiveResults = new ArrayList<>();
         this.trainingResults = new ArrayList<>();
 
