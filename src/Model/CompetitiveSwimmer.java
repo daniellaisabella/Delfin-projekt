@@ -9,7 +9,7 @@ public class CompetitiveSwimmer extends Member {
     private List<CompetitiveResults> competitiveResults; // List of competition results
 
     // Constructor for CompetitiveSwimmer
-    public CompetitiveSwimmer(String name, String surName, int age, String membershipType, String address, int phoneNumber, String mail, String memberType) {
+    public CompetitiveSwimmer(String name, String surName, int age, String membershipType, String address, String phoneNumber, String mail, String memberType) {
         super(name, surName, age, address, phoneNumber, mail, membershipType, memberType); // Updated super call
         this.swimStrokes = new ArrayList<>();
         this.trainingResults = new ArrayList<>();
