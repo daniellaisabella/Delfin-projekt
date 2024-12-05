@@ -104,7 +104,7 @@ public class UserInterface {
         System.out.print("Age: ");
         int age = getIntInput();
 
-        System.out.print("Address: ");
+        System.out.print("Address (street name, house nr, zip code, city): ");
         String address = scanner.nextLine().trim();
 
         System.out.print("Phone number: ");
