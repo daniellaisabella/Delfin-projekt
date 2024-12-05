@@ -82,6 +82,7 @@ public class UserInterface {
     private void displayAdminMenu() {
         System.out.println("[1] Register new member");
         System.out.println("[2] View all members");
+        System.out.println("[3] Delete member");
         System.out.println("[0] Logout");
     }
 
@@ -89,6 +90,7 @@ public class UserInterface {
         switch (choice) {
             case "1" -> addMember();
             case "2" -> showMembers();
+            case "3" -> deleteMember();
             default -> System.out.println("Invalid choice.");
         }
     }
@@ -109,6 +111,11 @@ public class UserInterface {
         }
     }
 
+    private void deleteMember() {
+        System.out.println("Please enter the phone number of the member you want to delete:");
+        String phoneNumber = scanner.nextLine().trim();
+        controller.getMemberList().deleteMember(phoneNumber);
+    }
     private void displayCoachMenu() {
         System.out.println("[1] View top swimmers by stroke");
         System.out.println("[0] Logout");
