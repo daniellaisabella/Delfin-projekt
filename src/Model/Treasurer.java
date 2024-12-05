@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Treasurer extends User {
 
@@ -37,10 +38,11 @@ public class Treasurer extends User {
         }
 
         System.out.println("Total Actual Payments: " + totalPaid + " DKK");
-
-        System.out.println("debug register payments here - switch/scanner");
-
-
+        System.out.print("Enter recieved payment here: ");
+        Scanner scanner = new Scanner(System.in);
+        double payment = scanner.nextDouble();
+        scanner.close();
+        System.out.println("Payment Recieved: " + payment + " DKK");
     }
 
     // Udregn og vis restance (forventede betalinger minus faktiske betalinger)
