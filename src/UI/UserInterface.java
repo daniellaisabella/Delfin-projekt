@@ -15,7 +15,7 @@ public class UserInterface {
     public void startProgram() {
         boolean running = true;
         while (running) {
-            System.out.println("Welcome - Please login");
+            System.out.println("Welcome - login");
             System.out.print("Enter username: ");
             String username = scanner.nextLine();
             System.out.print("Enter password: ");
