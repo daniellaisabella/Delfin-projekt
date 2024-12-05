@@ -1,15 +1,27 @@
 package Model;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public class CompetitiveResults {
     private String tournament;
-    private String swimStroke;
     private double timePerformance;
     private int placement;
 
-    public CompetitiveResults(String tournament, String swimStroke, double timePerformance, int placement) {
-        this.tournament = tournament;
-        this.swimStroke = swimStroke;
-        this.timePerformance = timePerformance;
+    private LocalTime time;
+    private LocalDate date;
+    private SwimStroke stroke;
+    private boolean isTournament;
+    private String location; // Only for tournaments
+     // Only for tournaments
+
+    public CompetitiveResults(LocalTime time, LocalDate date, SwimStroke stroke,
+                              boolean isTournament, String location, Integer placement) {
+        this.time = time;
+        this.date = date;
+        this.stroke = stroke;
+        this.isTournament = isTournament;
+        this.location = location;
         this.placement = placement;
     }
     public String getTournament() {
