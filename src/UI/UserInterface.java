@@ -169,7 +169,7 @@ public class UserInterface {
             System.out.println("\n--- Member Details ---");
 
 
-            System.out.println( members.size()+" members on the list");
+            System.out.println( members.size()+" members in Delfinklubben");
             System.out.println();
             for (Member member : members) {
                 System.out.println(member);
@@ -194,9 +194,9 @@ public class UserInterface {
     }
 
     private void displayTreasurerMenu() {
-        System.out.println("[1] View expected payments");
-        System.out.println("[2] View actual payments");
-        System.out.println("[3] Calculate arrears");
+        System.out.println("[1] Payments and arrears");
+        System.out.println("[2] Bookkeeping: register payments");
+
         System.out.println("[0] Logout");
     }
 
@@ -206,9 +206,11 @@ public class UserInterface {
 
         switch (choice) {
             case "1" -> treasurer.viewExpectedPayments(members);
-            case "2" -> treasurer.viewActualPayments(members);
-            case "3" -> treasurer.calculateArrears(members);
+            case "2" -> treasurer.actualPayments(members);
+
             default -> System.out.println("Invalid choice.");
         }
     }
+
+
 }

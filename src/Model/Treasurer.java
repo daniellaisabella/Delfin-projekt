@@ -16,12 +16,14 @@ public class Treasurer extends User {
         for (Member member : members) {
             totalExpected += member.getMembershipPrice();
         }
-
-        System.out.println("Total Expected Payments: " + totalExpected + " DKK");
+        System.out.println("Members:" + members.size());
+        System.out.println();
+        System.out.println("- 31.12.2024 -\nTotal Expected Payments: " + totalExpected + " DKK");
+        System.out.println("Outstanding payments: " + calculateArrears(members) + " DKK");
     }
 
     // Vis faktisk betaling (f.eks. ved at simulere betalte medlemmer)
-    public void viewActualPayments(ArrayList<Member> members) {
+    public void actualPayments(ArrayList<Member> members) {
         System.out.println("\n--- Actual Payments ---");
         double totalPaid = 0;
 
@@ -38,7 +40,7 @@ public class Treasurer extends User {
     }
 
     // Udregn og vis restance (forventede betalinger minus faktiske betalinger)
-    public void calculateArrears(ArrayList<Member> members) {
+    public double calculateArrears(ArrayList<Member> members) {
         System.out.println("\n--- Arrears Calculation ---");
         double totalExpected = 0;
         double totalPaid = 0;
@@ -54,6 +56,7 @@ public class Treasurer extends User {
         System.out.println("Total Expected Payments: " + totalExpected + " DKK");
         System.out.println("Total Actual Payments: " + totalPaid + " DKK");
         System.out.println("Total Arrears (Outstanding Payments): " + arrears + " DKK");
+        return totalExpected;
     }
 
     @Override
