@@ -29,7 +29,7 @@ public class Filehandler {
                     int age = Integer.parseInt(data[2]);
                     String membershipType = data[3].toLowerCase(); // "active" eller "passive"
                     String address = data[4];
-                    int phoneNumber = Integer.parseInt(data[5]);
+                    String phoneNumber = data[5];
                     String mail = data[6];
                     String memberType = data[7].toLowerCase(); // "competition" eller "fitness enthusiast"
 
@@ -71,6 +71,9 @@ public class Filehandler {
             return false;
         }
     }
+
+//    public void deleteMember(String phone) {
+//
 
     // Opret en tom CSV-fil, hvis den ikke findes
     private void createEmptyFile() {

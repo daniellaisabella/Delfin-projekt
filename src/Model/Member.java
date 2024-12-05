@@ -5,14 +5,14 @@ public abstract class Member {
     private String surname;
     private int age;
     private String address;
-    private int phoneNumber;
+    private String phoneNumber;
     private String mail;
     private String membershipType; // "active" or "passive"
     private String memberType;     // "competition" or "fitness enthusiast"
     private int membershipPrice;   // Price for membership
     private int totalPaid;       // Simulerer om medlemmet har betalt
 
-    public Member(String name, String surname, int age, String address, int phoneNumber, String mail, String membershipType, String memberType) {
+    public Member(String name, String surname, int age, String address, String phoneNumber, String mail, String membershipType, String memberType) {
         this.name = capitalizeFirstLetter(name);
         this.surname = capitalizeFirstLetter(surname);
         this.age = age;
@@ -82,7 +82,7 @@ public abstract class Member {
         return address;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
