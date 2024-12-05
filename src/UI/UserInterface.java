@@ -206,7 +206,7 @@ public class UserInterface {
 
         switch (choice) {
             case "1" -> treasurer.viewExpectedPayments(members);
-            case "2" -> treasurer.actualPayments(members);
+            case "2" -> treasurer.bookkeeping(members);
 
             default -> System.out.println("Invalid choice.");
         }
