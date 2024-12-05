@@ -1,38 +1,26 @@
 package Model;
 
-public class TrainingResults {
-    private String swimStroke;
+import java.time.LocalDate;
+
+class TrainingResult {
+    private LocalDate date;
     private double timePerformance;
-    private int placement;
+    private SwimStroke stroke;
 
-    public TrainingResults(String swimStroke, double timePerformance, int placement) {
-        this.swimStroke = swimStroke;
+    public TrainingResult(LocalDate date, double timePerformance, SwimStroke stroke) {
+        this.date = date;
         this.timePerformance = timePerformance;
-        this.placement = placement;
+        this.stroke = stroke;
     }
 
-    public String getSwimStroke() {
-        return swimStroke;
+    // Getters
+    public LocalDate getDate() {
+        return date;
     }
-
     public double getTimePerformance() {
         return timePerformance;
     }
-
-    public int getPlacement() {
-        return placement;
-    }
-    //Result method ????
-//    public void addResult(String discipline, double time) {
-//        this.discipline = discipline;
-//        this.time = time;
-//    }
-
-
-    // Display results details
-    @Override
-    public String toString() {
-        return "stroke style = " + swimStroke + ", time = " + timePerformance + ", placement = " + placement;
+    public SwimStroke getStroke() {
+        return stroke;
     }
 }
-

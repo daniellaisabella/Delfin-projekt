@@ -7,57 +7,65 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Coach extends User {
-    private List<Swimmer> juniorTeam;
-    private List<Swimmer> seniorTeam;
-   private List<Swimmer> allSwimmers;
-    private EnumSet<SwimStroke> activeStrokes;
 
+    private List<Swimmer> swimmers = new ArrayList<>();
+    public void registerSwimmer(Swimmer swimmer) {
+        swimmers.add(swimmer);
+    }
     public Coach(String username, String password){
         super(username, password);
     }
-    public Coach() {
-        juniorTeam = new ArrayList<>();
-        seniorTeam = new ArrayList<>();
-        activeStrokes = EnumSet.noneOf(SwimStroke.class);
-    }
-
-
-    public void registerSwimmer(Swimmer swimmer) {
-        if (swimmer.getAge() < 18) {
-            juniorTeam.add(swimmer);
-        } else {
-            seniorTeam.add(swimmer);
-        }
-    }
-
 
     public void registerTrainingResult(Swimmer swimmer, LocalDate date, double time, SwimStroke stroke) {
-        TrainingResults result = new TrainingResults(date, time, stroke);
-        swimmer.addTrainingResults(result);
+        TrainingResult result = new TrainingResult(date, time, stroke);
+        swimmer.addTrainingResult(result);
     }
 
-    public void registerTournamentResult(Swimmer swimmer, String location, int placement,
-                                         double time, LocalDate date, SwimStroke stroke) {
+    public void registerCompetitiveResult(Swimmer swimmer, String location, int placement,
+                                          double time, LocalDate date, SwimStroke stroke) {
         CompetitiveResults result = new CompetitiveResults(location, placement, time, date, stroke);
-        swimmer.addCompetitiveResults(result);
+        swimmer.addCompetitiveResult(result);
     }
 
     public void registerActiveStroke(Swimmer swimmer, SwimStroke stroke) {
         swimmer.addActiveStroke(stroke);
     }
-    //------------------------------------------
+
+    public List<Swimmer> getTeamMembers(Team team) {
+        List<Swimmer> teamMembers = new ArrayList<>();
+        for (Swimmer swimmer : swimmers) {
+            if (swimmer.getTeam() == team) {
+                teamMembers.add(swimmer);
+            }
+        }
+        return teamMembers;
+    }
+
     public List<Swimmer> getAllSwimmers() {
-        List<Swimmer> allSwimmers = new ArrayList<>(juniorTeam);
-        allSwimmers.addAll(seniorTeam);
-        return allSwimmers;
+        return new ArrayList<>(swimmers);
     }
 
-    public List<Swimmer> getJuniorTeam() {
-        return juniorTeam;
-    }
+    public List<Swimmer> getTop5Swimmers(Team team, SwimStroke stroke) {
+        List<Swimmer> eligibleSwimmers = new ArrayList<>();
+        for (Swimmer swimmer : swimmers) {
+            if (swimmer.getTeam() == team && swimmer.hasActiveStroke(stroke)) {
+                eligibleSwimmers.add(swimmer);
+            }
+        }
 
-    public List<Swimmer> getSeniorTeam() {
-        return seniorTeam;
+        // Sort eligible swimmers by their best time for the given stroke
+        for (int i = 0; i < eligibleSwimmers.size(); i++) {
+            for (int j = i + 1; j < eligibleSwimmers.size(); j++) {
+                if (eligibleSwimmers.get(i).getBestTime(stroke) > eligibleSwimmers.get(j).getBestTime(stroke)) {
+                    Swimmer temp = eligibleSwimmers.get(i);
+                    eligibleSwimmers.set(i, eligibleSwimmers.get(j));
+                    eligibleSwimmers.set(j, temp);
+                }
+            }
+        }
+
+        // Return top 5 or fewer if there are less than 5 eligible swimmers
+        return eligibleSwimmers.subList(0, Math.min(5, eligibleSwimmers.size()));
     }
 
     public void displaySwimmerInfo(Swimmer swimmer) {
@@ -66,28 +74,21 @@ public class Coach extends User {
         System.out.println("Phone: " + swimmer.getPhoneNumber());
         System.out.println("Team: " + swimmer.getTeam());
         System.out.println("Active Strokes: " + swimmer.getActiveStrokes());
-        System.out.println("Has attended tournament: " + swimmer.hasAttendedTournament());
+        System.out.println("Has attended competition: " + swimmer.hasAttendedCompetition());
 
-        if (swimmer.hasAttendedTournament()) {
-            System.out.println("Tournament Results:");
+        if (swimmer.hasAttendedCompetition()) {
+            System.out.println("Competition Results:");
             for (CompetitiveResults result : swimmer.getCompetitiveResults()) {
-                System.out.println("  Location: " + result.location);
-                System.out.println("  Date: " + result.date);
-                System.out.println("  Stroke: " + result.stroke);
-                System.out.println("  Time: " + result.time);
-                System.out.println("  Placement: " + result.placement);
+                System.out.println("  Location: " + result.getLocation());
+                System.out.println("  Date: " + result.getDate());
+                System.out.println("  Stroke: " + result.getStroke());
+                System.out.println("  Time: " + result.getTimePerformance());
+                System.out.println("  Placement: " + result.getPlacement());
             }
         }
-
-
-    @Override
-    public void displayMenu() {
-        System.out.println("\n---- Coach Menu ----");
-        System.out.println("1. View all members");
-        System.out.println("2. View top swimmers by stroke category");
-        System.out.println("3. Register and edit time performance");
-        System.out.println("0. Exit");
     }
-
-    
 }
+
+
+
+

@@ -8,51 +8,50 @@ public class Swimmer extends Member {
     private String name;
     private int age;
     private String phoneNumber;
-    private EnumSet<SwimStroke> activeStrokes;
-    private List<TrainingResults> trainingResults;
-    private List<CompetitiveResults> competitiveResults;
-    private String team;
+    private Team team;
+    private List<TrainingResult> trainingResult = new ArrayList<>();
+    private List<CompetitiveResults> competitiveResults = new ArrayList<>();
+    private List<SwimStroke> activeStrokes = new ArrayList<>();
 
-    public Swimmer(String name, String surName, int age, String address, String phoneNumber, String mail, String membershipType, String memberType) {
-        super(name, surName, age, address, phoneNumber, mail, membershipType, memberType);
-        this.name = name;
-        this.age = age;
-        this.phoneNumber = phoneNumber;
-        this.competitiveResults = new ArrayList<>();
-        this.trainingResults = new ArrayList<>();
-        this.activeStrokes = EnumSet.noneOf(SwimStroke.class);
-        assignTeam();
+    public Swimmer(String name, int age, String phoneNumber, Team team) {
+        super(name, "", age, "", phoneNumber, "", "", "");
+        this.team = (age < 18) ? Team.JUNIOR : Team.SENIOR;
     }
-    private void assignTeam() {
-        if (age >= 0 && age < 18) {
-            team = "Junior";
-        } else if (age >= 18 && age < 60) {
-            team = "Senior";
-        } else {
-            team = "Pensionist"; // For swimmers 60 and above
-        }
-    }
-    //----------------------------------------
-    public void addTrainingResults(TrainingResults result) {
-        trainingResults.add(result);
-    }
-    //----------------------------------------
 
-    public void addActiveStroke(SwimStroke stroke) {
-        activeStrokes.add(stroke);
-    }
-    //----------------------------------------
 
-    public void addCompetitiveResults(CompetitiveResults result) {
+    public void addTrainingResult(TrainingResult result) {
+        trainingResult.add(result);
+    }
+
+    public void addCompetitiveResult(CompetitiveResults result) {
         competitiveResults.add(result);
     }
 
-    public boolean hasAttendedTournament() {
+    public void addActiveStroke(SwimStroke stroke) {
+        if (!activeStrokes.contains(stroke)) {
+            activeStrokes.add(stroke);
+        }
+    }
+
+    public boolean hasAttendedCompetition() {
         return !competitiveResults.isEmpty();
     }
-    // Getters and setters
-    //----------------------------------------
-    // Getters and setters
+
+    public boolean hasActiveStroke(SwimStroke stroke) {
+        return activeStrokes.contains(stroke);
+    }
+
+    public double getBestTime(SwimStroke stroke) {
+        double bestTime = Double.MAX_VALUE;
+        for (CompetitiveResults result : competitiveResults) {
+            if (result.getStroke() == stroke && result.getTimePerformance() < bestTime) {
+                bestTime = result.getTimePerformance();
+            }
+        }
+        return bestTime;
+    }
+
+    // Getters
     public String getName() {
         return name;
     }
@@ -62,15 +61,17 @@ public class Swimmer extends Member {
     public String getPhoneNumber() {
         return phoneNumber;
     }
-    public EnumSet<SwimStroke> getActiveStrokes() {
-        return activeStrokes;
+    public Team getTeam() {
+        return team;
     }
-    public List<TrainingResults> getTrainingResults() {
-        return trainingResults;
+    public List<TrainingResult> getTrainingResult() {
+        return trainingResult;
     }
-    public List<CompetitiveResults> getCompetitiveResults(){
-        return competitiveResults; // Return the list of competitiveResults;
+    public List<CompetitiveResults> getCompetitiveResults() {
+        return competitiveResults;
     }
+    public List<SwimStroke> getActiveStrokes() {
+        return activeStrokes; }
 }
 
 

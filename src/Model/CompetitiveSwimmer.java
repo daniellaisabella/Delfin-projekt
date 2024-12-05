@@ -6,7 +6,7 @@ import java.util.List;
 
 public class CompetitiveSwimmer extends Member {
     private List<String> swimStrokes; // List of stroke styles
-    private List<TrainingResults> trainingResults; // List of training results
+    private List<TrainingResult> trainingResults; // List of training results
     private List<CompetitiveResults> competitiveResults; // List of competition results
 
 
@@ -52,7 +52,7 @@ public class CompetitiveSwimmer extends Member {
         competitiveResults.add(new CompetitiveResults(swimStroke, timePerformance, placement));
     }
     public void addTrainingResult(String swimStrokes, double timePerformance, int placement) {
-        trainingResults.add(new TrainingResults(swimStrokes, timePerformance, placement));
+        trainingResults.add(new TrainingResult(swimStrokes, timePerformance, placement));
     }
 
 
@@ -64,7 +64,7 @@ public class CompetitiveSwimmer extends Member {
     }
 
     // Get the list of training results
-    public List<TrainingResults> getTrainingResults() {
+    public List<TrainingResult> getTrainingResults() {
         return trainingResults;
     }
 
@@ -75,12 +75,7 @@ public class CompetitiveSwimmer extends Member {
 
 
     // Override toString() to display swimmer details
-    @Override
-    public String toString() {
-        return "Name: " + getName() + ", Age: " + getAge() + ", Active: " + isActive() +
-                ", Swim Strokes: " + swimStrokes + ", Training Results: " + trainingResults +
-                ", Competitive Results: " + competitiveResults;
-    }
+
 }
 
 

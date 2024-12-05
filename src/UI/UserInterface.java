@@ -1,6 +1,9 @@
 package UI;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import DataSource.Filehandler;
@@ -10,6 +13,12 @@ public class UserInterface {
     private Controller controller = new Controller();
     private Scanner scanner = new Scanner(System.in);
     private Filehandler filehandler = new Filehandler();
+    //-----------------------------------
+    private Coach coach;
+
+    public UserInterface(Coach coach) {
+        this.coach = coach;
+    }
 
     public void startProgram() {
         boolean running = true;
@@ -61,7 +70,7 @@ public class UserInterface {
                     if ("0".equals(choice)) {
                         loggedIn = false;
                     } else {
-                        handleCoachChoice(choice);
+                        handleCoachChoice(Integer.parseInt(choice));
                     }
                 }
                 case "Treasurer" -> {
@@ -176,23 +185,212 @@ public class UserInterface {
             }
         }
     }
-
+//--------------------------------------------COACH MENU----------------------------------------------------------
     private void displayCoachMenu() {
-        System.out.println("[1] View top swimmers by stroke");
-        System.out.println("[0] Logout");
+        System.out.println("\n--- Coach Menu ---");
+        System.out.println("1. Register new swimmer");
+        System.out.println("2. Register training result");
+        System.out.println("3. Register competitive result");
+        System.out.println("4. Register active stroke for a swimmer");
+        System.out.println("5. Display swimmer info");
+        System.out.println("6. Display team members");
+        System.out.println("7. View all swimmers");
+        System.out.println("8. View top 5 swimmers");
+        System.out.println("0. Exit");
     }
 
-    private void handleCoachChoice(String choice) {
+    private void handleCoachChoice(int choice) {
+        boolean running = true;
+        while (running) {
+            displayCoachMenu();
+            choice = getIntInput("Enter your choice: ");
+        }
         switch (choice) {
-            case "1" -> viewTopSwimmers();
-            default -> System.out.println("Invalid choice.");
+            case 1:
+                registerSwimmer();
+                break;
+            case 2:
+                registerTrainingResult();
+                break;
+            case 3:
+                registerCompetitiveResult();
+                break;
+            case 4:
+                registerActiveStroke();
+                break;
+            case 5:
+                displaySwimmerInfo();
+            break;
+            case 6:
+                displayTeamMembers();
+            break;
+            case 7:
+                viewAllSwimmers();
+            break;
+            case 8:
+                viewTop5Swimmers();
+            break;
+            case 0:
+                break;
+            default: System.out.println("Invalid choice. Please try again.");
+        }
+    }
+
+    private void registerSwimmer() {
+        String name = getStringInput("Enter swimmer's name: ");
+        int age = getIntInput("Enter swimmer's age: ");
+        String phone = getStringInput("Enter swimmer's phone number: ");
+        SwimStroke stroke = selectSwimStroke();
+        Swimmer swimmer = new Swimmer(name, age, phone);
+        swimmer.addActiveStroke(stroke);
+        coach.registerSwimmer(swimmer);
+        System.out.println("Swimmer registered successfully.");
+    }
+
+    private void registerTrainingResult() {
+        Swimmer swimmer = selectSwimmer();
+        if (swimmer == null) return;
+        LocalDate date = getDateInput("Enter training date (YYYY-MM-DD): ");
+        double time = getDoubleInput("Enter time (in seconds): ");
+        SwimStroke stroke = selectSwimStroke();
+        coach.registerTrainingResult(swimmer, date, time, stroke);
+        System.out.println("Training result registered successfully.");
+    }
+
+    private void registerCompetitiveResult() {
+        Swimmer swimmer = selectSwimmer();
+        if (swimmer == null) return;
+        String location = getStringInput("Enter competition location: ");
+        int placement = getIntInput("Enter placement: ");
+        double time = getDoubleInput("Enter time (in seconds): ");
+        LocalDate date = getDateInput("Enter competition date (YYYY-MM-DD): ");
+        SwimStroke stroke = selectSwimStroke();
+        coach.registerCompetitiveResult(swimmer, location, placement, time, date, stroke);
+        System.out.println("Competitive result registered successfully.");
+    }
+
+    private void registerActiveStroke() {
+        Swimmer swimmer = selectSwimmer();
+        if (swimmer == null) return;
+        SwimStroke stroke = selectSwimStroke();
+        coach.registerActiveStroke(swimmer, stroke);
+        System.out.println("Active stroke registered successfully.");
+    }
+
+    private void displaySwimmerInfo() {
+        Swimmer swimmer = selectSwimmer();
+        if (swimmer != null) {
+            coach.displaySwimmerInfo(swimmer);
+        }
+    }
+
+    private void displayTeamMembers() {
+        System.out.println("Junior Team:");
+        for (Swimmer swimmer : coach.getTeamMembers(Team.JUNIOR)) {
+            System.out.println("- " + swimmer.getName());
+        }
+        System.out.println("\nSenior Team:");
+        for (Swimmer swimmer : coach.getTeamMembers(Team.SENIOR)) {
+            System.out.println("- " + swimmer.getName());
+        }
+    }
+    private void viewAllSwimmers() {
+        List<Swimmer> allSwimmers = coach.getAllSwimmers();
+        System.out.println("All Swimmers:");
+        for (Swimmer swimmer : allSwimmers) {
+            System.out.println("- " + swimmer.getName() + " (" + swimmer.getTeam() + ")");
+        }
+    }
+    private void viewTop5Swimmers() {
+        System.out.println("========VIEW TOP 5 SWIMMERS============");
+        Team team = selectTeam();
+        SwimStroke stroke = selectSwimStroke();
+        List<Swimmer> top5 = coach.getTop5Swimmers(team, stroke);
+        System.out.println("Top 5 " + team + " swimmers in " + stroke + ":");
+        for (int i = 0; i < top5.size(); i++) {
+            Swimmer swimmer = top5.get(i);
+            System.out.println((i + 1) + ". " + swimmer.getName() + " - Best time: " + swimmer.getBestTime(stroke));
+        }
+    }
+    private Swimmer selectSwimmer() {
+        List<Swimmer> allSwimmers = coach.getAllSwimmers();
+        System.out.println("Select a swimmer:");
+        for (int i = 0; i < allSwimmers.size(); i++) {
+            Swimmer swimmer = allSwimmers.get(i);
+            System.out.println((i + 1) + ". " + swimmer.getName() + " (" + swimmer.getTeam() + ")");
+        }
+        int choice = getIntInput("Enter the number of the swimmer: ");
+        if (choice > 0 && choice <= allSwimmers.size()) {
+            return allSwimmers.get(choice - 1);
+        } else {
+            System.out.println("Invalid selection.");
+            return null;
+        }
+    }
+
+    private SwimStroke selectSwimStroke() {
+        System.out.println("Select swim stroke:");
+        for (int i = 0; i < SwimStroke.values().length; i++) {
+            System.out.println((i + 1) + ". " + SwimStroke.values()[i]);
+        }
+        int choice = getIntInput("Enter your choice: ");
+        if (choice > 0 && choice <= SwimStroke.values().length) {
+            return SwimStroke.values()[choice - 1];
+        }
+        return SwimStroke.BREASTSTROKE; // Default
+    }
+
+    private Team selectTeam() {
+        System.out.println("Select team:");
+        System.out.println("1. Junior Team");
+        System.out.println("2. Senior Team");
+        int choice = getIntInput("Enter your choice: ");
+        return (choice == 1) ? Team.JUNIOR : Team.SENIOR;
+    }
+
+    private String getStringInput(String prompt) {
+        System.out.print(prompt);
+        return scanner.nextLine();
+    }
+
+    private int getIntInput(String prompt) {
+        System.out.print(prompt);
+        while (!scanner.hasNextInt()) {
+            System.out.println("That's not a valid number. Please try again.");
+            scanner.next();
+        }
+        int result = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+        return result;
+    }
+
+    private double getDoubleInput(String prompt) {
+        System.out.print(prompt);
+        while (!scanner.hasNextDouble()) {
+            System.out.println("That's not a valid number. Please try again.");
+            scanner.next();
+        }
+        double result = scanner.nextDouble();
+        scanner.nextLine(); // Consume newline
+        return result;
+    }
+
+    private LocalDate getDateInput(String prompt) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        while (true) {
+            try {
+                String dateString = getStringInput(prompt);
+                return LocalDate.parse(dateString, formatter);
+            } catch (Exception e) {
+                System.out.println("Invalid date format. Please use YYYY-MM-DD.");
+            }
         }
     }
 
     private void viewTopSwimmers() {
         System.out.println("Top swimmers functionality is not yet implemented.");
     }
-
+//----------------------------------------------------------------------------------------
     private void displayTreasurerMenu() {
         System.out.println("[1] Payments and arrears");
         System.out.println("[2] Bookkeeping: register payments");

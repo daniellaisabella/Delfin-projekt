@@ -1,49 +1,37 @@
 package Model;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 public class CompetitiveResults {
-    private String tournament;
-    private double timePerformance;
+    private String location;
     private int placement;
-
-    private LocalTime time;
+    private double timePerformance;
     private LocalDate date;
     private SwimStroke stroke;
-    private boolean isTournament;
-    private String location; // Only for tournaments
-     // Only for tournaments
 
-    public CompetitiveResults(LocalTime time, LocalDate date, SwimStroke stroke,
-                              boolean isTournament, String location, Integer placement) {
-        this.time = time;
-        this.date = date;
-        this.stroke = stroke;
-        this.isTournament = isTournament;
+    public CompetitiveResults(String location, int placement, double timePerformance, LocalDate date, SwimStroke stroke) {
         this.location = location;
         this.placement = placement;
+        this.timePerformance = timePerformance;
+        this.date = date;
+        this.stroke = stroke;
     }
-    public String getTournament() {
-        return tournament;
+    public String getLocation() {
+        return location;
     }
-
-    public String getSwimStroke() {
-        return swimStroke;
-    }
-
-    public double getTimePerformance() {
-        return timePerformance;
-    }
-
     public int getPlacement() {
         return placement;
     }
-
-    // Display competition result details
-    @Override
-    public String toString() {
-        return "Swim Stroke = " + swimStroke + ", Time = " + timePerformance + ", Placement = " + placement;
+    public double getTimePerformance() {
+        return timePerformance;
     }
+    public LocalDate getDate() {
+        return date;
+    }
+    public SwimStroke getStroke() {
+        return stroke;
+    }
+
+
 }
 
