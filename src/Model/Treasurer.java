@@ -18,12 +18,12 @@ public class Treasurer extends User {
         }
         System.out.println("Members:" + members.size());
         System.out.println();
-        System.out.println("- 31.12.2024 -\nTotal Expected Payments: " + totalExpected + " DKK");
+        System.out.println("- Next payment due 31.12.2024 -");
         System.out.println("Outstanding payments: " + calculateArrears(members) + " DKK");
     }
 
     // Vis faktisk betaling (f.eks. ved at simulere betalte medlemmer)
-    public void actualPayments(ArrayList<Member> members) {
+    public void bookkeeping(ArrayList<Member> members) {
         System.out.println("\n--- Actual Payments ---");
         double totalPaid = 0;
 
@@ -37,6 +37,10 @@ public class Treasurer extends User {
         }
 
         System.out.println("Total Actual Payments: " + totalPaid + " DKK");
+
+        System.out.println("debug register payments here - switch/scanner");
+
+
     }
 
     // Udregn og vis restance (forventede betalinger minus faktiske betalinger)
