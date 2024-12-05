@@ -72,6 +72,8 @@ public class Filehandler {
         }
     }
 
+//    public void deleteMember(String phone) {
+//
 
     // Opret en tom CSV-fil, hvis den ikke findes
     private void createEmptyFile() {
@@ -82,8 +84,4 @@ public class Filehandler {
             System.out.println("Could not create CSV file: " + e.getMessage());
         }
     }
-
-
-
-
 }
