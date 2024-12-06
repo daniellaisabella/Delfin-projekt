@@ -9,6 +9,36 @@ import java.util.Scanner;
 
 public class Filehandler {
     private final String filePath = "src/DataSource/Members.csv";
+    private final String BOOKKEEPING_CSV_FIL = "src/DataSource/Bookkeeping.csv";
+
+    // Gem betalingen til CSV
+    public void savePaymentsToCsv(double payment) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(BOOKKEEPING_CSV_FIL, true))) {
+            writer.println(payment);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Indlæs betalinger fra CSV og summer total
+    public double loadPaymentsFromCsv() {
+        double totalPayments = 0.0;
+        try (Scanner scanner = new Scanner(new File(BOOKKEEPING_CSV_FIL))) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine().trim();
+                if (!line.isEmpty()) {
+                    try {
+                        totalPayments += Double.parseDouble(line);
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid payment record skipped: " + line);
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("No payments file found. Starting with zero payments.");
+        }
+        return totalPayments;
+    }
 
     // Læs medlemmer fra filen
     public ArrayList<Swimmer> loadMembers() {

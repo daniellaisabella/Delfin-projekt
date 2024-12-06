@@ -2,14 +2,15 @@ package Model;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import DataSource.Filehandler;
 
 public class Treasurer extends User {
 
     private double totalPaid; // Holder styr på faktiske betalinger
 
-    public Treasurer(String username, String password) {
+    public Treasurer(String username, String password, Filehandler filehandler) {
         super(username, password);
-        this.totalPaid = 0; // Initialiser med 0
+        this.totalPaid = filehandler.loadPaymentsFromCsv(); // Initialiser med total sum fra filen
     }
 
     // Vis forventede betalinger baseret på medlemmernes kontingent
@@ -24,7 +25,7 @@ public class Treasurer extends User {
     }
 
     // Registrer modtaget betaling og opdater faktiske betalinger
-    public void registerPayment(ArrayList<Member> members) {
+    public void registerPayment(ArrayList<Member> members, Filehandler filehandler) {
         if (members == null || members.isEmpty()) {
             System.out.println("Error: No members available to calculate payments.");
             return; // Stop, hvis medlemslisten er tom
@@ -37,6 +38,9 @@ public class Treasurer extends User {
             System.out.println("Payment Received: " + payment + " DKK");
             System.out.println("Total Actual Payments Updated: " + totalPaid + " DKK");
             System.out.println("Outstanding Payments: " + calculateArrears(members) + " DKK"); // Opdater udestående betaling
+
+            filehandler.savePaymentsToCsv(payment);
+
         } catch (Exception e) {
             System.out.println("Invalid input. Please enter a valid number.");
             scanner.nextLine(); // Ryd scanneren for forkert input
@@ -67,15 +71,5 @@ public class Treasurer extends User {
             totalExpected += member.getMembershipPrice();
         }
         return totalExpected;
-    }
-
-    @Override
-    public void displayMenu() {
-        System.out.println("\n--- Treasurer Menu ---");
-        System.out.println("[1] View expected payments");
-        System.out.println("[2] View actual payments");
-        System.out.println("[3] Register received payment");
-        System.out.println("[4] Calculate arrears");
-        System.out.println("[0] Logout");
     }
 }
