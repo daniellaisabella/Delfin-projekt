@@ -23,8 +23,9 @@ public class Swimmer extends Member {
         trainingResult.add(result);
     }
 
-    public void addCompetitiveResult(CompetitiveResults result) {
-        competitiveResults.add(result);
+    public Swimmer(String name, String surName, int age, String address, String phoneNumber, String mail, String membershipType, String memberType) {
+        super(name, surName, age, address, phoneNumber, mail, membershipType, memberType);
+        this.competitiveResults = new ArrayList<>();
     }
 
     public void addActiveStroke(SwimStroke stroke) {
@@ -69,6 +70,10 @@ public class Swimmer extends Member {
     }
     public List<CompetitiveResults> getCompetitiveResults() {
         return competitiveResults;
+    }
+
+    public void addCompetitiveResult(String result) {
+        competitiveResults.add(result);
     }
     public List<SwimStroke> getActiveStrokes() {
         return activeStrokes; }

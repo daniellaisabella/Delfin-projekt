@@ -9,29 +9,6 @@ public class CompetitiveSwimmer extends Member {
     private List<TrainingResult> trainingResults; // List of training results
     private List<CompetitiveResults> competitiveResults; // List of competition results
 
-
-
-
-    private int [] butterflyTime;
-    private String butterflyDate;
-    private boolean activeButterfly;
-
-    private int [] backstrokeTime;
-    private String backstrokeDate;
-    private boolean activeBackstroke;
-
-    private int [] breaststrokeTime;
-    private String breaststrokeDate;
-    private boolean activeBreaststroke;
-
-    private int [] crawlTime;
-    private String crawlDate;
-    private boolean activeCrawl;
-
-    private int[] backCrawlTime;
-    private String backCrawlDate;
-    private boolean activeBackCrawl;
-
     // Constructor for CompetitiveSwimmer
     public CompetitiveSwimmer(String name, String surName, int age, boolean isActive) {
         super(name, surName, age, isActive); // Updated to accept age as int
@@ -64,7 +41,7 @@ public class CompetitiveSwimmer extends Member {
     }
 
     // Get the list of training results
-    public List<TrainingResult> getTrainingResults() {
+    public List<TrainingResults> getTrainingResults() {
         return trainingResults;
     }
 
@@ -73,12 +50,12 @@ public class CompetitiveSwimmer extends Member {
         return competitiveResults;
     }
 
-
     // Override toString() to display swimmer details
-
+    @Override
+    public String toString() {
+        return String.format(
+                "Name: %s %s, Age: %d, Membership Type: %s, Member Type: %s, Address: %s, Phone: %d, Email: %s, Swim Strokes: %s, Training Results: %s, Competitive Results: %s",
+                getName(), getSurname(), getAge(), getMembershipType(), getMemberType(), getAddress(), getPhoneNumber(), getMail(), swimStrokes, trainingResults, competitiveResults
+        );
+    }
 }
-
-
-
-
-

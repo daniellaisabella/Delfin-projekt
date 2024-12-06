@@ -20,5 +20,8 @@ public class MemberList {
     public Member getMemberByUsername(String username) {
         return null;
     }
-}
 
+    public void deleteMember(String phoneNumber) {
+        members.removeIf(member -> Integer.parseInt(member.getPhoneNumber()) == Integer.parseInt(phoneNumber));
+    }
+}

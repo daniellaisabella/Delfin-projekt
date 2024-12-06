@@ -4,7 +4,7 @@ public class Membership extends Member {
     private String membershipType; // "active" or "passive"
 
     // Constructor
-    public Membership(String name, String surName, int age, String address, int phoneNumber, String mail, String membershipType, String memberType) {
+    public Membership(String name, String surName, int age, String address, String phoneNumber, String mail, String membershipType, String memberType) {
         super(name, surName, age, address, phoneNumber, mail, membershipType, memberType); // Kald til super-konstruktor
         this.membershipType = membershipType.toLowerCase();
     }

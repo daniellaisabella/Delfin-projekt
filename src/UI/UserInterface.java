@@ -13,6 +13,7 @@ public class UserInterface {
     private Controller controller = new Controller();
     private Scanner scanner = new Scanner(System.in);
     private Filehandler filehandler = new Filehandler();
+    private Treasurer treasurer = new Treasurer("treasurer", "treasurer123"); // Flyttet for at genbruge
     //-----------------------------------
     private Coach coach;
 
@@ -90,6 +91,7 @@ public class UserInterface {
     private void displayAdminMenu() {
         System.out.println("[1] Register new member");
         System.out.println("[2] View all members");
+        System.out.println("[3] Delete member");
         System.out.println("[0] Logout");
     }
 
@@ -97,6 +99,7 @@ public class UserInterface {
         switch (choice) {
             case "1" -> addMember();
             case "2" -> showMembers();
+            case "3" -> deleteMember();
             default -> System.out.println("Invalid choice.");
         }
     }
@@ -113,11 +116,11 @@ public class UserInterface {
         System.out.print("Age: ");
         int age = getIntInput();
 
-        System.out.print("Address: ");
+        System.out.print("Address (street name, house nr, zip code, city): ");
         String address = scanner.nextLine().trim();
 
         System.out.print("Phone number: ");
-        int phoneNumber = getIntInput();
+        String phoneNumber = scanner.nextLine().trim();
 
         System.out.print("Email address: ");
         String email = scanner.nextLine().trim();
@@ -128,9 +131,11 @@ public class UserInterface {
         System.out.print("Member type (competition/fitness enthusiast): ");
         String memberType = getMemberTypeInput();
 
+        // Opretter en ny Swimmer
         Swimmer newMember = new Swimmer(name, surName, age, address, phoneNumber, email, membershipType, memberType);
-        controller.getMemberList().addMember(newMember);
+        controller.getMemberList().addMember(newMember); // Tilføj medlem til listen
 
+        // Gemmer medlemmer i fil
         ArrayList<Member> members = controller.getMemberList().getMembers();
         if (controller.getFilehandler().saveMember(members)) {
             System.out.println("Member added successfully! Membership price: " + newMember.getMembershipPrice());
@@ -171,19 +176,20 @@ public class UserInterface {
 
     private void showMembers() {
         ArrayList<Member> members = controller.getMemberList().getMembers();
-
         if (members.isEmpty()) {
             System.out.println("No members on the list.");
         } else {
             System.out.println("\n--- Member Details ---");
-
-
-            System.out.println( members.size()+" members in Delfinklubben");
-            System.out.println();
             for (Member member : members) {
                 System.out.println(member);
             }
         }
+    }
+
+    private void deleteMember() {
+        System.out.println("Please enter the phone number of the member you want to delete:");
+        String phoneNumber = scanner.nextLine().trim();
+        controller.getMemberList().deleteMember(phoneNumber);
     }
 //--------------------------------------------COACH MENU----------------------------------------------------------
     private void displayCoachMenu() {
@@ -394,7 +400,6 @@ public class UserInterface {
     private void displayTreasurerMenu() {
         System.out.println("[1] Payments and arrears");
         System.out.println("[2] Bookkeeping: register payments");
-
         System.out.println("[0] Logout");
     }
 

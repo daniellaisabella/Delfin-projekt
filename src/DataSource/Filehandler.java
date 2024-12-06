@@ -29,7 +29,7 @@ public class Filehandler {
                     int age = Integer.parseInt(data[2]);
                     String membershipType = data[3].toLowerCase(); // "active" eller "passive"
                     String address = data[4];
-                    int phoneNumber = Integer.parseInt(data[5]);
+                    String phoneNumber = data[5];
                     String mail = data[6];
                     String memberType = data[7].toLowerCase(); // "competition" eller "fitness enthusiast"
 
@@ -39,7 +39,6 @@ public class Filehandler {
             }
         } catch (FileNotFoundException e) {
             System.out.println("CSV file not found. Creating a new file.");
-            createEmptyFile();
         } catch (Exception e) {
             System.out.println("Error reading CSV file: " + e.getMessage());
         }
@@ -69,16 +68,6 @@ public class Filehandler {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             return false;
-        }
-    }
-
-    // Opret en tom CSV-fil, hvis den ikke findes
-    private void createEmptyFile() {
-        File file = new File(filePath);
-        try (PrintWriter writer = new PrintWriter(new FileOutputStream(file, false))) {
-            writer.println("Name,Surname,Age,MembershipType,Address,Phone,Email,MemberType");
-        } catch (IOException e) {
-            System.out.println("Could not create CSV file: " + e.getMessage());
         }
     }
 }
