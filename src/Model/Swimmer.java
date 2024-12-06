@@ -13,8 +13,8 @@ public class Swimmer extends Member {
     private List<CompetitiveResults> competitiveResults = new ArrayList<>();
     private List<SwimStroke> activeStrokes = new ArrayList<>();
 
-    public Swimmer(String name, int age, String phoneNumber, Team team) {
-        super(name, "", age, "", phoneNumber, "", "", "");
+    public Swimmer(String name, String surName, int age, String address, String phoneNumber, String mail, String membershipType, String memberType) {
+            super(name, surName, age, address, phoneNumber, mail, membershipType, memberType);
         this.team = (age < 18) ? Team.JUNIOR : Team.SENIOR;
     }
     //------------------Active Stroke--------------------

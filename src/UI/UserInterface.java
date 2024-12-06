@@ -15,6 +15,8 @@ public class UserInterface {
     private Filehandler filehandler = new Filehandler();
     private Treasurer treasurer = new Treasurer("treasurer", "treasurer123", filehandler);
     private Coach coach = new Coach("coach", "coach123");
+
+
     public void startProgram() {
         boolean running = true;
         while (running) {
@@ -126,6 +128,7 @@ public class UserInterface {
         String memberType = getMemberTypeInput();
 
         // Opretter en ny Swimmer
+
         Swimmer newMember = new Swimmer(name, surName, age, address, phoneNumber, email, membershipType, memberType);
         controller.getMemberList().addMember(newMember); // Tilføj medlem til listen
 
@@ -194,8 +197,10 @@ public class UserInterface {
             String phoneNumber = scanner.nextLine().trim();
             controller.getMemberList().deleteMember(phoneNumber);
         }
+
         //---------------------------------------COACH MENU------------------------------------
-        private void displayCoachMenu () {
+
+    private void displayCoachMenu () {
             System.out.println("\n--- Coach Menu ---");
             System.out.println("1. Register new swimmer");
             System.out.println("2. Register training result");
@@ -207,9 +212,7 @@ public class UserInterface {
             System.out.println("8. View top 5 swimmers");
             System.out.println("9. View all training results"); // New option
             System.out.println("0. Exit");
-
         }
-
         private void handleCoachChoice (String choice){
             switch (choice) {
                 case "1" -> registerSwimmer();
@@ -227,12 +230,12 @@ public class UserInterface {
         //------------------------------
         private void registerSwimmer() {
             String name = getStringInput("Enter swimmer's name: ");
+            String surName = getStringInput("Enter swimmer's surname: ");
             int age = getIntInput("Enter swimmer's age: ");
             String phone = getStringInput("Enter swimmer's phone number: ");
             SwimStroke stroke = selectSwimStroke();
             Team team = (age < 18) ? Team.JUNIOR : Team.SENIOR;
-            Swimmer swimmer = new Swimmer(name, age, phone, team);
-            swimmer.addActiveStroke(stroke);
+            Swimmer swimmer = new Swimmer(name, surName, age, "", phone, "", "", "");            swimmer.addActiveStroke(stroke);
             coach.registerSwimmer(swimmer);
             System.out.println("Swimmer registered successfully.");
         }

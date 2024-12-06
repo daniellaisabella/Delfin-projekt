@@ -30,7 +30,5 @@ public class CompetitiveResults {
     public SwimStroke getStroke() {
         return stroke;
     }
-
-
 }
 
