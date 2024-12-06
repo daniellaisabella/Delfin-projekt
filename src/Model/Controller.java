@@ -1,17 +1,10 @@
 package Model;
 
-import DataSource.Filehandler;
-
-import java.util.ArrayList;
-
 public class Controller {
     private MemberList memberList;
-    private Filehandler filehandler;
 
     public Controller() {
-        filehandler = new Filehandler();
-        ArrayList<Swimmer> loadedMembers = filehandler.loadMembers();
-        memberList = new MemberList(new ArrayList<>(loadedMembers));
+        this.memberList = new MemberList(); // Initialiserer MemberList
     }
 
     public MemberList getMemberList() {
@@ -19,6 +12,6 @@ public class Controller {
     }
 
     public Filehandler getFilehandler() {
-        return filehandler;
+        return new Filehandler();
     }
 }
