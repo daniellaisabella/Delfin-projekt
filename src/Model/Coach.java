@@ -1,4 +1,5 @@
 package Model;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -9,10 +10,12 @@ import java.util.Scanner;
 public class Coach extends User {
 
     private List<Swimmer> swimmers = new ArrayList<>();
+
     public void registerSwimmer(Swimmer swimmer) {
         swimmers.add(swimmer);
     }
-    public Coach(String username, String password){
+
+    public Coach(String username, String password) {
         super(username, password);
     }
 

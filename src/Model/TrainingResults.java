@@ -11,6 +11,12 @@ class TrainingResult {
         this.date = date;
         this.timePerformance = timePerformance;
         this.stroke = stroke;
+        this.location = location;
+        this.placement = placement;
+        this.timePerformance = timePerformance;
+        this.date = date;
+        this.stroke = stroke;
+    }
     }
 
     // Getters

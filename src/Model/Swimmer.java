@@ -68,7 +68,7 @@ public class Swimmer extends Member {
         return competitiveResults;
     }
 
-    public void addCompetitiveResult(String result) {
+    public void addCompetitiveResult(CompetitiveResults result) {
         competitiveResults.add(result);
     }
     public List<SwimStroke> getActiveStrokes() {

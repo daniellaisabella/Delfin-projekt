@@ -17,5 +17,5 @@ public abstract class User {
         return username;
     }
 
-    public abstract void displayMenu();
+
 }
