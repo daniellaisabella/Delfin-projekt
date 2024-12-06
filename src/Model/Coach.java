@@ -24,15 +24,4 @@ public class Coach extends User {
 
 
     }
-
-    @Override
-    public void displayMenu() {
-        System.out.println("\n---- Coach Menu ----");
-        System.out.println("1. View all members");
-        System.out.println("2. View top swimmers by stroke category");
-        System.out.println("3. Register and edit time performance");
-        System.out.println("0. Exit");
-    }
-
-    
 }

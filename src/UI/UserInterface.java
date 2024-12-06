@@ -10,7 +10,7 @@ public class UserInterface {
     private Controller controller = new Controller();
     private Scanner scanner = new Scanner(System.in);
     private Filehandler filehandler = new Filehandler();
-    private Treasurer treasurer = new Treasurer("treasurer", "treasurer123"); // Flyttet for at genbruge
+    private Treasurer treasurer = new Treasurer("treasurer", "treasurer123", filehandler);
 
     public void startProgram() {
         boolean running = true;

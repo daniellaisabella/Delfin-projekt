@@ -1,17 +1,16 @@
 package Model;
 
-import DataSource.Filehandler;
-
 import java.util.ArrayList;
 import java.util.Scanner;
+import DataSource.Filehandler;
 
 public class Treasurer extends User {
 
     private double totalPaid; // Holder styr på faktiske betalinger
 
-    public Treasurer(String username, String password) {
+    public Treasurer(String username, String password, Filehandler filehandler) {
         super(username, password);
-        this.totalPaid = 0; // Initialiser med 0
+        this.totalPaid = filehandler.loadPaymentsFromCsv(); // Initialiser med total sum fra filen
     }
 
     // Vis forventede betalinger baseret på medlemmernes kontingent
@@ -72,15 +71,5 @@ public class Treasurer extends User {
             totalExpected += member.getMembershipPrice();
         }
         return totalExpected;
-    }
-
-    @Override
-    public void displayMenu() {
-        System.out.println("\n--- Treasurer Menu ---");
-        System.out.println("[1] View expected payments");
-        System.out.println("[2] View actual payments");
-        System.out.println("[3] Register received payment");
-        System.out.println("[4] Calculate arrears");
-        System.out.println("[0] Logout");
     }
 }
