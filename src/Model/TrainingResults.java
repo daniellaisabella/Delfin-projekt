@@ -23,3 +23,4 @@ public class TrainingResults {
         return stroke;
     }
 }
+
