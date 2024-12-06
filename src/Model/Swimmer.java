@@ -18,15 +18,11 @@ public class Swimmer extends Member {
         this.team = (age < 18) ? Team.JUNIOR : Team.SENIOR;
     }
 
-
     public void addTrainingResult(TrainingResult result) {
         trainingResult.add(result);
     }
 
-    public Swimmer(String name, String surName, int age, String address, String phoneNumber, String mail, String membershipType, String memberType) {
-        super(name, surName, age, address, phoneNumber, mail, membershipType, memberType);
-        this.competitiveResults = new ArrayList<>();
-    }
+
 
     public void addActiveStroke(SwimStroke stroke) {
         if (!activeStrokes.contains(stroke)) {
