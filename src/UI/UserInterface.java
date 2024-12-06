@@ -202,6 +202,7 @@ public class UserInterface {
         System.out.println("6. Display team members");
         System.out.println("7. View all swimmers");
         System.out.println("8. View top 5 swimmers");
+        System.out.println("9. View all training results");
         System.out.println("0. Exit");
     }
 
@@ -238,6 +239,9 @@ public class UserInterface {
             break;
             case 0:
                 break;
+            case 9:
+                viewAllTrainingResults();
+                break;
             default: System.out.println("Invalid choice. Please try again.");
         }
     }
@@ -247,7 +251,7 @@ public class UserInterface {
         int age = getIntInput("Enter swimmer's age: ");
         String phone = getStringInput("Enter swimmer's phone number: ");
         SwimStroke stroke = selectSwimStroke();
-        Swimmer swimmer = new Swimmer(name, age, phone);
+        Swimmer swimmer = new Swimmer(name, age, phone ,);
         swimmer.addActiveStroke(stroke);
         coach.registerSwimmer(swimmer);
         System.out.println("Swimmer registered successfully.");
@@ -259,7 +263,7 @@ public class UserInterface {
         LocalDate date = getDateInput("Enter training date (YYYY-MM-DD): ");
         double time = getDoubleInput("Enter time (in seconds): ");
         SwimStroke stroke = selectSwimStroke();
-        coach.registerTrainingResult(swimmer, date, time, stroke);
+        coach.registerTrainingResults(swimmer, date, time, stroke);
         System.out.println("Training result registered successfully.");
     }
 
@@ -380,8 +384,25 @@ public class UserInterface {
         scanner.nextLine(); // Consume newline
         return result;
     }
+    private void viewAllTrainingResults() {
+        Swimmer swimmer = selectSwimmer();
+        if (swimmer != null) {
+            List<TrainingResults> results = swimmer.getTrainingResults();
+            if (results.isEmpty()) {
+                System.out.println("No training results found for " + swimmer.getName());
+            } else {
+                System.out.println("Training results for " + swimmer.getName() + ":");
+                for (TrainingResults result : results) {
+                    System.out.println("  Date: " + result.getDate());
+                    System.out.println("  Stroke: " + result.getStroke());
+                    System.out.println("  Time: " + result.getTimePerformance() + " seconds");
+                    System.out.println("  ---");
+                }
+            }
+        }
+    }
 
-    private LocalDate getDateInput(String prompt) {
+                private LocalDate getDateInput(String prompt) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         while (true) {
             try {
@@ -392,10 +413,8 @@ public class UserInterface {
             }
         }
     }
+//--------------------------------------------------------
 
-    private void viewTopSwimmers() {
-        System.out.println("Top swimmers functionality is not yet implemented.");
-    }
 //----------------------------------------------------------------------------------------
     private void displayTreasurerMenu() {
         System.out.println("[1] Payments and arrears");

@@ -18,22 +18,26 @@ public class Coach extends User {
     public Coach(String username, String password) {
         super(username, password);
     }
-
-    public void registerTrainingResult(Swimmer swimmer, LocalDate date, double time, SwimStroke stroke) {
-        TrainingResult result = new TrainingResult(date, time, stroke);
-        swimmer.addTrainingResult(result);
+    //------------------------------Training Result------------------------
+    public void registerTrainingResults(Swimmer swimmer, LocalDate date, double time, SwimStroke stroke) {
+        TrainingResults results = new TrainingResults(date, time, stroke);
+        swimmer.addTrainingResults(results);
+    }
+    public List<TrainingResults> getTrainingResults(Swimmer swimmer) {
+        return swimmer.getTrainingResults();
     }
 
+    //------------------------------Competitive Result------------------------
     public void registerCompetitiveResult(Swimmer swimmer, String location, int placement,
                                           double time, LocalDate date, SwimStroke stroke) {
         CompetitiveResults result = new CompetitiveResults(location, placement, time, date, stroke);
         swimmer.addCompetitiveResult(result);
     }
-
+    //------------------------------Active Stroke------------------------
     public void registerActiveStroke(Swimmer swimmer, SwimStroke stroke) {
         swimmer.addActiveStroke(stroke);
     }
-
+    //------------------------------Team members------------------------
     public List<Swimmer> getTeamMembers(Team team) {
         List<Swimmer> teamMembers = new ArrayList<>();
         for (Swimmer swimmer : swimmers) {

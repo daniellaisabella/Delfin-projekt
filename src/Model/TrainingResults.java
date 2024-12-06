@@ -2,23 +2,16 @@ package Model;
 
 import java.time.LocalDate;
 
-class TrainingResult {
+public class TrainingResults {
     private LocalDate date;
     private double timePerformance;
     private SwimStroke stroke;
 
-    public TrainingResult(LocalDate date, double timePerformance, SwimStroke stroke) {
-        this.date = date;
-        this.timePerformance = timePerformance;
-        this.stroke = stroke;
-        this.location = location;
-        this.placement = placement;
+    public TrainingResults(LocalDate date, double timePerformance, SwimStroke stroke) {
         this.timePerformance = timePerformance;
         this.date = date;
         this.stroke = stroke;
     }
-    }
-
     // Getters
     public LocalDate getDate() {
         return date;
