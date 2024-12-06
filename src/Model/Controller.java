@@ -11,7 +11,7 @@ public class Controller {
     public Controller() {
         filehandler = new Filehandler();
         ArrayList<Swimmer> loadedMembers = filehandler.loadMembers();
-        memberList = new MemberList(new ArrayList<>(loadedMembers));
+        memberList = new MemberList(new ArrayList<>(loadedMembers), this);  // Send this (Controller) videre til MemberList
     }
 
     public MemberList getMemberList() {

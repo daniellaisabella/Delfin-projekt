@@ -178,37 +178,47 @@ public class UserInterface {
     }
 
     private void deleteMember() {
-        System.out.println("Please enter the phone number of the member you want to delete:");
-        String phoneNumber = scanner.nextLine().trim();
-        controller.getMemberList().deleteMember(phoneNumber);
-    }
-    private void displayCoachMenu() {
-        System.out.println("[1] View top swimmers by stroke");
-        System.out.println("[0] Logout");
-    }
+        System.out.println("Delete member by phone number");
+        System.out.println();
+        System.out.println("Do you want to see the member list? [yes/no]");
+        String choice = scanner.nextLine().trim().toLowerCase();
+        if (choice.equals("yes")) {
+            showMembers();
+        }
+        System.out.println();
+            System.out.println("Please enter the phone number of the member you want to delete:");
+        System.out.println();
 
-    private void handleCoachChoice(String choice) {
-        System.out.println("Top swimmers functionality is not yet implemented.");
-    }
-
-    private void displayTreasurerMenu() {
-        System.out.println("[1] Payments and arrears");
-        System.out.println("[2] Bookkeeping: register payments");
-        System.out.println("[0] Logout");
-    }
-
-    private void handleTreasurerChoice(String choice) {
-        ArrayList<Member> members = controller.getMemberList().getMembers();
-
-        if (members == null || members.isEmpty()) {
-            System.out.println("No members available. Please add members first.");
-            return;
+            String phoneNumber = scanner.nextLine().trim();
+            controller.getMemberList().deleteMember(phoneNumber);
+        }
+        private void displayCoachMenu () {
+            System.out.println("[1] View top swimmers by stroke");
+            System.out.println("[0] Logout");
         }
 
-        switch (choice) {
-            case "1" -> treasurer.viewExpectedPayments(members);
-            case "2" -> treasurer.registerPayment(members);
-            default -> System.out.println("Invalid choice.");
+        private void handleCoachChoice (String choice){
+            System.out.println("Top swimmers functionality is not yet implemented.");
+        }
+
+        private void displayTreasurerMenu () {
+            System.out.println("[1] Payments and arrears");
+            System.out.println("[2] Bookkeeping: register payments");
+            System.out.println("[0] Logout");
+        }
+
+        private void handleTreasurerChoice (String choice){
+            ArrayList<Member> members = controller.getMemberList().getMembers();
+
+            if (members == null || members.isEmpty()) {
+                System.out.println("No members available. Please add members first.");
+                return;
+            }
+
+            switch (choice) {
+                case "1" -> treasurer.viewExpectedPayments(members);
+                case "2" -> treasurer.registerPayment(members);
+                default -> System.out.println("Invalid choice.");
+            }
         }
     }
-}
