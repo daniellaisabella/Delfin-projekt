@@ -9,6 +9,16 @@ import java.util.Scanner;
 
 public class Filehandler {
     private final String filePath = "src/DataSource/Members.csv";
+    private final String BOOKKEEPING_CSV_FIL = "src/DataSource/Bookkeeping.csv";
+
+    public void savePaymentsToCsv(double payment){
+        try(PrintWriter writer = new PrintWriter(new FileWriter(BOOKKEEPING_CSV_FIL, true))){
+            writer.println(payment);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     // Læs medlemmer fra filen
     public ArrayList<Swimmer> loadMembers() {

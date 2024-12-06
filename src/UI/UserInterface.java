@@ -71,7 +71,7 @@ public class UserInterface {
                     if ("0".equals(choice)) {
                         loggedIn = false;
                     } else {
-                        handleTreasurerChoice(choice);
+                        handleTreasurerChoice(choice, filehandler);
                     }
                 }
                 default -> loggedIn = false;
@@ -197,7 +197,7 @@ public class UserInterface {
         System.out.println("[0] Logout");
     }
 
-    private void handleTreasurerChoice(String choice) {
+    private void handleTreasurerChoice(String choice, Filehandler filehandler) {
         ArrayList<Member> members = controller.getMemberList().getMembers();
 
         if (members == null || members.isEmpty()) {
@@ -207,7 +207,7 @@ public class UserInterface {
 
         switch (choice) {
             case "1" -> treasurer.viewExpectedPayments(members);
-            case "2" -> treasurer.registerPayment(members);
+            case "2" -> treasurer.registerPayment(members, filehandler);
             default -> System.out.println("Invalid choice.");
         }
     }
