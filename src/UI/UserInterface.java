@@ -251,7 +251,8 @@ public class UserInterface {
         int age = getIntInput("Enter swimmer's age: ");
         String phone = getStringInput("Enter swimmer's phone number: ");
         SwimStroke stroke = selectSwimStroke();
-        Swimmer swimmer = new Swimmer(name, age, phone ,);
+        Team team = (age < 18) ? Team.JUNIOR : Team.SENIOR;
+        Swimmer swimmer = new Swimmer(name, age, phone, team);
         swimmer.addActiveStroke(stroke);
         coach.registerSwimmer(swimmer);
         System.out.println("Swimmer registered successfully.");
