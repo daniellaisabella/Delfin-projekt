@@ -111,7 +111,7 @@ public class UserInterface {
         String address = scanner.nextLine().trim();
 
         System.out.print("Phone number: ");
-        int phoneNumber = getIntInput();
+        String phoneNumber = scanner.nextLine().trim();
 
         System.out.print("Email address: ");
         String email = scanner.nextLine().trim();

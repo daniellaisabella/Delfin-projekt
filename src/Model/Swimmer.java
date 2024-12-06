@@ -6,7 +6,7 @@ import java.util.List;
 public class Swimmer extends Member {
     private List<String> competitiveResults;
 
-    public Swimmer(String name, String surName, int age, String address, int phoneNumber, String mail, String membershipType, String memberType) {
+    public Swimmer(String name, String surName, int age, String address, String phoneNumber, String mail, String membershipType, String memberType) {
         super(name, surName, age, address, phoneNumber, mail, membershipType, memberType);
         this.competitiveResults = new ArrayList<>();
     }
