@@ -2,7 +2,7 @@ package Model;
 
 import java.time.LocalDate;
 
-public class TrainingResults {
+    public class TrainingResults {
     private LocalDate date;
     private double timePerformance;
     private SwimStroke stroke;

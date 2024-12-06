@@ -62,7 +62,6 @@ public class Swimmer extends Member {
     public void addTrainingResults(TrainingResults results) {
         trainingResults.add(results);
     }
-
     //----------------------------Competitive Results------------------------
     public List<CompetitiveResults> getCompetitiveResults() {
         return competitiveResults;

@@ -137,7 +137,6 @@ public class UserInterface {
             System.out.println("Failed to save member to file.");
         }
     }
-
     private int getIntInput() {
         while (!scanner.hasNextInt()) {
             System.out.println("Invalid input. Please enter a valid number.");

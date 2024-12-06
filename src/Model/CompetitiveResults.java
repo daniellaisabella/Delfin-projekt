@@ -1,7 +1,6 @@
 package Model;
 
 import java.time.LocalDate;
-
 public class CompetitiveResults {
     private String location;
     private int placement;
