@@ -25,7 +25,7 @@ public class MemberList {
     }
 
     public void deleteMember(String phoneNumber) {
-        members.removeIf(member -> Integer.parseInt(member.getPhoneNumber()) == Integer.parseInt(phoneNumber));
+        members.removeIf(member -> (member.getPhoneNumber()) == (phoneNumber));
         if (controller.getFilehandler().saveMember(members)) {
             System.out.println("Member is deleted and changes are saved");
         } else {
