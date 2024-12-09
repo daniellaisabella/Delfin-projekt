@@ -83,7 +83,7 @@ public class UserInterface {
             }
         }
     }
-
+//-------------------------------ADMIN MENU----------------------------------------
     private void displayAdminMenu() {
         System.out.println("[1] Register new member");
         System.out.println("[2] View all members");
@@ -150,15 +150,6 @@ public class UserInterface {
         return input;
     }
 
-    private String getMembershipTypeInput() {
-        while (true) {
-            String input = scanner.nextLine().trim().toLowerCase();
-            if (input.equals("active") || input.equals("passive")) {
-                return input;
-            }
-            System.out.println("Invalid input. Please enter 'active' or 'passive'.");
-        }
-    }
 
     private String getMemberTypeInput() {
         while (true) {
@@ -169,6 +160,16 @@ public class UserInterface {
             System.out.println("Invalid input. Please enter 'competition' or 'fitness enthusiast'.");
         }
     }
+    private String getMembershipTypeInput() {
+        while (true) {
+            String input = scanner.nextLine().trim().toLowerCase();
+            if (input.equals("active") || input.equals("passive")) {
+                return input;
+            }
+            System.out.println("Invalid input. Please enter 'active' or 'passive'.");
+        }
+    }
+
 
     private void showMembers() {
         ArrayList<Member> members = controller.getMemberList().getMembers();
@@ -181,7 +182,7 @@ public class UserInterface {
             }
         }
     }
-
+//---------------------delete member----------------
     private void deleteMember() {
         System.out.println("Delete member by phone number");
         System.out.println();
@@ -198,128 +199,180 @@ public class UserInterface {
             controller.getMemberList().deleteMember(phoneNumber);
         }
 
-        //---------------------------------------COACH MENU------------------------------------
+    //---------------------------------------COACH MENU------------------------------------
 
     private void displayCoachMenu () {
-            System.out.println("\n--- Coach Menu ---");
-            System.out.println("1. Register new swimmer");
-            System.out.println("2. Register training result");
-            System.out.println("3. Register competitive result");
-            System.out.println("4. Register active stroke for a swimmer");
-            System.out.println("5. Display swimmer info");
-            System.out.println("6. Display team members");
-            System.out.println("7. View all swimmers");
-            System.out.println("8. View top 5 swimmers");
-            System.out.println("9. View all training results"); // New option
-            System.out.println("0. Exit");
+        System.out.println("\n--- Coach Menu ---");
+        System.out.println("1. Register new swimmer");
+        System.out.println("2. Register training result");
+        System.out.println("3. Register competitive result");
+        System.out.println("4. Register active stroke for a swimmer");
+        System.out.println("5. Display swimmer info");
+        System.out.println("6. Display team members");
+        System.out.println("7. View all competitive swimmers");
+        System.out.println("8. View top 5 swimmers");
+        System.out.println("9. View all training results"); // New option
+        System.out.println("0. Exit");
+    }
+    private void handleCoachChoice (String choice){
+        switch (choice) {
+            case "1" -> registerCompetitiveSwimmer();
+            case "2" -> registerTrainingResult();
+            case "3" -> registerCompetitiveResult();
+            case "4" -> registerActiveStroke();
+            case "5" -> displaySwimmerInfo();
+            case "6" -> displayTeamMembers();
+            case "7" -> viewAllCompetitiveSwimmers();
+            case "8" -> viewTop5Swimmers();
+            case "9" -> viewAllTrainingResults();
+            default -> System.out.println("Invalid choice. Please try again.");
         }
-        private void handleCoachChoice (String choice){
-            switch (choice) {
-                case "1" -> registerSwimmer();
-                case "2" -> registerTrainingResult();
-                case "3" -> registerCompetitiveResult();
-                case "4" -> registerActiveStroke();
-                case "5" -> displaySwimmerInfo();
-                case "6" -> displayTeamMembers();
-                case "7" -> viewAllSwimmers();
-                case "8" -> viewTop5Swimmers();
-                case "9" -> viewAllTrainingResults();
-                default -> System.out.println("Invalid choice. Please try again.");
-            }
-        }
-        //------------------------------
-        private void registerSwimmer() {
-            String name = getStringInput("Enter swimmer's name: ");
-            String surName = getStringInput("Enter swimmer's surname: ");
-            int age = getIntInput("Enter swimmer's age: ");
-            String phone = getStringInput("Enter swimmer's phone number: ");
-            SwimStroke stroke = selectSwimStroke();
-            Team team = (age < 18) ? Team.JUNIOR : Team.SENIOR;
-            Swimmer swimmer = new Swimmer(name, surName, age, "", phone, "", "", "");            swimmer.addActiveStroke(stroke);
-            coach.registerSwimmer(swimmer);
-            System.out.println("Swimmer registered successfully.");
-        }
-    //------------------------------
+    }
+    //------------------------------ register competitive swimmer
+    private void registerCompetitiveSwimmer() {
+        String name = getStringInput("Enter swimmer's name: ");
+        String surname = getStringInput("Enter swimmer's surname: ");
+        int age = getIntInput("Enter swimmer's age: ");
+        String phone = getStringInput("Enter swimmer's phone number: ");
+        String address = getStringInput("Enter swimmer's address: ");
+        String mail = getStringInput("Enter swimmer's email: ");
+        MembershipType membershipType = selectMembershipType();
+        SwimStroke stroke = selectSwimStroke();
+        Team team = (age < 18) ? Team.JUNIOR : Team.SENIOR;
+        String tournamentAttendance = getStringInput("Has attended tournament (yes/no): ");
+        CompetitiveSwimmer competitiveSwimmer = new CompetitiveSwimmer(name, surname, age, address, phone, mail, team, membershipType,tournamentAttendance);
 
+
+        coach.registerCompetitiveSwimmer(competitiveSwimmer);
+        controller.getMemberList().addMember((Member) competitiveSwimmer);
+
+        // Save the updated memberList to the CSV file
+        ArrayList<Member> members = controller.getMemberList().getMembers();
+        if (controller.getFilehandler().saveMember(members)) {
+            System.out.println("Swimmer registered successfully.");
+        } else {
+            System.out.println("Failed to save member to file.");
+        }
+    }
+//-------------------------- select memebership type
+    private MembershipType selectMembershipType() {
+        System.out.println("Select membership type:");
+        System.out.println("1. Active");
+        System.out.println("2. Passive");
+        int choice = getIntInput("Enter your choice: ");
+        switch (choice) {
+            case 1:
+                return MembershipType.ACTIVE;
+            case 2:
+                return MembershipType.PASSIVE;
+            default:
+                System.out.println("Invalid choice. Please try again.");
+                return selectMembershipType();
+        }
+    }
+    //------------------------------register training result
     private void registerTrainingResult() {
-        Swimmer swimmer = selectSwimmer();
-        if (swimmer == null) return;
+        CompetitiveSwimmer competitiveSwimmer = selectSwimmer();
+        if (competitiveSwimmer == null) return;
         LocalDate date = getDateInput("Enter training date (YYYY-MM-DD): ");
         double time = getDoubleInput("Enter time (in seconds): ");
         SwimStroke stroke = selectSwimStroke();
-        coach.registerTrainingResults(swimmer, date, time, stroke);
+        coach.registerTrainingResults(competitiveSwimmer, date, time, stroke);
         System.out.println("Training result registered successfully.");
-    }
-    //------------------------------
 
+        // Update the memberList with the new training result
+        controller.getMemberList().updateMember(competitiveSwimmer);
+
+        // Save the updated memberList to the CSV file
+        ArrayList<Member> members = controller.getMemberList().getMembers();
+        if (controller.getFilehandler().saveMember(members)) {
+            System.out.println("Training result registered and saved successfully.");
+        } else {
+            System.out.println("Failed to save training result.");
+        }
+    }
+    //------------------------------Register competitive results
     private void registerCompetitiveResult() {
-        Swimmer swimmer = selectSwimmer();
-        if (swimmer == null) return;
+        CompetitiveSwimmer competitiveSwimmer = selectSwimmer();
+        if (competitiveSwimmer == null) return;
         String location = getStringInput("Enter competition location: ");
         int placement = getIntInput("Enter placement: ");
         double time = getDoubleInput("Enter time (in seconds): ");
         LocalDate date = getDateInput("Enter competition date (YYYY-MM-DD): ");
         SwimStroke stroke = selectSwimStroke();
-        coach.registerCompetitiveResult(swimmer, location, placement, time, date, stroke);
+        coach.registerCompetitiveResult(competitiveSwimmer, location, placement, time, date, stroke);
         System.out.println("Competitive result registered successfully.");
-    }
-    //------------------------------
 
-    private void registerActiveStroke() {
-        Swimmer swimmer = selectSwimmer();
-        if (swimmer == null) return;
-        SwimStroke stroke = selectSwimStroke();
-        coach.registerActiveStroke(swimmer, stroke);
-        System.out.println("Active stroke registered successfully.");
-    }
-    //------------------------------
+        // Update the memberList with the new competitive result
+        controller.getMemberList().updateMember(competitiveSwimmer);
 
-    private void displaySwimmerInfo() {
-        Swimmer swimmer = selectSwimmer();
-        if (swimmer != null) {
-            coach.displaySwimmerInfo(swimmer);
+        // Save the updated memberList to the CSV file
+        ArrayList<Member> members = controller.getMemberList().getMembers();
+        if (controller.getFilehandler().saveMember(members)) {
+            System.out.println("Competitive result registered and saved successfully.");
+        } else {
+            System.out.println("Failed to save competitive result.");
         }
     }
-    //------------------------------
+    //------------------------------register active stroke
+
+    private void registerActiveStroke() {
+        CompetitiveSwimmer competitiveSwimmer = (Model.CompetitiveSwimmer) selectSwimmer();
+        if (competitiveSwimmer == null) return;
+        SwimStroke stroke = selectSwimStroke();
+        coach.registerActiveStroke(competitiveSwimmer, stroke);
+        System.out.println("Active stroke registered successfully.");
+        competitiveSwimmer.addActiveStroke(stroke);
+    }
+    //------------------------------display swimmer info
+
+    private void displaySwimmerInfo() {
+        CompetitiveSwimmer competitiveSwimmer = (Model.CompetitiveSwimmer) selectSwimmer();
+        if (competitiveSwimmer != null) {
+            coach.displaySwimmerInfo(competitiveSwimmer);
+        }
+    }
+    //------------------------------Display team members-----------------
 
     private void displayTeamMembers() {
         System.out.println("Junior Team:");
-        for (Swimmer swimmer : coach.getTeamMembers(Team.JUNIOR)) {
-            System.out.println("- " + swimmer.getName());
+        for (CompetitiveSwimmer competitiveSwimmer : coach.getTeamMembers(Team.JUNIOR)) {
+            System.out.println("- " + competitiveSwimmer.getName());
         }
         System.out.println("\nSenior Team:");
-        for (Swimmer swimmer : coach.getTeamMembers(Team.SENIOR)) {
-            System.out.println("- " + swimmer.getName());
+        for (CompetitiveSwimmer competitiveSwimmer : coach.getTeamMembers(Team.SENIOR)) {
+            System.out.println("- " + competitiveSwimmer.getName());
         }
     }
-    private void viewAllSwimmers() {
-        List<Swimmer> allSwimmers = coach.getAllSwimmers();
+    //----------------------View all competitive swimmers---------------------
+    private void viewAllCompetitiveSwimmers() {
+        List<CompetitiveSwimmer> allSwimmers = coach.getAllSwimmers();
         System.out.println("All Swimmers:");
-        for (Swimmer swimmer : allSwimmers) {
-            System.out.println("- " + swimmer.getName() + " (" + swimmer.getTeam() + ")");
+        for (CompetitiveSwimmer competitiveSwimmer : allSwimmers) {
+            System.out.println("- " + competitiveSwimmer.getName() + " (" + competitiveSwimmer.getTeam() + ")");
         }
     }
 
-    //-------------------------------
+    //-------------------------------view top 5 swimmers-------------------------
     private void viewTop5Swimmers() {
         System.out.println("========VIEW TOP 5 SWIMMERS============");
         Team team = selectTeam();
         SwimStroke stroke = selectSwimStroke();
-        List<Swimmer> top5 = coach.getTop5Swimmers(team, stroke);
+        List<CompetitiveSwimmer> top5 = coach.getTop5Swimmers(team, stroke);
         System.out.println("Top 5 " + team + " swimmers in " + stroke + ":");
         for (int i = 0; i < top5.size(); i++) {
-            Swimmer swimmer = top5.get(i);
-            System.out.println((i + 1) + ". " + swimmer.getName() + " - Best time: " + swimmer.getBestTime(stroke));
+            CompetitiveSwimmer competitiveSwimmer = top5.get(i);
+            System.out.println((i + 1) + ". " + competitiveSwimmer.getName() + " - Best time: " + competitiveSwimmer.getBestTime(stroke));
         }
     }
-    //----------Internal menu-------------
+    //----------Internal sub menu-------------
 
-    private Swimmer selectSwimmer() {
-        List<Swimmer> allSwimmers = coach.getAllSwimmers();
+    private CompetitiveSwimmer selectSwimmer() {
+        List<CompetitiveSwimmer> allSwimmers = coach.getAllSwimmers();
         System.out.println("Select a swimmer:");
         for (int i = 0; i < allSwimmers.size(); i++) {
-            Swimmer swimmer = allSwimmers.get(i);
-            System.out.println((i + 1) + ". " + swimmer.getName() + " (" + swimmer.getTeam() + ")");
+            CompetitiveSwimmer competitiveSwimmer = allSwimmers.get(i);
+            System.out.println((i + 1) + ". " + competitiveSwimmer.getName() + " (" + competitiveSwimmer.getTeam() + ")");
         }
         int choice = getIntInput("Enter the number of the swimmer: ");
         if (choice > 0 && choice <= allSwimmers.size()) {
@@ -329,7 +382,7 @@ public class UserInterface {
             return null;
         }
     }
-    //------------------------------
+    //------------------------------select swim stroke
 
     private SwimStroke selectSwimStroke() {
         System.out.println("Select swim stroke:");
@@ -342,7 +395,7 @@ public class UserInterface {
         }
         return SwimStroke.BREASTSTROKE; // Default
     }
-    //------------------------------
+    //------------------------------select team
 
     private Team selectTeam() {
         System.out.println("Select team:");
@@ -351,13 +404,13 @@ public class UserInterface {
         int choice = getIntInput("Enter your choice: ");
         return (choice == 1) ? Team.JUNIOR : Team.SENIOR;
     }
-    //------------------------------
+    //------------------------------string input
 
     private String getStringInput(String prompt) {
         System.out.print(prompt);
         return scanner.nextLine();
     }
-    //------------------------------
+    //------------------------------ int input
 
     private int getIntInput(String prompt) {
         System.out.print(prompt);
@@ -369,7 +422,7 @@ public class UserInterface {
         scanner.nextLine(); // Consume newline
         return result;
     }
-    //------------------------------
+    //------------------------------double input
 
     private double getDoubleInput(String prompt) {
         System.out.print(prompt);
@@ -381,16 +434,16 @@ public class UserInterface {
         scanner.nextLine(); // Consume newline
         return result;
     }
-    //------------------------------
+    //------------------------------ view all training results
 
     private void viewAllTrainingResults() {
-        Swimmer swimmer = selectSwimmer();
-        if (swimmer != null) {
-            List<TrainingResults> results = swimmer.getTrainingResults();
+        CompetitiveSwimmer competitiveSwimmer = selectSwimmer();
+        if (competitiveSwimmer != null) {
+            List<TrainingResults> results = competitiveSwimmer.getTrainingResults();
             if (results.isEmpty()) {
-                System.out.println("No training results found for " + swimmer.getName());
+                System.out.println("No training results found for " + competitiveSwimmer.getName());
             } else {
-                System.out.println("Training results for " + swimmer.getName() + ":");
+                System.out.println("Training results for " + competitiveSwimmer.getName() + ":");
                 for (TrainingResults result : results) {
                     System.out.println("  Date: " + result.getDate());
                     System.out.println("  Stroke: " + result.getStroke());
@@ -400,7 +453,7 @@ public class UserInterface {
             }
         }
     }
-    //------------------------------
+    //------------------------------date input
 
     private LocalDate getDateInput(String prompt) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -414,7 +467,7 @@ public class UserInterface {
         }
     }
 
-//--------------------------------------------------------------------
+//-----------------------------------Treasurere menu--------------------------------------------
 
 
     private void displayTreasurerMenu() {
