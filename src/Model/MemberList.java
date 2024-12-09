@@ -32,4 +32,14 @@ public class MemberList {
             System.out.println("Failed to save changes.");
         }
     }
+
+public void updateMember(Member member) {
+    for (int i = 0; i < members.size(); i++) {
+        if (members.get(i).equals(member)) {
+            members.set(i, member);
+            break;
+        }
+    }
+}
+
 }
