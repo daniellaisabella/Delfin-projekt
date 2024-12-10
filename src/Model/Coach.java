@@ -6,19 +6,22 @@ import java.util.List;
 
 public class Coach extends User {
 
-    private List<CompetitiveSwimmer> swimmers = new ArrayList<>();
+    private final List<CompetitiveSwimmer> swimmers = new ArrayList<>();
+
+    public Coach(String username, String password) {
+        super(username, password);
+    }
 
     public void registerCompetitiveSwimmer(CompetitiveSwimmer competitiveSwimmer) {
         swimmers.add(competitiveSwimmer);
     }
-    public Coach(String username, String password) {
-        super(username, password);
-    }
+
     //------------------------------Training Result------------------------
     public void registerTrainingResults(CompetitiveSwimmer competitiveSwimmer, LocalDate date, double time, SwimStroke stroke) {
         TrainingResults results = new TrainingResults(date, time, stroke);
         competitiveSwimmer.addTrainingResults(results);
     }
+
     public List<TrainingResults> getTrainingResults(CompetitiveSwimmer competitiveSwimmer) {
         return competitiveSwimmer.getTrainingResults();
     }
@@ -30,10 +33,12 @@ public class Coach extends User {
         CompetitiveResults result = new CompetitiveResults(location, placement, time, date, stroke);
         competitiveSwimmer.addCompetitiveResult(result);
     }
+
     //------------------------------Active Stroke------------------------
     public void registerActiveStroke(CompetitiveSwimmer competitiveSwimmer, SwimStroke stroke) {
         competitiveSwimmer.addActiveStroke(stroke);
     }
+
     //------------------------------Team members------------------------
     public List<CompetitiveSwimmer> getTeamMembers(Team team) {
         List<CompetitiveSwimmer> teamMembers = new ArrayList<>();
@@ -44,10 +49,12 @@ public class Coach extends User {
         }
         return teamMembers;
     }
+
     //-----------------------------Get all swimmers-------------------------
     public List<CompetitiveSwimmer> getAllSwimmers() {
         return new ArrayList<>(swimmers);
     }
+
     //-----------------------------Get Top 5 Swimmers-------------------------
     public List<CompetitiveSwimmer> getTop5Swimmers(Team team, SwimStroke stroke) {
         List<CompetitiveSwimmer> eligibleSwimmers = new ArrayList<>();
@@ -69,6 +76,7 @@ public class Coach extends User {
         // Return top 5 or fewer if there are less than 5 eligible swimmers
         return eligibleSwimmers.subList(0, Math.min(5, eligibleSwimmers.size()));
     }
+
     //-----------------------------display competitiveSwimmer info-------------------------
     public void displaySwimmerInfo(CompetitiveSwimmer competitiveSwimmer) {
         System.out.println("Name: " + competitiveSwimmer.getName());

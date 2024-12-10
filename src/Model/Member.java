@@ -10,7 +10,6 @@ public abstract class Member {
     private String membershipType; // "active" or "passive"
     private String memberType;     // "competition" or "fitness enthusiast"
     private int membershipPrice;   // Price for membership
-    private boolean hasPaid;       // Simulerer om medlemmet har betalt
 
     public Member(String name, String surname, int age, String address, String phoneNumber, String mail, String membershipType, String memberType) {
         this.name = capitalizeFirstLetter(name);
@@ -22,7 +21,6 @@ public abstract class Member {
         this.membershipType = validateMembershipType(membershipType);
         this.memberType = validateMemberType(memberType);
         this.membershipPrice = calculateMembershipPrice();
-        this.hasPaid = false; // Default er, at medlemmet ikke har betalt
     }
 
     private String capitalizeFirstLetter(String word) {
@@ -46,7 +44,7 @@ public abstract class Member {
         return type.toLowerCase();
     }
 
-    private int calculateMembershipPrice() {
+    public int calculateMembershipPrice() {
         if (membershipType.equals("passive")) {
             return 500; // Passive membership price
         } else if (age < 18) {
@@ -56,14 +54,6 @@ public abstract class Member {
         } else {
             return 1200; // Active retiree price
         }
-    }
-
-    public boolean hasPaid() {
-        return hasPaid;
-    }
-
-    public void setHasPaid(boolean hasPaid) {
-        this.hasPaid = hasPaid;
     }
 
     public String getName() {
@@ -105,7 +95,7 @@ public abstract class Member {
     @Override
     public String toString() {
         return String.format(
-          "Name: %s %s, Age: %d, Address: %s, Phone: %s, Email: %s, Membership Type: %s, Member Type: %s, Membership Price: %d",
+                "Name: %s %s, Age: %d, Address: %s, Phone: %s, Email: %s, Membership Type: %s, Member Type: %s, Membership Price: %d",
                 name, surname, age, address, phoneNumber, mail, membershipType, memberType, membershipPrice
         );
     }

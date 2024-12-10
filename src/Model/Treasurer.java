@@ -1,8 +1,9 @@
 package Model;
 
+import DataSource.Filehandler;
+
 import java.util.ArrayList;
 import java.util.Scanner;
-import DataSource.Filehandler;
 
 public class Treasurer extends User {
 
@@ -45,12 +46,6 @@ public class Treasurer extends User {
             System.out.println("Invalid input. Please enter a valid number.");
             scanner.nextLine(); // Ryd scanneren for forkert input
         }
-    }
-
-    // Vis faktisk betalinger
-    public void bookkeeping() {
-        System.out.println("\n--- Actual Payments ---");
-        System.out.println("Total Actual Payments: " + totalPaid + " DKK");
     }
 
     // Udregn og vis restance (forventede betalinger minus faktiske betalinger)

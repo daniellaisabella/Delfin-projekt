@@ -1,13 +1,13 @@
 package UI;
 
+import DataSource.Filehandler;
+import Model.*;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-import DataSource.Filehandler;
-import Model.*;
 
 public class UserInterface {
     private Controller controller = new Controller();
@@ -83,7 +83,8 @@ public class UserInterface {
             }
         }
     }
-//-------------------------------ADMIN MENU----------------------------------------
+
+    //-------------------------------ADMIN MENU----------------------------------------
     private void displayAdminMenu() {
         System.out.println("[1] Register new member");
         System.out.println("[2] View all members");
@@ -140,6 +141,7 @@ public class UserInterface {
             System.out.println("Failed to save member to file.");
         }
     }
+
     private int getIntInput() {
         while (!scanner.hasNextInt()) {
             System.out.println("Invalid input. Please enter a valid number.");
@@ -160,6 +162,7 @@ public class UserInterface {
             System.out.println("Invalid input. Please enter 'competition' or 'fitness enthusiast'.");
         }
     }
+
     private String getMembershipTypeInput() {
         while (true) {
             String input = scanner.nextLine().trim().toLowerCase();
@@ -182,7 +185,8 @@ public class UserInterface {
             }
         }
     }
-//---------------------delete member----------------
+
+    //---------------------delete member----------------
     private void deleteMember() {
         System.out.println("Delete member by phone number");
         System.out.println();
@@ -192,16 +196,16 @@ public class UserInterface {
             showMembers();
         }
         System.out.println();
-            System.out.println("Please enter the phone number of the member you want to delete:");
+        System.out.println("Please enter the phone number of the member you want to delete:");
         System.out.println();
 
-            String phoneNumber = scanner.nextLine().trim();
-            controller.getMemberList().deleteMember(phoneNumber);
-        }
+        String phoneNumber = scanner.nextLine().trim();
+        controller.getMemberList().deleteMember(phoneNumber);
+    }
 
     //---------------------------------------COACH MENU------------------------------------
 
-    private void displayCoachMenu () {
+    private void displayCoachMenu() {
         System.out.println("\n--- Coach Menu ---");
         System.out.println("1. Register new swimmer");
         System.out.println("2. Register training result");
@@ -214,7 +218,8 @@ public class UserInterface {
         System.out.println("9. View all training results"); // New option
         System.out.println("0. Exit");
     }
-    private void handleCoachChoice (String choice){
+
+    private void handleCoachChoice(String choice) {
         switch (choice) {
             case "1" -> registerCompetitiveSwimmer();
             case "2" -> registerTrainingResult();
@@ -228,6 +233,7 @@ public class UserInterface {
             default -> System.out.println("Invalid choice. Please try again.");
         }
     }
+
     //------------------------------ register competitive swimmer
     private void registerCompetitiveSwimmer() {
         String name = getStringInput("Enter swimmer's name: ");
@@ -240,7 +246,7 @@ public class UserInterface {
         SwimStroke stroke = selectSwimStroke();
         Team team = (age < 18) ? Team.JUNIOR : Team.SENIOR;
         String tournamentAttendance = getStringInput("Has attended tournament (yes/no): ");
-        CompetitiveSwimmer competitiveSwimmer = new CompetitiveSwimmer(name, surname, age, address, phone, mail, team, membershipType,tournamentAttendance);
+        CompetitiveSwimmer competitiveSwimmer = new CompetitiveSwimmer(name, surname, age, address, phone, mail, team, membershipType, tournamentAttendance);
 
 
         coach.registerCompetitiveSwimmer(competitiveSwimmer);
@@ -254,7 +260,8 @@ public class UserInterface {
             System.out.println("Failed to save member to file.");
         }
     }
-//-------------------------- select memebership type
+
+    //-------------------------- select memebership type
     private MembershipType selectMembershipType() {
         System.out.println("Select membership type:");
         System.out.println("1. Active");
@@ -270,6 +277,7 @@ public class UserInterface {
                 return selectMembershipType();
         }
     }
+
     //------------------------------register training result
     private void registerTrainingResult() {
         CompetitiveSwimmer competitiveSwimmer = selectSwimmer();
@@ -291,6 +299,7 @@ public class UserInterface {
             System.out.println("Failed to save training result.");
         }
     }
+
     //------------------------------Register competitive results
     private void registerCompetitiveResult() {
         CompetitiveSwimmer competitiveSwimmer = selectSwimmer();
@@ -344,6 +353,7 @@ public class UserInterface {
             System.out.println("- " + competitiveSwimmer.getName());
         }
     }
+
     //----------------------View all competitive swimmers---------------------
     private void viewAllCompetitiveSwimmers() {
         List<CompetitiveSwimmer> allSwimmers = coach.getAllSwimmers();

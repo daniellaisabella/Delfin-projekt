@@ -20,10 +20,6 @@ public class MemberList {
         return members;
     }
 
-    public Member getMemberByUsername(String username) {
-        return null;
-    }
-
     public void deleteMember(String phoneNumber) {
         members.removeIf(member -> (member.getPhoneNumber()) == (phoneNumber));
         if (controller.getFilehandler().saveMember(members)) {
@@ -33,13 +29,13 @@ public class MemberList {
         }
     }
 
-public void updateMember(Member member) {
-    for (int i = 0; i < members.size(); i++) {
-        if (members.get(i).equals(member)) {
-            members.set(i, member);
-            break;
+    public void updateMember(Member member) {
+        for (int i = 0; i < members.size(); i++) {
+            if (members.get(i).equals(member)) {
+                members.set(i, member);
+                break;
+            }
         }
     }
-}
 
 }

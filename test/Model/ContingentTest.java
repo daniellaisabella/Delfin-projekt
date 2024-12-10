@@ -7,13 +7,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class ContingentTest {
 
     @Test
-    void testCalculateContingentPassive() {
+    void testCalculateMembershipPrice() {
 
         //Arrange
         MembershipType type = MembershipType.PASSIVE;
 
         //Act
-        double result = Contingent.calculateContingent(type);
+        double result = Member.calculateMembershipPrice(type);
 
         //Assert
         assertEquals(500.0, result, "The fee for passive membership should be 500 kr.");
@@ -26,7 +26,7 @@ class ContingentTest {
         MembershipType type = MembershipType.ACTIVE_JUNIOR;
 
         //Act
-        double result = Contingent.calculateContingent(type);
+        double result = Member.calculateMembershipPrice(type);
 
         //Assert
         assertEquals(1000.0, result, "The fee for active junior membership should be 1000 kr.");
